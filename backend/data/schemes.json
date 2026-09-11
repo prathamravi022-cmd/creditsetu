@@ -1,0 +1,810 @@
+[
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-MF-001",
+      "name": "NSFDC Micro Finance",
+      "scheme_type": "micro_finance",
+      "description": "Small loans for SC/ST entrepreneurs",
+      "min_amount": 50000,
+      "max_amount": 140000,
+      "interest_rate": 6.5,
+      "subsidy_percentage": 5,
+      "margin_money_percentage": 5,
+      "min_tenure_months": 12,
+      "max_tenure_months": 60,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [
+          "UP",
+          "Bihar",
+          "MP",
+          "Rajasthan",
+          "Jharkhand",
+          "Chhattisgarh",
+          "Odisha"
+        ],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": true
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Bank Passbook",
+        "Photo",
+        "Project Report"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-TL-002",
+      "name": "NSFDC Term Loan",
+      "scheme_type": "term_loan",
+      "description": "Larger loans for SC/ST entrepreneurs",
+      "min_amount": 140000,
+      "max_amount": 5000000,
+      "interest_rate": 8.0,
+      "subsidy_percentage": 10,
+      "margin_money_percentage": 10,
+      "min_tenure_months": 12,
+      "max_tenure_months": 120,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "DPR",
+        "Bank Passbook",
+        "Land Docs"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NMDFC-EL-003",
+      "name": "NMDFC Education Loan",
+      "scheme_type": "education_loan",
+      "description": "Concessional education loans for OBC/minority",
+      "min_amount": 50000,
+      "max_amount": 2000000,
+      "interest_rate": 5.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 24,
+      "max_tenure_months": 120,
+      "moratorium_months": 12,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "education"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Income Certificate",
+        "Caste Certificate",
+        "Admission Letter",
+        "Marksheets",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "MUDRA-PM-004",
+      "name": "PM MUDRA Yojana",
+      "scheme_type": "micro_finance",
+      "description": "Loans up to 10L for non-farm activities. Shishu/Kishore/Tarun.",
+      "min_amount": 10000,
+      "max_amount": 1000000,
+      "interest_rate": 7.5,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 60,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "PAN Card",
+        "Address Proof",
+        "Photo",
+        "Project Report"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-HP-005",
+      "name": "NSFDC Housing Loan",
+      "scheme_type": "housing_loan",
+      "description": "Housing loans for SC/ST under PMAY",
+      "min_amount": 200000,
+      "max_amount": 3000000,
+      "interest_rate": 6.0,
+      "subsidy_percentage": 15,
+      "margin_money_percentage": 5,
+      "min_tenure_months": 60,
+      "max_tenure_months": 120,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": true
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Land Docs",
+        "House Plan",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-SC-006",
+      "name": "Stand-Up India Loan",
+      "scheme_type": "term_loan",
+      "description": "Loans 10L-1Cr for SC/ST/women greenfield enterprises",
+      "min_amount": 1000000,
+      "max_amount": 10000000,
+      "interest_rate": 8.5,
+      "subsidy_percentage": 5,
+      "margin_money_percentage": 15,
+      "min_tenure_months": 48,
+      "max_tenure_months": 120,
+      "moratorium_months": 12,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "DPR",
+        "Education Certs",
+        "Trade License"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "PMEGP-007",
+      "name": "PMEGP Employment Generation",
+      "scheme_type": "term_loan",
+      "description": "Credit-linked subsidy. 25% rural, 15% urban subsidy.",
+      "min_amount": 50000,
+      "max_amount": 5000000,
+      "interest_rate": 7.0,
+      "subsidy_percentage": 25,
+      "margin_money_percentage": 10,
+      "min_tenure_months": 36,
+      "max_tenure_months": 120,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "PAN Card",
+        "Education Cert",
+        "Project Report",
+        "Address Proof"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "CGTMSE-008",
+      "name": "CGTMSE Credit Guarantee",
+      "scheme_type": "term_loan",
+      "description": "Collateral-free MSME credit up to 2Cr",
+      "min_amount": 100000,
+      "max_amount": 20000000,
+      "interest_rate": 8.5,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 120,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "PAN Card",
+        "Business Registration",
+        "GST Returns",
+        "Bank Passbook",
+        "Project Report"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-CC-009",
+      "name": "NSFDC Credit Card",
+      "scheme_type": "micro_finance",
+      "description": "Working capital credit card for SC/ST",
+      "min_amount": 25000,
+      "max_amount": 500000,
+      "interest_rate": 7.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 60,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Business Registration",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NMDFC-TL-010",
+      "name": "NMDFC Term Loan OBC",
+      "scheme_type": "term_loan",
+      "description": "Concessional loans up to 20L for OBC entrepreneurs",
+      "min_amount": 100000,
+      "max_amount": 2000000,
+      "interest_rate": 6.0,
+      "subsidy_percentage": 5,
+      "margin_money_percentage": 10,
+      "min_tenure_months": 12,
+      "max_tenure_months": 120,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "obc"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "OBC Certificate",
+        "Income Certificate",
+        "DPR",
+        "Bank Passbook",
+        "Education Certs"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NRLM-011",
+      "name": "NRLM SHG Financing",
+      "scheme_type": "micro_finance",
+      "description": "Self-Help Group financing for rural poor women",
+      "min_amount": 10000,
+      "max_amount": 300000,
+      "interest_rate": 7.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 60,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": true
+      },
+      "required_documents": [
+        "Aadhaar",
+        "BPL Card",
+        "Bank Passbook",
+        "SHG Membership"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "MJP-012",
+      "name": "Phule Research Fellowship",
+      "scheme_type": "education_loan",
+      "description": "Research fellowship for SC/ST M.Phil/Ph.D. students",
+      "min_amount": 25000,
+      "max_amount": 500000,
+      "interest_rate": 0,
+      "subsidy_percentage": 100,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 24,
+      "max_tenure_months": 120,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 600000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "education"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Admission Letter",
+        "Degree Certs",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "PMS-SC-013",
+      "name": "Post-Matric Scholarship SC",
+      "scheme_type": "education_loan",
+      "description": "Full tuition + maintenance for SC post-matric students",
+      "min_amount": 5000,
+      "max_amount": 200000,
+      "interest_rate": 0,
+      "subsidy_percentage": 100,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 120,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "education"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "SC Certificate",
+        "Income Certificate",
+        "Admission Letter",
+        "Marksheets",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-SG-014",
+      "name": "NSFDC Skill Development",
+      "scheme_type": "education_loan",
+      "description": "Skill development loans for SC/ST youth",
+      "min_amount": 10000,
+      "max_amount": 500000,
+      "interest_rate": 4.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 120,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "education"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Course Admission",
+        "Fee Structure",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-WS-015",
+      "name": "NSFDC Water & Sanitation",
+      "scheme_type": "term_loan",
+      "description": "Loans for SC/ST water supply businesses",
+      "min_amount": 50000,
+      "max_amount": 2000000,
+      "interest_rate": 6.5,
+      "subsidy_percentage": 10,
+      "margin_money_percentage": 5,
+      "min_tenure_months": 24,
+      "max_tenure_months": 120,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Project Report",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "MUDRA-TP-016",
+      "name": "MUDRA Tarun Plus",
+      "scheme_type": "term_loan",
+      "description": "Extended MUDRA 10L-20L for existing borrowers",
+      "min_amount": 1000000,
+      "max_amount": 2000000,
+      "interest_rate": 8.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 120,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "PAN Card",
+        "Previous MUDRA Statement",
+        "Business Proof",
+        "GST Returns"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "PMMY-SH-017",
+      "name": "MUDRA Shishu Loan",
+      "scheme_type": "micro_finance",
+      "description": "Loans up to 50K for early stage enterprises. No processing fee.",
+      "min_amount": 5000,
+      "max_amount": 50000,
+      "interest_rate": 7.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 60,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Address Proof",
+        "Business Plan",
+        "Photo"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-WC-018",
+      "name": "NSFDC Working Capital",
+      "scheme_type": "micro_finance",
+      "description": "Short-term working capital for SC/ST enterprises",
+      "min_amount": 50000,
+      "max_amount": 500000,
+      "interest_rate": 7.5,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 6,
+      "max_tenure_months": 60,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Business Registration",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "SCSP-019",
+      "name": "SC Sub-Plan Credit",
+      "scheme_type": "term_loan",
+      "description": "Budgetary SC welfare concessional credit",
+      "min_amount": 100000,
+      "max_amount": 10000000,
+      "interest_rate": 6.5,
+      "subsidy_percentage": 15,
+      "margin_money_percentage": 5,
+      "min_tenure_months": 24,
+      "max_tenure_months": 120,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "SC Certificate",
+        "Income Certificate",
+        "DPR",
+        "Bank Passbook",
+        "Land Docs"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "NSFDC-TR-020",
+      "name": "NSFDC Transport Loan",
+      "scheme_type": "term_loan",
+      "description": "Loans for SC/ST to buy commercial vehicles",
+      "min_amount": 300000,
+      "max_amount": 5000000,
+      "interest_rate": 7.5,
+      "subsidy_percentage": 5,
+      "margin_money_percentage": 10,
+      "min_tenure_months": 36,
+      "max_tenure_months": 120,
+      "moratorium_months": 6,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "Caste Certificate",
+        "Income Certificate",
+        "Driving License",
+        "Vehicle Quotation",
+        "Bank Passbook"
+      ],
+      "is_active": true
+    }
+  },
+  {
+    "model": "schemes.Scheme",
+    "fields": {
+      "scheme_code": "CCLGS-021",
+      "name": "Credit Guarantee Micro",
+      "scheme_type": "micro_finance",
+      "description": "Govt guarantee for micro units up to 1Cr",
+      "min_amount": 50000,
+      "max_amount": 10000000,
+      "interest_rate": 8.0,
+      "subsidy_percentage": 0,
+      "margin_money_percentage": 0,
+      "min_tenure_months": 12,
+      "max_tenure_months": 60,
+      "moratorium_months": 0,
+      "eligibility_rules": {
+        "max_income": 500000,
+        "categories": [
+          "general",
+          "obc",
+          "sc",
+          "st"
+        ],
+        "states": [],
+        "loan_purpose": [
+          "business"
+        ],
+        "prefer_bpl": false
+      },
+      "required_documents": [
+        "Aadhaar",
+        "PAN Card",
+        "Business Registration",
+        "GST Returns",
+        "Bank Statements",
+        "Project Report"
+      ],
+      "is_active": true
+    }
+  }
+]

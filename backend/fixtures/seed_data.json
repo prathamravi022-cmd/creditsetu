@@ -1,0 +1,254 @@
+[
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000001",
+    "fields": {
+      "name": "State Bank of India",
+      "bank_type": "psb",
+      "branch_name": "Lucknow Main Branch",
+      "address": "Hazarduari Road, Lucknow",
+      "state": "Uttar Pradesh",
+      "district": "Lucknow",
+      "pincode": "226001",
+      "location": "POINT(80.9462 26.8467)",
+      "npa_percentage": 6.5,
+      "funds_available": true,
+      "sanctioned_limit": 50000000,
+      "disbursed_amount": 32000000,
+      "contact_phone": "0522-2620001",
+      "contact_email": "lucknow@sbi.co.in",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000002",
+    "fields": {
+      "name": "Punjab National Bank",
+      "bank_type": "psb",
+      "branch_name": "Varanasi Cantt Branch",
+      "address": "Cantt Area, Varanasi",
+      "state": "Uttar Pradesh",
+      "district": "Varanasi",
+      "pincode": "221001",
+      "location": "POINT(83.0076 25.3176)",
+      "npa_percentage": 8.2,
+      "funds_available": true,
+      "sanctioned_limit": 40000000,
+      "disbursed_amount": 28000000,
+      "contact_phone": "0542-2500100",
+      "contact_email": "varanasi@pnb.co.in",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000003",
+    "fields": {
+      "name": "Allahabad UP Gramin Bank",
+      "bank_type": "rrb",
+      "branch_name": "Prayagraj Branch",
+      "address": "Civil Lines, Prayagraj",
+      "state": "Uttar Pradesh",
+      "district": "Prayagraj",
+      "pincode": "211001",
+      "location": "POINT(81.8463 25.4358)",
+      "npa_percentage": 5.8,
+      "funds_available": true,
+      "sanctioned_limit": 25000000,
+      "disbursed_amount": 18000000,
+      "contact_phone": "0532-2420100",
+      "contact_email": "",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000004",
+    "fields": {
+      "name": "NSFDC - Uttar Pradesh SCA",
+      "bank_type": "sca",
+      "branch_name": "State Channelizing Agency",
+      "address": "Vikas Bhawan, Lucknow",
+      "state": "Uttar Pradesh",
+      "district": "Lucknow",
+      "pincode": "226021",
+      "location": "POINT(80.9500 26.8600)",
+      "npa_percentage": 4.2,
+      "funds_available": true,
+      "sanctioned_limit": 100000000,
+      "disbursed_amount": 65000000,
+      "contact_phone": "0522-2200100",
+      "contact_email": "info@nsfdc.up.gov.in",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000005",
+    "fields": {
+      "name": "Bandhan Bank",
+      "bank_type": "nbfc_mfi",
+      "branch_name": "Gorakhpur Microfinance Branch",
+      "address": "Gorakhpur City Center",
+      "state": "Uttar Pradesh",
+      "district": "Gorakhpur",
+      "pincode": "273001",
+      "location": "POINT(83.3733 26.7606)",
+      "npa_percentage": 7.1,
+      "funds_available": true,
+      "sanctioned_limit": 30000000,
+      "disbursed_amount": 22000000,
+      "contact_phone": "0551-2500100",
+      "contact_email": "gorakhpur@bandhan.com",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000006",
+    "fields": {
+      "name": "Bank of Baroda",
+      "bank_type": "psb",
+      "branch_name": "Agra Branch",
+      "address": "Sadar Bazaar, Agra",
+      "state": "Uttar Pradesh",
+      "district": "Agra",
+      "pincode": "282001",
+      "location": "POINT(78.0098 27.1767)",
+      "npa_percentage": 9.5,
+      "funds_available": true,
+      "sanctioned_limit": 35000000,
+      "disbursed_amount": 29000000,
+      "contact_phone": "0562-2420100",
+      "contact_email": "agra@bankofbaroda.com",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000007",
+    "fields": {
+      "name": "NABARD Microfinance Cell",
+      "bank_type": "sca",
+      "branch_name": "Jhansi Regional Office",
+      "address": "Civil Lines, Jhansi",
+      "state": "Uttar Pradesh",
+      "district": "Jhansi",
+      "pincode": "284001",
+      "location": "POINT(79.8997 25.4484)",
+      "npa_percentage": 3.8,
+      "funds_available": true,
+      "sanctioned_limit": 45000000,
+      "disbursed_amount": 30000000,
+      "contact_phone": "0510-2440100",
+      "contact_email": "jhansi@nabard.org",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000008",
+    "fields": {
+      "name": "Utkarsh Small Finance Bank",
+      "bank_type": "nbfc_mfi",
+      "branch_name": "Meerut Branch",
+      "address": "Shastri Nagar, Meerut",
+      "state": "Uttar Pradesh",
+      "district": "Meerut",
+      "pincode": "250001",
+      "location": "POINT(77.7126 28.9845)",
+      "npa_percentage": 6.0,
+      "funds_available": false,
+      "sanctioned_limit": 20000000,
+      "disbursed_amount": 20000000,
+      "contact_phone": "0121-2500100",
+      "contact_email": "meerut@utkarshbank.in",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000009",
+    "fields": {
+      "name": "Baroda UP Bank",
+      "bank_type": "rrb",
+      "branch_name": "Azamgarh Branch",
+      "address": "Civil Lines, Azamgarh",
+      "state": "Uttar Pradesh",
+      "district": "Azamgarh",
+      "pincode": "276001",
+      "location": "POINT(83.1883 26.0734)",
+      "npa_percentage": 7.9,
+      "funds_available": true,
+      "sanctioned_limit": 15000000,
+      "disbursed_amount": 12000000,
+      "contact_phone": "0183-2500100",
+      "contact_email": "",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000010",
+    "fields": {
+      "name": "Citi Union Bank",
+      "bank_type": "private",
+      "branch_name": "Noida Sector 62 Branch",
+      "address": "Sector 62, Noida",
+      "state": "Uttar Pradesh",
+      "district": "Gautam Buddh Nagar",
+      "pincode": "201301",
+      "location": "POINT(77.3622 28.6270)",
+      "npa_percentage": 4.5,
+      "funds_available": true,
+      "sanctioned_limit": 28000000,
+      "disbursed_amount": 19000000,
+      "contact_phone": "0120-2500100",
+      "contact_email": "noida@cubank.com",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000011",
+    "fields": {
+      "name": "Kashi Grameen Bank",
+      "bank_type": "rrb",
+      "branch_name": "Mirzapur Branch",
+      "address": "Mirzapur City",
+      "state": "Uttar Pradesh",
+      "district": "Mirzapur",
+      "pincode": "231001",
+      "location": "POINT(82.5644 25.1386)",
+      "npa_percentage": 8.8,
+      "funds_available": true,
+      "sanctioned_limit": 12000000,
+      "disbursed_amount": 10000000,
+      "contact_phone": "05442-2500100",
+      "contact_email": "",
+      "is_active": true
+    }
+  },
+  {
+    "model": "partners.ChannelPartner",
+    "pk": "a1b2c3d4-1111-4000-8000-000000000012",
+    "fields": {
+      "name": "Satin Creditcare Network",
+      "bank_type": "nbfc_mfi",
+      "branch_name": "Kanpur Microfinance Cell",
+      "address": "Swaroop Nagar, Kanpur",
+      "state": "Uttar Pradesh",
+      "district": "Kanpur Nagar",
+      "pincode": "208002",
+      "location": "POINT(80.3319 26.4499)",
+      "npa_percentage": 5.2,
+      "funds_available": true,
+      "sanctioned_limit": 35000000,
+      "disbursed_amount": 25000000,
+      "contact_phone": "0512-2300100",
+      "contact_email": "kanpur@satin.in",
+      "is_active": true
+    }
+  }
+]

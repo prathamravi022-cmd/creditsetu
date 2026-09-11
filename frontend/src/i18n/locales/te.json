@@ -1,0 +1,337 @@
+{
+  "landing": {
+    "nav_home": "Home",
+    "footer": {
+      "quick_links": "Quick Links",
+      "home": "Home",
+      "check_eligibility": "Check Eligibility",
+      "find_bank": "Find a Bank",
+      "legal": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms",
+      "feedback": "Feedback",
+      "ministry": "Ministry",
+      "helpline": "Toll-Free Helpline",
+      "available_247": "Available 24/7 for scheme queries and grievance redressal",
+      "government_scheme_finder": "Government scheme finder for marginalized entrepreneurs"
+    },
+    "partners_title": "Our Bank Partners",
+    "process": {
+      "title": "See How CreditSetu Works",
+      "subtitle": "A simple 4-step process to find and apply for the right government scheme",
+      "step1": {
+        "title": "Enter Your Details",
+        "desc": "Answer simple questions about your business and income in your preferred language"
+      },
+      "step2": {
+        "title": "AI Matches Schemes",
+        "desc": "Our engine finds schemes you qualify for with approval probability scores"
+      },
+      "step3": {
+        "title": "Get Approval",
+        "desc": "Apply with auto-generated document checklist routed to the nearest bank"
+      },
+      "step4": {
+        "title": "Receive Funds",
+        "desc": "Nearest eligible bank processes your application with available funds"
+      }
+    },
+    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "nav": {
+      "features": "విశేష్టాలు",
+      "schemes": "పథకాలు",
+      "how_it_works": "ఇലാ എాయిറാවాളిസിരി",
+      "contact": "సంപర്ക"
+    },
+    "cta": {
+      "title": "మీ సహీ పథకా కనుగొనരమా?",
+      "subtitle": "వర്ടസ഼పര ఉദ്യమిയులను పీര്കയേ చేయംഡి"
+    },
+    "stats": {
+      "schemes": "పథకాలు",
+      "partners": "బైంక్ పార്ടനెర്ലు",
+      "disbursed": "విയస్തం",
+      "districts": "జిల్లాలు"
+    },
+    "schemes_title": "Featured Schemes",
+    "trust": "సామాజిక న్యాయ మరియు సాధికార మంత్రిత్వ శాఖచే నమ్మదగినది",
+    "hero": {
+      "badge": "సామాజిక న్యాయం మరియు అధికారిక మాత్రమే ద్వారా విశ్వసనీయ",
+      "title": "AI-సంచాలిత క్రేడిట్ యోజనా మిలాన",
+      "subtitle": "మీ వ్యాపారం కోసం సహి సర్కారీ యోజనా కనుగొనരి. సరల, తేజి, మీ భాషాలో.",
+      "cta": "మీ పాత్రత్వ జాంచండి",
+      "view_all": "అణ్ഡి పథకాలను చూඩి",
+      "get_started": "ఇప్పుడే ప్రారంభిශ్డి",
+      "get_started_btn": "ప్రారంభిශ్"
+    },
+    "badge": "Trusted by Ministry of Social Justice",
+    "features": {
+      "title": "How It Works",
+      "step1": {
+        "title": "Tell Us About Yourself",
+        "desc": "Answer a few simple questions in your preferred language — voice input supported."
+      },
+      "step2": {
+        "title": "Get Matched Instantly",
+        "desc": "Our AI engine recommends the best schemes with approval probability scores."
+      },
+      "step3": {
+        "title": "Find Your Nearest Bank",
+        "desc": "Locate eligible bank branches near you and apply with one click."
+      }
+    },
+    "schemes": {
+      "title": "Featured Government Schemes",
+      "micro": {
+        "name": "PM MUDRA Micro Finance",
+        "desc": "Collateral-free loans up to ₹10 lakh for micro enterprises. Ideal for small business owners and entrepreneurs starting their journey."
+      },
+      "term": {
+        "name": "NSFDC Term Loan",
+        "desc": "Concessional term loans from ₹1.40 lakh to ₹50 lakh for SC/ST/OBC entrepreneurs with subsidized interest rates."
+      },
+      "edu": {
+        "name": "Educational Loan Scheme",
+        "desc": "Government-backed education loans for skill development courses and higher education with flexible repayment options."
+      },
+      "highly_recommended": "Highly Recommended",
+      "popular": "Popular",
+      "for_students": "For Students"
+    },
+    "nav_schemes": "Schemes",
+    "nav_how": "How It Works"
+  },
+  "footer": {
+    "disclaimer": "ఇയാ సర్కారీ యోజనావిని ప్యాయిటി అപ്ചാවി ఇലാ",
+    "made_with": "Team Codivra വരుഗാഡേഡ് ലബ്ഹുടോ ഹൈ"
+  },
+  "results": {
+    "title": "మీ పథకాలు",
+    "loading": "పథకాలను వెతుకుత్తున్าู...",
+    "highly_recommended": "అధికంగా సిఫారసు చేయబడిවాఇෂ్",
+    "recommended": "సిఫారసు",
+    "possible_match": "సాధ్య మైచ్",
+    "interest_rate": "వడ్డి రేటు",
+    "amount_range": "రుణ మొత్తం",
+    "apply": "ఇప్పుడు దరఖాస్చు చేయండి",
+    "calculate_emi": "EMI లెక్కిస్చిවదనരి",
+    "find_bank": "సమీపం బైంక్ కనుగొనരి"
+  },
+  "grievance": {
+    "title": "Raise a Complaint",
+    "category": "Issue Category",
+    "message": "Describe your issue",
+    "submit": "Submit Complaint"
+  },
+  "hero": {
+    "subtitle": "మీ వ్యాపారానికి సరైన ప్రభుత్వ పథకాన్ని కనుగొనండి. సులభం, వేగం, మీ భాషలో.",
+    "cta": "మీ అర్హతను తనిఖీ చేయండి",
+    "stats": {
+      "schemes": "21+ పథకాలు",
+      "partners": "500+ బ్యాంక్ భాగస్వాములు",
+      "disbursed": "₹500 కోట్లు+ పంపిణీ"
+    },
+    "tagline": "AI-నడిచే క్రెడిట్ స్కీమ్ మ్యాచింగ్"
+  },
+  "map": {
+    "title": "Nearest Eligible Banks",
+    "loading": "Finding banks near you...",
+    "no_results": "No eligible banks found in this area.",
+    "apply_here": "Apply & Route",
+    "funds_available": "Funds Available",
+    "no_funds": "Funds Exhausted",
+    "distance": "{{km}} km away",
+    "view_details": "View Details",
+    "search_banks": "Search bank name, branch, IFSC, district...",
+    "search_csc": "Search center name, district...",
+    "nearest_first": "Nearest First",
+    "lowest_npa": "Lowest NPA",
+    "most_funds": "Most Funds Available",
+    "all_banks": "All Banks",
+    "psb": "Public Sector Banks",
+    "rrb": "Regional Rural Banks",
+    "sca": "State Channelizing Agencies",
+    "nbfc_mfi": "NBFC-MFI",
+    "private_banks": "Private Banks",
+    "within_10": "Within 10 km",
+    "within_25": "Within 25 km",
+    "within_50": "Within 50 km",
+    "within_100": "Within 100 km",
+    "all": "All",
+    "my_location": "My Location",
+    "call_now": "Call Now",
+    "get_directions": "Get Directions",
+    "details": "Details",
+    "call_vle": "Call VLE",
+    "funds": "Funds",
+    "show_map": "Show Map",
+    "show_list": "Show List",
+    "banks_tab": "Banks",
+    "csc_tab": "Jan Seva Kendra",
+    "csc_services": "Services",
+    "csc_hours": "Hours",
+    "csc_contact": "Contact"
+  },
+  "onboarding": {
+    "title": "ప్రారంభిద్దాం",
+    "step": "దశ {{current}} / {{total}}",
+    "step1": {
+      "title": "ప్రాథమిదిక సమాచారం",
+      "language": "ఇష్టమైన భాషా",
+      "gender": "లింగం",
+      "dob": "పుట్టిన తేదీ",
+      "male": "పురుషుడు",
+      "female": "స్త్రీ",
+      "other": "ఇతరులు",
+      "voice_toggle": "వాయిస్ ఇన్‌పుట్ సక్రియగ్హిసించండి",
+      "age_calc": "మీ వయస్า {{age}} ุะวํะาาาาา จุว จะุ่ ุู้มา",
+      "age_range": "వయస్సు 12 మరియు 80 మధ్య ఉండాలి ఇరబేకు",
+      "validation_gender": "దయవశిట్టు మీ లింగాన్ను ఎంచుకోనരి",
+      "validation_dob": "దయవశిట్టు మీ పుట్టిన తేదీన్ నమోదుసి"
+    },
+    "step2": {
+      "title": "మీ స్థానం",
+      "state": "రాష్ట్రం",
+      "district": "జిల్లా",
+      "pincode": "పిన్‌కోడ్",
+      "location_type": "ప్రాంత రకం",
+      "urban": "పట్టణ",
+      "rural": "గ్రామీణ"
+    },
+    "step3": {
+      "title": "సామాజిక వర్గం",
+      "category": "మీరు ఏ వర్గానికి చెంದినవారు?",
+      "general": "జనరల్",
+      "obc": "OBC",
+      "sc": "SC",
+      "st": "ST"
+    },
+    "step4": {
+      "title": "ఆర్థిక వివరాలు",
+      "income": "కుటుంబ వార్షిక ఆదాయం (₹)",
+      "purpose": "రుణ ఉద్దేశ్యం",
+      "business": "వ్యాపారం",
+      "education": "విద్యా",
+      "cost": "ప్రాజ్క్ట్ ఖర్చు (₹)",
+      "bpl": "BPL కుటుంబమా?"
+    },
+    "next": "తదుపరి",
+    "back": "వెనుకకు",
+    "submit": "నా పథకాలను కనుగొనండించండి",
+    "save_exit": "సేవ్ మరియు బయటికి",
+    "complete": "% పూర్తి",
+    "header.step": "దశ {{step}} / {{total}} — సుమారు {{mins}} ని॥మి మిగిలి ఉంది",
+    "percent_complete": "{{pct}}% పూర్తయింది",
+    "select_gender": "లింగం ఎంచుకోండి",
+    "male": "పురుషుడు",
+    "female": "స్త్రీ",
+    "other": "ఇతర",
+    "dob": "పుట్టిన తేదీ",
+    "you_are": "మీ వయస్సు {{age}} సంవత్సరాలు",
+    "min_age": "(కనీస వయస్సు 12 సంవత్సరాలు)",
+    "max_age": "(గరిష్ట వయస్సు 80 సంవత్సరాలు)",
+    "select_state": "రాష్ట్రం ఎంచుకోండి",
+    "districts_available": "{{count}} జిల్లాలు అందుబాటులో ఉన్నాయి",
+    "pincode_ok": "పిన్‌కోడ్ ధృవీకరించబడింది",
+    "select_type": "రకం ఎంచుకోండి",
+    "visual": "దృశ్య",
+    "hearing": "వినికిడి",
+    "mobility": "కదలిక",
+    "mental": "మానసిక",
+    "multiple": "బహుళ",
+    "profile_summary": "మీ ప్రొఫైల్ సారాంశం",
+    "bpl_hint": "పేదరిక రేఖ క్రింద స్థితి సబ్సిడీ అర్హతను ప్రభావితం చేస్తుంది",
+    "business_loan": "వ్యాపార/ఎంటర్‌ప్రైజ్ రుణం",
+    "education_loan": "విద్య/నైపుణ్య రుణం",
+    "urban": "పట్టణ",
+    "rural": "గ్రామీణ",
+    "select_district": "జిల్లా ఎంచుకోండి",
+    "select_state_first": "మొదట రాష్ట్రం ఎంచుకోండి"
+  },
+  "app_name": "క్రెడిట్‌సేతు",
+  "edit_profile": {
+    "title": "Edit Profile",
+    "personal": "Personal Information",
+    "contact": "Contact Details",
+    "save": "Save Changes",
+    "saved": "Profile updated successfully!",
+    "rerun": "Re-run Scheme Matching",
+    "back": "Back to Home",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Mobile Number",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "state": "State",
+    "district": "District",
+    "category": "Social Category",
+    "income": "Annual Income",
+    "project_cost": "Estimated Project Cost"
+  },
+  "admin": {
+    "unauthorized": "Unauthorized! This phone number does not have admin access.",
+    "enter_admin_phone": "Enter Admin Phone",
+    "authorized_personnel": "Authorized personnel only",
+    "enter_otp": "Enter OTP",
+    "otp_sent_to": "OTP sent to {{phone}}",
+    "verify_login": "Verify & Login",
+    "change_phone": "Change Phone Number",
+    "enter_valid_otp": "Please enter a valid 6-digit OTP.",
+    "verification_failed": "Verification failed. Please try again.",
+    "not_authorized": "This number is not authorized for admin access.",
+    "sending_otp": "Sending OTP...",
+    "verifying": "Verifying...",
+    "sih_credit": "CreditSetu — Smart India Hackathon 2026"
+  },
+  "login": {
+    "title": "ప్రభుత్వ పథకా ఫైండర్",
+    "continue_google": "Google తో కొనసాగించండి",
+    "or": "లేదా",
+    "mobile_number": "మొబైల్ నంబర్",
+    "enter_otp": "OTP నమోదుస్చి",
+    "send_otp": "OTP పంపండి",
+    "verify": "ధృవీకరిస్చిව",
+    "phone_verified": "ఫోన్ ధృవీకరిస్చిවాఇෂ్",
+    "admin_restricted": "అడ్మిన్ యాక్సేస్ అధికారిక సిబ్బందికికి మాత్రమే"
+  },
+  "common": {
+    "close": "మూసివేయండి",
+    "optional": "Optional",
+    "retry": "మళ్ళీ ప్రయత్నించండి",
+    "search": "వెతకండి",
+    "loading": "లోడ్ అవుతోంది...",
+    "error": "ఏదో తప్పు జరిగింది",
+    "confirm": "Confirm",
+    "filter": "Filter",
+    "cancel": "రద్దు",
+    "no_results": "No results found",
+    "sort": "Sort",
+    "required": "తప్పనిసరి"
+  },
+  "glossary": {
+    "moratorium": {
+      "term": "Moratorium",
+      "def": "A period at the start of your loan where you don't have to pay EMIs. Interest may still accrue."
+    },
+    "amortization": {
+      "term": "Amortization",
+      "def": "A table showing how your loan is paid off month by month, splitting each payment into principal and interest."
+    },
+    "npa": {
+      "term": "NPA (Non-Performing Asset)",
+      "def": "A bank loan where the borrower has stopped paying. Lower NPA means a healthier bank."
+    },
+    "subsidy": {
+      "term": "Subsidy",
+      "def": "Government contribution to reduce your loan burden. You don't pay back this portion."
+    },
+    "margin_money": {
+      "term": "Margin Money",
+      "def": "The percentage of the project cost you pay from your own pocket. The bank covers the rest."
+    },
+    "bpl": {
+      "term": "BPL (Below Poverty Line)",
+      "def": "Families earning below a government-defined threshold, eligible for special benefits."
+    }
+  }
+}

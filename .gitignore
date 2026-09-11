@@ -1,0 +1,77 @@
+# ============================================
+# CreditSetu — .gitignore
+# ============================================
+
+# ----- Python / Django -----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+venv/
+.venv/
+env/
+.env
+.env.local
+db.sqlite3
+*.log
+
+# ----- Node.js / React -----
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ----- IDE / Editor -----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ----- OS -----
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ----- Temporary / Build Artifacts -----
+*.tmp
+*.bak
+*.old
+*.orig
+*.rej
+*.patch
+*.bak[0-9]
+*.part
+*.txt
+!README.md
+!LICENSE
+!requirements.txt
+!.env.example
+b64part*.txt
+part_*.txt
+write_*.js
+gen_*.js
+gen.js
+*.cjs
+
+# ----- Freebuff Internal -----
+.freebuff/
+.plan
+freebuff-debug-query.txt
+freebuff-plan.md
+run.md

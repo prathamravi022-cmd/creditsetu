@@ -1,0 +1,393 @@
+{
+  "app_name": "CreditSetu Scheme Finder",
+  "hero": {
+    "tagline": "AI-Driven Credit Scheme Matching",
+    "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
+    "cta": "Check Your Eligibility",
+    "stats": {
+      "schemes": "15+ Schemes",
+      "partners": "500+ Bank Partners",
+      "disbursed": "₹500Cr+ Disbursed"
+    }
+  },
+  "landing": {
+    "features": {
+      "title": "How It Works",
+      "step1": {
+        "title": "Tell Us About Yourself",
+        "desc": "Answer a few simple questions in your preferred language — voice input supported."
+      },
+      "step2": {
+        "title": "Get Matched Instantly",
+        "desc": "Our AI engine recommends the best schemes with approval probability scores."
+      },
+      "step3": {
+        "title": "Find Your Nearest Bank",
+        "desc": "Locate eligible bank branches near you and apply with one click."
+      }
+    },
+    "schemes_title": "Featured Schemes",
+    "partners_title": "Our Bank Partners",
+    "trust": "Trusted by the Ministry of Social Justice & Empowerment",
+    "schemes": {
+      "title": "Featured Government Schemes",
+      "micro": {
+        "name": "PM MUDRA Micro Finance",
+        "desc": "Collateral-free loans up to ₹10 lakh for micro enterprises. Ideal for small business owners and entrepreneurs starting their journey."
+      },
+      "term": {
+        "name": "NSFDC Term Loan",
+        "desc": "Concessional term loans from ₹1.40 lakh to ₹50 lakh for SC/ST/OBC entrepreneurs with subsidized interest rates."
+      },
+      "edu": {
+        "name": "Educational Loan Scheme",
+        "desc": "Government-backed education loans for skill development courses and higher education with flexible repayment options."
+      },
+      "highly_recommended": "Highly Recommended",
+      "popular": "Popular",
+      "for_students": "For Students"
+    },
+    "cta": {
+      "title": "Ready to Find Your Perfect Scheme?",
+      "subtitle": "Join thousands of entrepreneurs who have already benefited from government credit schemes. Start your application today.",
+      "ready": "Ready to find your perfect scheme?",
+      "join_thousands": "Join thousands of entrepreneurs who have already benefited from government loan schemes. Start your application today."
+    },
+    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "nav_home": "Home",
+    "nav_schemes": "Schemes",
+    "nav_how": "How It Works",
+    "hero": {
+      "badge": "Trusted by Ministry of Social Justice & Empowerment",
+      "title": "AI-Driven Credit Scheme Matching",
+      "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
+      "cta": "Check Your Eligibility",
+      "view_all": "View All Schemes",
+      "get_started": "Get Started Now",
+      "get_started_btn": "Get Started"
+    },
+    "process": {
+      "title": "See How CreditSetu Works",
+      "subtitle": "A simple 4-step process to find and apply for the right government scheme",
+      "step1": {
+        "title": "Enter Your Details",
+        "desc": "Answer simple questions about your business and income in your preferred language"
+      },
+      "step2": {
+        "title": "AI Matches Schemes",
+        "desc": "Our engine finds schemes you qualify for with approval probability scores"
+      },
+      "step3": {
+        "title": "Get Approval",
+        "desc": "Apply with auto-generated document checklist routed to the nearest bank"
+      },
+      "step4": {
+        "title": "Receive Funds",
+        "desc": "Nearest eligible bank processes your application with available funds"
+      }
+    },
+    "nav": {
+      "features": "Features",
+      "schemes": "Schemes",
+      "how_it_works": "How It Works",
+      "contact": "Contact"
+    },
+    "stats": {
+      "schemes": "Schemes",
+      "partners": "Bank Partners",
+      "disbursed": "Disbursed",
+      "districts": "Districts"
+    },
+    "badge": "Trusted by Ministry of Social Justice",
+    "footer": {
+      "quick_links": "Quick Links",
+      "home": "Home",
+      "check_eligibility": "Check Eligibility",
+      "find_bank": "Find a Bank",
+      "legal": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms",
+      "feedback": "Feedback",
+      "ministry": "Ministry",
+      "helpline": "Toll-Free Helpline",
+      "available_247": "Available 24/7 for scheme queries and grievance redressal",
+      "government_scheme_finder": "Government scheme finder for marginalized entrepreneurs"
+    }
+  },
+  "onboarding": {
+    "title": "Let's Get You Started",
+    "step": "Step {{current}} of {{total}}",
+    "step1": {
+      "title": "Basic Information",
+      "mobile": "Mobile Number",
+      "otp": "Enter OTP",
+      "send_otp": "Send OTP",
+      "verify": "Verify",
+      "language": "Preferred Language",
+      "gender": "Gender",
+      "age": "Age",
+      "voice_toggle": "Enable Voice Input",
+      "dob": "Date of Birth",
+      "dob_required": "Date of Birth is required",
+      "age_calc": "You are {{age}} years old",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "lang_hint": "Choose your preferred language for the form"
+    },
+    "step2": {
+      "title": "Your Location",
+      "state": "State",
+      "district": "District",
+      "pincode": "Pincode",
+      "location_type": "Area Type",
+      "urban": "Urban",
+      "rural": "Rural"
+    },
+    "step3": {
+      "title": "Social Category",
+      "category": "Which category do you belong to?",
+      "general": "General",
+      "obc": "OBC (Other Backward Class)",
+      "sc": "SC (Scheduled Caste)",
+      "st": "ST (Scheduled Tribe)",
+      "disability": "Do you have a disability?",
+      "disability_type": "Type of Disability"
+    },
+    "step4": {
+      "title": "Financial Details",
+      "bpl": "Is your family below the poverty line (BPL)?",
+      "income": "Family Annual Income (₹)",
+      "purpose": "Loan Purpose",
+      "business": "Business",
+      "education": "Education",
+      "cost": "Estimated Project Cost (₹)",
+      "cost_hint": "Slide to select the estimated cost of your project"
+    },
+    "next": "Next",
+    "back": "Back",
+    "submit": "Find My Schemes",
+    "save_exit": "Save & Exit",
+    "complete": "% complete",
+    "est_time": "About {{min}} min left",
+    "profile_summary": "Your Profile Summary",
+    "eligible_mosje": "You are eligible for MoSJE concessional schemes",
+    "not_eligible": "Income above ₹5L — standard schemes apply",
+    "business_desc": "Business/Enterprise loan",
+    "education_desc": "Education/Skill loan",
+    "male_short": "Male",
+    "female_short": "Female",
+    "other_short": "Other",
+    "yrs": "yrs",
+    "age_range": "Age must be between 12 and 80",
+    "validation_gender": "Please select your gender",
+    "validation_dob": "Please enter your date of birth",
+    "validation_state": "Please select your state",
+    "validation_district": "Please select your district",
+    "validation_category": "Please select your social category",
+    "validation_income": "Please enter your family income",
+    "validation_cost": "Please set an estimated project cost",
+    "header.step": "Step {{step}} of {{total}} — About {{mins}} min left",
+    "percent_complete": "{{pct}}% complete",
+    "select_gender": "Select Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "dob": "Date of Birth",
+    "you_are": "You are {{age}} years old",
+    "min_age": "(Minimum age is 12 years)",
+    "max_age": "(Maximum age is 80 years)",
+    "select_state": "Select State",
+    "districts_available": "{{count}} districts available",
+    "pincode_ok": "Pincode validated",
+    "select_type": "Select Type",
+    "visual": "Visual",
+    "hearing": "Hearing",
+    "mobility": "Mobility",
+    "mental": "Mental",
+    "multiple": "Multiple",
+    "bpl_hint": "Below Poverty Line status affects subsidy eligibility",
+    "business_loan": "Business/Enterprise loan",
+    "education_loan": "Education/Skill loan",
+    "urban": "Urban",
+    "rural": "Rural",
+    "select_district": "Select District",
+    "select_state_first": "Select State first"
+  },
+  "results": {
+    "title": "Your Matched Schemes",
+    "loading": "Finding the best schemes for you...",
+    "probability": "Approval Probability",
+    "highly_recommended": "Highly Recommended",
+    "recommended": "Recommended",
+    "possible_match": "Possible Match",
+    "low_match": "Low Match",
+    "interest_rate": "Interest Rate",
+    "amount_range": "Loan Amount",
+    "tenure": "Loan Tenure",
+    "moratorium": "Moratorium Period",
+    "documents": "Required Documents",
+    "calculate_emi": "Calculate EMI",
+    "find_bank": "Find Nearest Bank",
+    "apply": "Apply Now",
+    "download_pdf": "Download as PDF",
+    "emi_calculator": "EMI Calculator",
+    "project_cost": "Project Cost",
+    "tenure_months": "Tenure (months)",
+    "moratorium_months": "Moratorium (months)",
+    "monthly_emi": "Monthly EMI",
+    "total_interest": "Total Interest",
+    "total_payment": "Total Payment",
+    "subsidy": "Government Subsidy",
+    "margin_money": "Your Down Payment"
+  },
+  "map": {
+    "title": "Nearest Eligible Banks",
+    "loading": "Finding banks near you...",
+    "no_results": "No eligible banks found in this area.",
+    "apply_here": "Apply & Route",
+    "funds_available": "Funds Available",
+    "no_funds": "Funds Exhausted",
+    "distance": "{{km}} km away",
+    "view_details": "View Details",
+    "search_banks": "Search bank name, branch, IFSC, district...",
+    "search_csc": "Search center name, district...",
+    "nearest_first": "Nearest First",
+    "lowest_npa": "Lowest NPA",
+    "most_funds": "Most Funds Available",
+    "all_banks": "All Banks",
+    "psb": "Public Sector Banks",
+    "rrb": "Regional Rural Banks",
+    "sca": "State Channelizing Agencies",
+    "nbfc_mfi": "NBFC-MFI",
+    "private_banks": "Private Banks",
+    "within_10": "Within 10 km",
+    "within_25": "Within 25 km",
+    "within_50": "Within 50 km",
+    "within_100": "Within 100 km",
+    "all": "All",
+    "my_location": "My Location",
+    "call_now": "Call Now",
+    "get_directions": "Get Directions",
+    "details": "Details",
+    "call_vle": "Call VLE",
+    "funds": "Funds",
+    "show_map": "Show Map",
+    "show_list": "Show List",
+    "banks_tab": "Banks",
+    "csc_tab": "Jan Seva Kendra",
+    "csc_services": "Services",
+    "csc_hours": "Hours",
+    "csc_contact": "Contact"
+  },
+  "glossary": {
+    "moratorium": {
+      "term": "Moratorium",
+      "def": "A period at the start of your loan where you don't have to pay EMIs. Interest may still accrue."
+    },
+    "amortization": {
+      "term": "Amortization",
+      "def": "A table showing how your loan is paid off month by month, splitting each payment into principal and interest."
+    },
+    "npa": {
+      "term": "NPA (Non-Performing Asset)",
+      "def": "A bank loan where the borrower has stopped paying. Lower NPA means a healthier bank."
+    },
+    "subsidy": {
+      "term": "Subsidy",
+      "def": "Government contribution to reduce your loan burden. You don't pay back this portion."
+    },
+    "margin_money": {
+      "term": "Margin Money",
+      "def": "The percentage of the project cost you pay from your own pocket. The bank covers the rest."
+    },
+    "bpl": {
+      "term": "BPL (Below Poverty Line)",
+      "def": "Families earning below a government-defined threshold, eligible for special benefits."
+    }
+  },
+  "grievance": {
+    "title": "Raise a Complaint",
+    "category": "Issue Category",
+    "message": "Describe your issue",
+    "submit": "Submit Complaint"
+  },
+  "footer": {
+    "disclaimer": "This is a prototype for Smart India Hackathon. Not an official government portal.",
+    "made_with": "Made with ❤️ by Team Codivra — Smart India Hackathon 2026",
+    "feedback": "Feedback & Grievance"
+  },
+  "edit_profile": {
+    "title": "Edit Profile",
+    "personal": "Personal Information",
+    "contact": "Contact Details",
+    "save": "Save Changes",
+    "saved": "Profile updated successfully!",
+    "rerun": "Re-run Scheme Matching",
+    "back": "Back to Home",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Mobile Number",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "state": "State",
+    "district": "District",
+    "category": "Social Category",
+    "income": "Annual Income",
+    "project_cost": "Estimated Project Cost"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "no_results": "No results found",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "login": {
+    "title": "GovTech Scheme Finder",
+    "continue_google": "Continue with Google",
+    "or": "or",
+    "mobile_number": "Mobile Number",
+    "enter_otp": "Enter OTP",
+    "send_otp": "Send OTP",
+    "verify": "Verify",
+    "otp_sent": "OTP sent successfully!",
+    "otp_expired": "OTP has expired. Please request a new one.",
+    "otp_invalid": "Invalid OTP. Please try again.",
+    "otp_max_attempts": "Maximum attempts exceeded. Please request a new OTP.",
+    "resend_in": "Resend in {{seconds}}s",
+    "resend_otp": "Resend OTP",
+    "phone_verified": "Phone verified",
+    "terms_text": "By continuing, you agree to our Terms of Service.",
+    "dpdp_note": "Government data is handled per DPDP Act 2023.",
+    "admin_restricted": "Admin access is restricted to authorized personnel.",
+    "enter_valid_mobile": "Enter a valid 10-digit mobile number",
+    "enter_otp_error": "Enter the OTP",
+    "failed_send_otp": "Failed to send OTP. Please try again.",
+    "welcome": "Welcome",
+    "admin": "Admin",
+    "failed_google": "Google login failed"
+  },
+  "admin": {
+    "unauthorized": "Unauthorized! This phone number does not have admin access.",
+    "enter_admin_phone": "Enter Admin Phone",
+    "authorized_personnel": "Authorized personnel only",
+    "enter_otp": "Enter OTP",
+    "otp_sent_to": "OTP sent to {{phone}}",
+    "verify_login": "Verify & Login",
+    "change_phone": "Change Phone Number",
+    "enter_valid_otp": "Please enter a valid 6-digit OTP.",
+    "verification_failed": "Verification failed. Please try again.",
+    "not_authorized": "This number is not authorized for admin access.",
+    "sending_otp": "Sending OTP...",
+    "verifying": "Verifying...",
+    "sih_credit": "CreditSetu — Smart India Hackathon 2026"
+  }
+}
