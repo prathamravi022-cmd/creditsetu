@@ -199,7 +199,7 @@ export default function LandingPage() {
       </aside>
     </div>
     <section ref={heroRef} className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-16 min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0 z-0"><div className="absolute inset-0 bg-hero" /><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[420px] h-[420px] -top-24 right-[-6%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-green w-[360px] h-[360px] bottom-[-10%] left-[-4%] opacity-60" /><div aria-hidden="true" className="absolute inset-y-0 right-0 w-1/2 cs-dots opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" /></div>
+      <div className="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80" alt="" className="w-full h-full object-cover" /><div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/50" /><div className="absolute inset-0 bg-[#065f46]/5" /></div>
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         <div className={"max-w-2xl transition-all duration-700 ease-out " + (heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay:"0.1s"}}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#138808]/10 border border-[#138808]/20 mb-5">
