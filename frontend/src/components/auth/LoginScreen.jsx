@@ -10,18 +10,9 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../store/AuthContext';
 import {
-  Shield, Send, Check, Globe, ArrowRight, Phone, KeyRound
+  Shield, Send, Check, ArrowRight, Phone
 } from 'lucide-react';
-
-const LANGS = [
-  { code: 'en', label: 'English' },
-  { code: 'hi', label: 'हिन्दी' },
-  { code: 'ta', label: 'தமிழ்' },
-  { code: 'te', label: 'తెలుగు' },
-  { code: 'bn', label: 'বাংলা' },
-  { code: 'mr', label: 'मराठी' },
-  { code: 'kn', label: 'ಕನ್ನಡ' },
-];
+import LanguageDropdown from '../ui/LanguageDropdown';
 
 export default function LoginScreen() {
   const { t, i18n } = useTranslation();
@@ -138,18 +129,9 @@ export default function LoginScreen() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md relative z-10"
       >
-        {/* Language selector — positioned at top-right of card */}
+        {/* Language selector — custom dropdown */}
         <div className="flex justify-end mb-3">
-          <select
-            value={i18n.language}
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-            className="px-2 py-1.5 rounded-lg text-xs font-medium text-white/80 bg-white/10 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 cursor-pointer"
-            aria-label="Select language"
-          >
-            {LANGS.map((l) => (
-              <option key={l.code} value={l.code} className="text-gray-900">{l.label}</option>
-            ))}
-          </select>
+          <LanguageDropdown />
         </div>
 
         {/* Header */}

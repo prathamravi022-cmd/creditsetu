@@ -1,5 +1,4 @@
 import { DarkModeProvider } from "./store/DarkModeContext";
-import { AnimatePresence, motion } from "framer-motion";
 import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './store/AuthContext';
@@ -99,9 +98,7 @@ export default function App() {
         <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 transition-colors duration-300">
           {!isLanding && !isAuthPage && <Navbar />}
           <main className="flex-1">
-            <AnimatePresence mode="wait">
-              <AppRoutes key={location.pathname} />
-            </AnimatePresence>
+            <AppRoutes />
           </main>
           <GrievanceModal />
           {!isLanding && !isAuthPage && <Footer />}

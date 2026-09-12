@@ -3,7 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../store/AuthContext';
 import { useDarkMode } from '../../store/DarkModeContext';
-import { Menu, X, Shield, Globe, LogIn, LogOut, User } from 'lucide-react';
+import { Menu, X, Shield, LogIn, LogOut, User } from 'lucide-react';
+import LanguageDropdown from '../ui/LanguageDropdown';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -35,15 +36,7 @@ export default function Navbar() {
 
   const { dark, toggleDark } = useDarkMode();
 
-  const languages = [
-    { code: 'en', label: 'EN' },
-    { code: 'hi', label: 'HI' },
-    { code: 'ta', label: 'TA' },
-    { code: 'te', label: 'TE' },
-    { code: 'bn', label: 'BN' },
-    { code: 'mr', label: 'MR' },
-    { code: 'kn', label: 'KN' },
-  ];
+
 
   const navLinks = [
     { path: '/', label: t('nav.home') || 'Home' },
@@ -115,17 +108,7 @@ export default function Navbar() {
               {dark ? '☀️' : '🌙'}
             </button>
 
-            {/* Language select — compact */}
-            <select
-              value={i18n.language}
-              onChange={(e) => i18n.changeLanguage(e.target.value)}
-              className="w-12 sm:w-auto px-1 sm:px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
-              aria-label="Select language"
-            >
-              {languages.map((l) => (
-                <option key={l.code} value={l.code}>{l.label}</option>
-              ))}
-            </select>
+            <LanguageDropdown compact />
 
             {/* Auth controls */}
             {isAuthenticated ? (
