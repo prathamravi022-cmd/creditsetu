@@ -27,6 +27,13 @@ i18n.use(initReactI18next).init({
 
 i18n.on('languageChanged', (lng) => {
   localStorage.setItem('creditsetu_lang', lng);
+  // Update the HTML lang attribute for screen readers
+  document.documentElement.lang = lng;
 });
+
+// Set initial lang attribute
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = i18n.language || 'en';
+}
 
 export default i18n;
