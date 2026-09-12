@@ -74,14 +74,16 @@ export default function AdminLogin() {
     handlePhoneSubmit();
   }
 
-  return (<div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+  return (<div className="min-h-screen flex items-center justify-center px-4 relative">
+    <div aria-hidden="true" className="cs-orb cs-orb-green w-[380px] h-[380px] -top-32 -left-28 opacity-60" />
+    <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -bottom-32 -right-24 opacity-60" />
     <div className="w-full max-w-md">
       <div className="text-center mb-8">
         <div className="w-16 h-16 rounded-2xl bg-[#138808] flex items-center justify-center mx-auto mb-4"><Shield className="w-8 h-8 text-white" /></div>
         <h1 className="text-2xl font-bold text-[#000080]">CreditSetu Admin</h1>
         <p className="text-gray-500 text-sm mt-1">Authorized personnel only</p>
       </div>
-      <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+      <div className="glass-card rounded-2xl p-8 relative z-10">
         {step === "phone" ? (<div>
           <div className="flex items-center gap-2 mb-4"><Phone className="w-5 h-5 text-[#FF9933]" /><h2 className="font-semibold text-[#000080]">Enter Admin Phone</h2></div>
           <p className="text-gray-500 text-xs mb-4">Only pre-authorized admin numbers can access this panel.</p>

@@ -25,7 +25,7 @@ function ProtectedRoute({ children, requireAdmin = false }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-green-700 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -95,7 +95,9 @@ export default function App() {
     <ErrorBoundary>
       <AuthProvider>
         <DarkModeProvider>
-        <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 transition-colors duration-300">
+        <div className="cs-shell min-h-screen flex flex-col text-slate-900 dark:text-gray-100 transition-colors duration-300">
+          {/* Fixed ambient background: saffron/green/navy glows + faint grid */}
+          <div className="cs-ambient" aria-hidden="true" />
           {!isLanding && !isAuthPage && <Navbar />}
           <main className="flex-1">
             <AppRoutes />

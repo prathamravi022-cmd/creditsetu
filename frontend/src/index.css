@@ -1,3 +1,6 @@
+/* Premium background system (gradients, glows, patterns, glass) */
+@import './styles/premium-backgrounds.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

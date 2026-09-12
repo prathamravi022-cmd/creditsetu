@@ -212,7 +212,10 @@ export default function OnboardingWizard() {
   ) : null;
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center p-4 bg-gray-50">
+    <div className="min-h-[80vh] flex items-center justify-center p-4 relative">
+      {/* Decorative corner glows */}
+      <div aria-hidden="true" className="cs-orb cs-orb-green w-[360px] h-[360px] -top-32 -right-28 opacity-60" />
+      <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -bottom-32 -left-24 opacity-50" />
       <div className="w-full max-w-2xl">
         {/* Header with time estimate */}
         <div className="flex items-center justify-between mb-2">
@@ -247,7 +250,7 @@ export default function OnboardingWizard() {
         </div>
 
         {/* Step Content */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+        <div className="glass-card rounded-2xl p-8 relative z-10">
           <h2 className="text-2xl font-bold text-green-900 mb-6">{t(`onboarding.step${step}.title`)}</h2>
 
           <AnimatePresence mode="wait">

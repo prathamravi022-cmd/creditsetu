@@ -1,0 +1,317 @@
+/* ============================================================
+   CreditSetu — Premium Background System
+   Theme: Saffron #FF9933 · Green #138808 · Navy #000080
+   Subtle gradients + abstract shapes + soft glows + patterns.
+   All layers are decorative (aria-hidden), never cover content.
+   ============================================================ */
+
+@layer components {
+  /* ---------- Shell: every authenticated page sits on this ---------- */
+  .cs-shell {
+    position: relative;
+    min-height: 100vh;
+    background: #f6f9f7;
+  }
+  .dark .cs-shell {
+    background: #0a1017;
+  }
+
+  /* ---------- Ambient canvas (fixed, ultra-subtle) ---------- */
+  .cs-ambient {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 45% at 12% -8%, rgba(255, 153, 51, 0.10), transparent 60%),
+      radial-gradient(ellipse 65% 50% at 92% 0%, rgba(19, 136, 8, 0.09), transparent 62%),
+      radial-gradient(ellipse 80% 55% at 50% 110%, rgba(0, 0, 128, 0.07), transparent 65%);
+  }
+  .dark .cs-ambient {
+    background:
+      radial-gradient(ellipse 70% 45% at 12% -8%, rgba(255, 153, 51, 0.08), transparent 60%),
+      radial-gradient(ellipse 65% 50% at 92% 0%, rgba(19, 136, 8, 0.10), transparent 62%),
+      radial-gradient(ellipse 80% 55% at 50% 110%, rgba(96, 165, 250, 0.07), transparent 65%);
+  }
+
+  /* Fine blueprint grid, very faint */
+  .cs-ambient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(15, 36, 64, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 36, 64, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 25%, black 35%, transparent 78%);
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 25%, black 35%, transparent 78%);
+  }
+  .dark .cs-ambient::before {
+    background-image:
+      linear-gradient(rgba(148, 197, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 197, 255, 0.05) 1px, transparent 1px);
+  }
+
+  /* Slow drifting aurora blobs */
+  .cs-ambient::after {
+    content: '';
+    position: absolute;
+    width: 560px;
+    height: 560px;
+    top: -220px;
+    right: -160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(19, 136, 8, 0.10) 0%, transparent 70%);
+    filter: blur(60px);
+    animation: csDrift 26s ease-in-out infinite alternate;
+  }
+  .dark .cs-ambient::after {
+    background: radial-gradient(circle, rgba(19, 136, 8, 0.16) 0%, transparent 70%);
+  }
+
+  /* Second blob lives on the shell (so it isn't clipped by ambient's overflow) */
+  .cs-shell::before {
+    content: '';
+    position: fixed;
+    width: 480px;
+    height: 480px;
+    bottom: -200px;
+    left: -160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 153, 51, 0.09) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: -1;
+    animation: csDrift 30s ease-in-out infinite alternate-reverse;
+  }
+  .dark .cs-shell::before {
+    background: radial-gradient(circle, rgba(255, 153, 51, 0.12) 0%, transparent 70%);
+  }
+
+  @keyframes csDrift {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-60px, 40px) scale(1.08); }
+    100% { transform: translate(40px, -30px) scale(1); }
+  }
+
+  /* ---------- Section-level decorative backdrops ---------- */
+
+  /* Login: deep government green night with layered glows + tricolor hairline */
+  .bg-auth {
+    background:
+      radial-gradient(ellipse 60% 42% at 18% 6%, rgba(255, 153, 51, 0.16), transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 18%, rgba(19, 136, 8, 0.22), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 108%, rgba(0, 0, 80, 0.35), transparent 65%),
+      linear-gradient(160deg, #052e1b 0%, #06381f 45%, #04121f 100%);
+  }
+  .bg-auth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1.5px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse 65% 60% at 70% 35%, black 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 65% 60% at 70% 35%, black 20%, transparent 75%);
+    opacity: 0.5;
+  }
+  .bg-auth::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #FF9933 0%, #ffffff 50%, #138808 100%);
+    opacity: 0.85;
+  }
+
+  /* Landing hero: paper-tone canvas, saffron→green glow from the right */
+  .bg-hero {
+    background:
+      radial-gradient(ellipse 55% 55% at 85% 30%, rgba(19, 136, 8, 0.10), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 78% 75%, rgba(255, 153, 51, 0.10), transparent 60%),
+      linear-gradient(120deg, #fdfdfb 0%, #f4f8f5 55%, #eef6f1 100%);
+  }
+  .dark .bg-hero {
+    background:
+      radial-gradient(ellipse 55% 55% at 85% 30%, rgba(19, 136, 8, 0.16), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 78% 75%, rgba(255, 153, 51, 0.10), transparent 60%),
+      linear-gradient(120deg, #0c1319 0%, #0e1a14 55%, #0a1017 100%);
+  }
+
+  /* Landing stats band: deep green with layered depth */
+  .bg-stats {
+    background:
+      radial-gradient(ellipse 60% 80% at 15% 10%, rgba(255, 255, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse 55% 75% at 88% 90%, rgba(0, 0, 80, 0.28), transparent 60%),
+      linear-gradient(120deg, #0d6b04 0%, #138808 55%, #0c5f06 100%);
+  }
+
+  /* Landing "How it works": soft neutral with faint grid */
+  .bg-steps {
+    background:
+      linear-gradient(rgba(15, 36, 64, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 36, 64, 0.035) 1px, transparent 1px),
+      linear-gradient(180deg, #f8fafb 0%, #f1f5f3 100%);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+  }
+  .dark .bg-steps {
+    background:
+      linear-gradient(rgba(148, 197, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 197, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(180deg, #0d141b 0%, #0a1017 100%);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+  }
+
+  /* Landing schemes: clean paper with soft green/saffron corner washes */
+  .bg-schemes {
+    background:
+      radial-gradient(ellipse 40% 55% at 0% 20%, rgba(19, 136, 8, 0.07), transparent 60%),
+      radial-gradient(ellipse 40% 55% at 100% 85%, rgba(255, 153, 51, 0.07), transparent 60%),
+      linear-gradient(180deg, #f6f9f7 0%, #ffffff 100%);
+  }
+  .dark .bg-schemes {
+    background:
+      radial-gradient(ellipse 40% 55% at 0% 20%, rgba(19, 136, 8, 0.12), transparent 60%),
+      radial-gradient(ellipse 40% 55% at 100% 85%, rgba(255, 153, 51, 0.08), transparent 60%),
+      linear-gradient(180deg, #0a1017 0%, #0d141b 100%);
+  }
+
+  /* Landing process/testimonials: airy neutral */
+  .bg-process {
+    background: linear-gradient(180deg, #ffffff 0%, #f7faf8 100%);
+  }
+  .dark .bg-process {
+    background: linear-gradient(180deg, #0d1319 0%, #0a0f14 100%);
+  }
+
+  /* Landing final CTA: green with navy depth + glow */
+  .bg-cta {
+    background:
+      radial-gradient(ellipse 55% 70% at 50% -20%, rgba(255, 255, 255, 0.12), transparent 55%),
+      radial-gradient(ellipse 50% 60% at 85% 100%, rgba(0, 0, 80, 0.30), transparent 60%),
+      linear-gradient(150deg, #0d6b04 0%, #138808 55%, #084b03 100%);
+  }
+
+  /* App (Navbar/Footer) pages: soft gray-green with faint tricolor top wash */
+  .bg-app {
+    background:
+      linear-gradient(rgba(15, 36, 64, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 36, 64, 0.03) 1px, transparent 1px),
+      radial-gradient(ellipse 60% 40% at 50% -10%, rgba(19, 136, 8, 0.06), transparent 60%),
+      #f8fafc;
+    background-size: 42px 42px, 42px 42px, 100% 100%, 100% 100%;
+  }
+  .dark .bg-app {
+    background:
+      linear-gradient(rgba(148, 197, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 197, 226, 0.04) 1px, transparent 1px),
+      radial-gradient(ellipse 60% 40% at 50% -10%, rgba(19, 136, 8, 0.08), transparent 60%),
+      #0d1319;
+  }
+
+  /* ---------- Glassmorphism ---------- */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow:
+      0 1px 2px rgba(15, 36, 64, 0.05),
+      0 12px 32px -12px rgba(15, 36, 64, 0.18);
+  }
+  .dark .glass-card {
+    background: rgba(17, 24, 39, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.80);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+  .dark .glass-panel {
+    background: rgba(17, 24, 39, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Glassy sticky navbars */
+  .cs-nav {
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    border-bottom: 1px solid rgba(15, 36, 64, 0.08);
+  }
+  .dark .cs-nav {
+    background: rgba(13, 19, 25, 0.86);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  /* ---------- Decorative abstract shapes (drop-in divs) ---------- */
+
+  /* Layered glow orbs for section corners */
+  .cs-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(70px);
+    pointer-events: none;
+  }
+  .cs-orb-saffron { background: radial-gradient(circle, rgba(255,153,51,0.20) 0%, transparent 70%); }
+  .cs-orb-green   { background: radial-gradient(circle, rgba(19,136,8,0.20) 0%, transparent 70%); }
+  .cs-orb-navy    { background: radial-gradient(circle, rgba(0,0,128,0.16) 0%, transparent 70%); }
+
+  /* Dot-matrix pattern panel */
+  .cs-dots {
+    background-image: radial-gradient(rgba(19, 136, 8, 0.16) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+
+  /* Ringed concentric circles */
+  .cs-rings {
+    background-image: repeating-radial-gradient(
+      circle at center,
+      transparent 0px,
+      transparent 34px,
+      rgba(19, 136, 8, 0.08) 34px,
+      rgba(19, 136, 8, 0.08) 35px
+    );
+  }
+
+  /* Glassmorphic hero card */
+  .cs-hero-glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.68), rgba(255,255,255,0.42));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 24px 64px -24px rgba(15, 36, 64, 0.30);
+  }
+  .dark .cs-hero-glass {
+    background: linear-gradient(135deg, rgba(17,24,39,0.66), rgba(17,24,39,0.42));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ---------- Motion & performance ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cs-ambient::after,
+  .cs-shell::before {
+    animation: none;
+  }
+}
+
+/* Mobile: lighter FX (blur is expensive on low-end phones) */
+@media (max-width: 640px) {
+  .cs-ambient::after,
+  .cs-shell::before {
+    filter: blur(40px);
+  }
+  .glass-card,
+  .glass-panel {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}

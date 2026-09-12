@@ -119,9 +119,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-4 bg-gradient-to-br from-green-900 via-green-800 to-green-700">
-      {/* Gradient overlay for readability */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-green-900/30 via-transparent to-green-900/40" />
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-4 bg-auth">
+      {/* Ambient decorative glows */}
+      <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[380px] h-[380px] -top-28 -left-24 opacity-80" />
+      <div aria-hidden="true" className="cs-orb cs-orb-green w-[440px] h-[440px] top-1/3 -right-32 opacity-90" />
+      <div aria-hidden="true" className="cs-orb cs-orb-navy w-[320px] h-[320px] -bottom-24 left-1/4 opacity-70" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -150,7 +152,7 @@ export default function LoginScreen() {
         </div>
 
         {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+        <div className="glass-card rounded-2xl p-6 sm:p-8">
           {/* Google OAuth Button */}
           <button
             onClick={handleGoogleLogin}

@@ -19,7 +19,7 @@ var SAMPLE_BANKS = [];
 var ACTIVITY_LOG = [];
 function StatCard(props) {
   return (
-    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-white/70 shadow-sm p-5 hover:shadow-md transition-shadow">
       <div className={"w-10 h-10 rounded-lg flex items-center justify-center mb-3 " + props.color}>
         {props.icon}
       </div>
@@ -238,7 +238,9 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen relative p-4 sm:p-0">
+      <div aria-hidden="true" className="cs-orb cs-orb-green w-[380px] h-[380px] -top-40 right-[-8%] opacity-50" />
+      <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] bottom-[-10%] left-[-6%] opacity-40" />
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#138808] flex items-center justify-center"><Shield className="w-5 h-5 text-white" /></div>

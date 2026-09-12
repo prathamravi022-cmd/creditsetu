@@ -27,7 +27,7 @@ export default function FeedbackPage() {
   if (submitted) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12">
+        <div className="glass-card rounded-2xl p-12 relative z-10">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-green-700" />
           </div>
@@ -55,7 +55,7 @@ export default function FeedbackPage() {
         <ArrowLeft className="w-4 h-4" /> Back to Home
       </Link>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-10">
+      <div className="glass-card rounded-2xl p-8 md:p-10 relative z-10">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-green-700 rounded-xl flex items-center justify-center">
             <MessageSquare className="w-5 h-5 text-white" />

@@ -7,8 +7,11 @@ export default function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-green-900 dark:bg-gray-950 text-white mt-auto">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <footer className="relative overflow-hidden text-white mt-auto" style={{ background: "linear-gradient(160deg, #052e1b 0%, #14532d 55%, #0b2b1a 100%)" }}>
+      <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[300px] h-[300px] -top-36 right-[-6%] opacity-50" />
+      <div aria-hidden="true" className="cs-orb cs-orb-navy w-[280px] h-[280px] -bottom-36 left-[-6%] opacity-50" />
+      <div aria-hidden="true" className="absolute inset-0 cs-dots opacity-[0.05]" />
+      <div className="max-w-7xl mx-auto px-4 py-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
