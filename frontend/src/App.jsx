@@ -91,19 +91,20 @@ function AppRoutes() {
 export default function App() {
   const location = useLocation();
   const isLanding = location.pathname === "/";
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/admin";
   return (
     <ErrorBoundary>
       <AuthProvider>
         <DarkModeProvider>
         <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-slate-900 dark:text-gray-100 transition-colors duration-300">
-          {!isLanding && <Navbar />}
+          {!isLanding && !isAuthPage && <Navbar />}
           <main className="flex-1">
             <AnimatePresence mode="wait">
               <AppRoutes key={location.pathname} />
             </AnimatePresence>
           </main>
           <GrievanceModal />
-          {!isLanding && <Footer />}
+          {!isLanding && !isAuthPage && <Footer />}
         </div>
       </DarkModeProvider>
       </AuthProvider>

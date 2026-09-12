@@ -36,7 +36,7 @@
         "desc": "Nearest eligible bank processes your application with available funds"
       }
     },
-    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "trust_badge": "Built to help users discover relevant government credit schemes",
     "nav": {
       "features": "Features",
       "schemes": "Schemes",
@@ -56,9 +56,9 @@
       "districts": "Districts"
     },
     "schemes_title": "Featured Schemes",
-    "trust": "ಸಾಮಾಜಿಕ ನ್ಯಾಯ ಮತ್ತು ಸಬಲೀಕರಣ ಸಚಿವಾಲಯದಿಂದ ವಿಶ್ವಾರ್ಹ",
+    "trust": "ಸರ್ಕಾರಿ ಸಾಲ ಯೋಜನೆಗಳನ್ನು ಹುಡುಗಲು ಸಹಾಯ ಮಾಡಲು ನಿರ್ಮಿಸಲಾಗಿದೆ",
     "hero": {
-      "badge": "Trusted by Ministry of Social Justice & Empowerment",
+      "badge": "Helping users discover government credit schemes",
       "title": "AI-Driven Credit Scheme Matching",
       "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
       "cta": "Check Your Eligibility",
@@ -66,7 +66,7 @@
       "get_started": "Get Started Now",
       "get_started_btn": "Get Started"
     },
-    "badge": "Trusted by Ministry of Social Justice",
+    "badge": "Helping users discover government credit schemes",
     "features": {
       "title": "How It Works",
       "step1": {
@@ -348,7 +348,17 @@
     "failed_send_otp": "Failed to send OTP. Please try again.",
     "welcome": "Welcome",
     "admin": "Admin",
-    "failed_google": "Google login failed"
+    "failed_google": "Google login failed",
+    "google_success": "Google ನೊಂದಿಗೆ ಲಾಗಿನ್ ಯಶಸ್ವಿ!",
+    "google_failed": "Google ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮೊಬೈಲ್ ಲಾಗಿನ್ ಪ್ರಯತ್ನಿಸಿ.",
+    "dev_mode": "ಅಭಿವೃದ್ಧಿ ಮೋಡ್: ಯಾವುದೇ 6 ಅಂಕಿಗಳ OTP ನಮೂದಿಸಿ",
+    "enter_otp_6": "ಪೂರ್ಣ 6 ಅಂಕಿಗಳ OTP ನಮೂದಿಸಿ",
+    "invalid_otp": "ಅಮಾನ್ಯ OTP. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+    "otp_hint": "ನಿಮ್ಮ ಮೊಬೈಲ್‌ಗೆ ಕಳುಹಿಸಿದ 6 ಅಂಕಿಗಳ OTP ನಮೂದಿಸಿ.",
+    "terms_prefix": "ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನೀವು ನಮ್ಮ",
+    "terms_link": "ಸೇವಾ ನಿಯಮಗಳು",
+    "dpdp": "ಸರ್ಕಾರಿ ಡೇಟಾ DPDP ಕಾಯ್ದೆ 2023 ರ ಪ್ರಕಾರ ನಿರ್ವಹಿಸಲಾಗುತ್ತದೆ.",
+    "admin_access": "ನಿರ್ವಾಹಕ ಪ್ರವೇಶ ಅಧಿಕೃತ ಸಿಬ್ಬಂದಿಗೆ ಮಾತ್ರ."
   },
   "common": {
     "close": "ಮುಚ್ಚಿ",
@@ -389,5 +399,12 @@
       "term": "BPL (Below Poverty Line)",
       "def": "Families earning below a government-defined threshold, eligible for special benefits."
     }
+  },
+  "nav": {
+    "home": "ಹೋಮ್",
+    "check_eligibility": "ಅರ್ಹತಾ ಪರಿಶೀಲನೆ",
+    "results": "ಫಲಿತಾಂಶಗಳು",
+    "find_bank": "ಬ್ಯಾಂಕ್ ಹುಡುಕಿ",
+    "admin": "ನಿರ್ವಾಹಕ"
   }
 }

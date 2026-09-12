@@ -36,7 +36,7 @@
         "desc": "Nearest eligible bank processes your application with available funds"
       }
     },
-    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "trust_badge": "Built to help users discover relevant government credit schemes",
     "nav": {
       "features": "విశేష్టాలు",
       "schemes": "పథకాలు",
@@ -54,7 +54,7 @@
       "districts": "జిల్లాలు"
     },
     "schemes_title": "Featured Schemes",
-    "trust": "సామాజిక న్యాయ మరియు సాధికార మంత్రిత్వ శాఖచే నమ్మదగినది",
+    "trust": "ప్రభుత్వ రుణ పథకాలను కనుగొనడంలో సహాయం చేయడానికి నిర్మించబడింది",
     "hero": {
       "badge": "సామాజిక న్యాయం మరియు అధికారిక మాత్రమే ద్వారా విశ్వసనీయ",
       "title": "AI-సంచాలిత క్రేడిట్ యోజనా మిలాన",
@@ -64,7 +64,7 @@
       "get_started": "ఇప్పుడే ప్రారంభిශ్డి",
       "get_started_btn": "ప్రారంభిශ్"
     },
-    "badge": "Trusted by Ministry of Social Justice",
+    "badge": "Helping users discover government credit schemes",
     "features": {
       "title": "How It Works",
       "step1": {
@@ -292,7 +292,22 @@
     "send_otp": "OTP పంపండి",
     "verify": "ధృవీకరిస్చిව",
     "phone_verified": "ఫోన్ ధృవీకరిస్చిවాఇෂ్",
-    "admin_restricted": "అడ్మిన్ యాక్సేస్ అధికారిక సిబ్బందికికి మాత్రమే"
+    "admin_restricted": "అడ్మిన్ యాక్సేస్ అధికారిక సిబ్బందికికి మాత్రమే",
+    "google_success": "Google తో లాగిన్ విజయవంతం!",
+    "google_failed": "Google లాగిన్ విఫలమైంది. మొబైల్ లాగిన్ ప్రయత్నించండి.",
+    "enter_valid_mobile": "చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్ నమోదు చేయండి",
+    "otp_sent": "OTP పంపబడింది",
+    "dev_mode": "డెవలప్‌మెంట్ మోడ్: ఏదైనా 6 అంకెల OTP నమోదు చేయండి",
+    "enter_otp_6": "పూర్తి 6 అంకెల OTP నమోదు చేయండి",
+    "welcome": "స్వాగతం!",
+    "invalid_otp": "చెల్లని OTP. దయచేసి మళ్ళీ ప్రయత్నించండి.",
+    "otp_hint": "మీ మొబైల్‌కు పంపిన 6 అంకెల OTP నమోదు చేయండి.",
+    "resend_in": "మళ్ళీ పంపండి",
+    "resend_otp": "OTP మళ్ళీ పంపండి",
+    "terms_prefix": "కొనసాగించడం ద్వారా, మీరు మా",
+    "terms_link": "సేవా నిబంధనలు",
+    "dpdp": "ప్రభుత్వ డేటా DPDP చట్టం 2023 ప్రకారం నిర్వహించబడుతుంది.",
+    "admin_access": "అడ్మిన్ యాక్సెస్ అధికృత సిబ్బందికి మాత్రమే."
   },
   "common": {
     "close": "మూసివేయండి",
@@ -333,5 +348,12 @@
       "term": "BPL (Below Poverty Line)",
       "def": "Families earning below a government-defined threshold, eligible for special benefits."
     }
+  },
+  "nav": {
+    "home": "హోమ్",
+    "check_eligibility": "అర్హత తనిఖీ",
+    "results": "ఫలితాలు",
+    "find_bank": "బ్యాంక్ కనుగొనండి",
+    "admin": "అడ్మిన్"
   }
 }

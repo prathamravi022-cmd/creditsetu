@@ -36,7 +36,7 @@
         "desc": "Nearest eligible bank processes your application with available funds"
       }
     },
-    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "trust_badge": "Built to help users discover relevant government credit schemes",
     "nav": {
       "features": "Features",
       "schemes": "Schemes",
@@ -56,9 +56,9 @@
       "districts": "Districts"
     },
     "schemes_title": "Featured Schemes",
-    "trust": "சமூக நீதி மற்றும் அதிகாரமளித்தல் அமைச்சகம் மூலம் நம்பகமானது",
+    "trust": "அரசு கடன் திட்டங்களை கண்டறிய உதவ உருவாக்கப்பட்டது",
     "hero": {
-      "badge": "Trusted by Ministry of Social Justice & Empowerment",
+      "badge": "Helping users discover government credit schemes",
       "title": "AI-Driven Credit Scheme Matching",
       "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
       "cta": "Check Your Eligibility",
@@ -66,7 +66,7 @@
       "get_started": "Get Started Now",
       "get_started_btn": "Get Started"
     },
-    "badge": "Trusted by Ministry of Social Justice",
+    "badge": "Helping users discover government credit schemes",
     "features": {
       "title": "How It Works",
       "step1": {
@@ -348,7 +348,17 @@
     "failed_send_otp": "Failed to send OTP. Please try again.",
     "welcome": "Welcome",
     "admin": "Admin",
-    "failed_google": "Google login failed"
+    "failed_google": "Google login failed",
+    "google_success": "Google உடன் உள்நுழைவு வெற்றி!",
+    "google_failed": "Google உள்நுழைவு தோல்வி. மொபைல் உள்நுழைவு முயற்சிக்கவும்.",
+    "dev_mode": "உருவாக்கும் பயன்முறை: எந்த 6 இலக்க OTP யையும் உள்ளிடவும்",
+    "enter_otp_6": "முழுமையான 6 இலக்க OTP யை உள்ளிடவும்",
+    "invalid_otp": "தவறான OTP. மீண்டும் முயற்சிக்கவும்.",
+    "otp_hint": "உங்கள் மொபைலுக்கு அனுப்பப்பட்ட 6 இலக்க OTP யை உள்ளிடவும்.",
+    "terms_prefix": "தொடர்வதன் மூலம், நீங்கள் எங்கள்",
+    "terms_link": "சேவை விதிமுறைகள்",
+    "dpdp": "அரசு தரவு DPDP சட்டம் 2023 படி கையாளப்படுகிறது.",
+    "admin_access": "நிர்வாக அணுகல் அங்கீகரிக்கப்பட்ட ஊழியர்களுக்கு மட்டுமே."
   },
   "common": {
     "close": "மூடு",
@@ -389,5 +399,12 @@
       "term": "BPL (Below Poverty Line)",
       "def": "Families earning below a government-defined threshold, eligible for special benefits."
     }
+  },
+  "nav": {
+    "home": "முகப்பு",
+    "check_eligibility": "தகுதி சரிபார்ப்பு",
+    "results": "முடிவுகள்",
+    "find_bank": "வங்கி கண்டறிய",
+    "admin": "நிர்வாகம்"
   }
 }

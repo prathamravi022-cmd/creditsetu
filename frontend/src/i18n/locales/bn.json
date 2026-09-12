@@ -36,7 +36,7 @@
         "desc": "Nearest eligible bank processes your application with available funds"
       }
     },
-    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "trust_badge": "Built to help users discover relevant government credit schemes",
     "nav": {
       "features": "Features",
       "schemes": "Schemes",
@@ -56,9 +56,9 @@
       "districts": "Districts"
     },
     "schemes_title": "Featured Schemes",
-    "trust": "সমাজ কল্যাণ ও ক্ষমতায়ন মন্ত্রণালয়ের দ্বারা বিশ্বস্ত",
+    "trust": "সরকারি ঋণ প্রকল্প আবিষ্কারে সাহায্য করতে তৈরি",
     "hero": {
-      "badge": "Trusted by Ministry of Social Justice & Empowerment",
+      "badge": "Helping users discover government credit schemes",
       "title": "AI-Driven Credit Scheme Matching",
       "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
       "cta": "Check Your Eligibility",
@@ -66,7 +66,7 @@
       "get_started": "Get Started Now",
       "get_started_btn": "Get Started"
     },
-    "badge": "Trusted by Ministry of Social Justice",
+    "badge": "Helping users discover government credit schemes",
     "features": {
       "title": "How It Works",
       "step1": {
@@ -348,7 +348,17 @@
     "failed_send_otp": "Failed to send OTP. Please try again.",
     "welcome": "Welcome",
     "admin": "Admin",
-    "failed_google": "Google login failed"
+    "failed_google": "Google login failed",
+    "google_success": "Google দিয়ে লগইন সফল!",
+    "google_failed": "Google লগইন ব্যর্থ। মোবাইল লগইন চেষ্টা করুন।",
+    "dev_mode": "ডেভেলপার মোড: যেকোনো 6 ডিজিট OTP প্রবেশ করুন",
+    "enter_otp_6": "সম্পূর্ণ 6 ডিজিট OTP প্রবেশ করুন",
+    "invalid_otp": "অবৈধ OTP। আবার চেষ্টা করুন।",
+    "otp_hint": "আপনার মোবাইলে পাঠানো 6 ডিজিট OTP প্রবেশ করুন।",
+    "terms_prefix": "চালিয়ে যেয়ে, আপনি আমাদের",
+    "terms_link": "সেবার শর্তাবলী",
+    "dpdp": "সরকারি তথ্য DPDP আইন 2023 অনুসারে পরিচালিত হয়।",
+    "admin_access": "অ্যাডমিন প্রবেশ কেবল অনুমোদিত কর্মীদের জন্য।"
   },
   "common": {
     "close": "বন্ধ",
@@ -389,5 +399,12 @@
       "term": "BPL (Below Poverty Line)",
       "def": "Families earning below a government-defined threshold, eligible for special benefits."
     }
+  },
+  "nav": {
+    "home": "হোম",
+    "check_eligibility": "যোগ্যতা পরীক্ষা",
+    "results": "ফলাফল",
+    "find_bank": "ব্যাংক খুঁজুন",
+    "admin": "অ্যাডমিন"
   }
 }

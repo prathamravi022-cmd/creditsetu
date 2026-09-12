@@ -28,7 +28,7 @@
     },
     "schemes_title": "Featured Schemes",
     "partners_title": "Our Bank Partners",
-    "trust": "Trusted by the Ministry of Social Justice & Empowerment",
+    "trust": "Built to help users discover relevant government credit schemes",
     "schemes": {
       "title": "Featured Government Schemes",
       "micro": {
@@ -53,12 +53,12 @@
       "ready": "Ready to find your perfect scheme?",
       "join_thousands": "Join thousands of entrepreneurs who have already benefited from government loan schemes. Start your application today."
     },
-    "trust_badge": "Trusted by the Ministry of Social Justice & Empowerment",
+    "trust_badge": "Built to help users discover relevant government credit schemes",
     "nav_home": "Home",
     "nav_schemes": "Schemes",
     "nav_how": "How It Works",
     "hero": {
-      "badge": "Trusted by Ministry of Social Justice & Empowerment",
+      "badge": "Helping users discover government credit schemes",
       "title": "AI-Driven Credit Scheme Matching",
       "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
       "cta": "Check Your Eligibility",
@@ -98,7 +98,7 @@
       "disbursed": "Disbursed",
       "districts": "Districts"
     },
-    "badge": "Trusted by Ministry of Social Justice",
+    "badge": "Helping users discover government credit schemes",
     "footer": {
       "quick_links": "Quick Links",
       "home": "Home",
@@ -373,7 +373,17 @@
     "failed_send_otp": "Failed to send OTP. Please try again.",
     "welcome": "Welcome",
     "admin": "Admin",
-    "failed_google": "Google login failed"
+    "failed_google": "Google login failed",
+    "google_success": "Logged in with Google!",
+    "google_failed": "Google login failed. Please try mobile login.",
+    "dev_mode": "Development mode: enter any 6-digit OTP",
+    "enter_otp_6": "Please enter the complete 6-digit OTP",
+    "invalid_otp": "Invalid OTP. Please try again.",
+    "otp_hint": "Enter the 6-digit OTP sent to your mobile.",
+    "terms_prefix": "By continuing, you agree to our",
+    "terms_link": "Terms of Service",
+    "dpdp": "Government data is handled per DPDP Act 2023.",
+    "admin_access": "Admin access is restricted to authorized personnel."
   },
   "admin": {
     "unauthorized": "Unauthorized! This phone number does not have admin access.",
@@ -389,5 +399,12 @@
     "sending_otp": "Sending OTP...",
     "verifying": "Verifying...",
     "sih_credit": "CreditSetu — Smart India Hackathon 2026"
+  },
+  "nav": {
+    "home": "Home",
+    "check_eligibility": "Check Eligibility",
+    "results": "Results",
+    "find_bank": "Find Bank",
+    "admin": "Admin"
   }
 }
