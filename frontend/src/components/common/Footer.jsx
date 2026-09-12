@@ -41,7 +41,7 @@ export default function Footer() {
               <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
               <li><Link to="/feedback" className="hover:text-white transition-colors">Feedback / Grievance</Link></li>
-              <li><Link to="/grievance" className="hover:text-white transition-colors">Report an Issue</Link></li>
+              <li><Link to="/feedback" className="hover:text-white transition-colors">Report an Issue</Link></li>
             </ul>
           </div>
 
@@ -54,7 +54,7 @@ export default function Footer() {
               Smart India Hackathon — PS 26092
             </p>
             <p className="text-xs text-slate-500 mt-3">
-              Helpline: 1800-XXX-XXXX<br />
+              Helpline: 1800-11-0031<br />
               (Toll Free, Mon–Sat 9AM–6PM)
             </p>
           </div>
@@ -62,7 +62,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500">
           <span>{t('footer.made_with')}</span>
-          <span>© 2024 CreditSetu Scheme Finder. All rights reserved.</span>
+          <span>© 2026 CreditSetu Scheme Finder. All rights reserved.</span>
         </div>
       </div>
     </footer>

@@ -71,7 +71,7 @@ export default function ResultsDashboard() {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.setFontSize(16);
-      pdf.text('GovTech Scheme Finder — Application Summary', 20, 20);
+      pdf.text('CreditSetu — Application Summary', 20, 20);
       pdf.addImage(imgData, 'PNG', 0, 30, imgWidth, imgHeight);
       pdf.save(`${scheme.scheme_code}_Summary.pdf`);
       toast.success('PDF downloaded!');

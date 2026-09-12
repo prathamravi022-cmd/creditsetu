@@ -27,9 +27,15 @@ export default function LoginScreen() {
   const [otpCountdown, setOtpCountdown] = useState(0);
   const countdownRef = useRef(null);
 
-  const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'hi' : 'en');
-  };
+  const langs = [
+    { code: 'en', label: 'English' },
+    { code: 'hi', label: 'हिन्दी' },
+    { code: 'ta', label: 'தமிழ்' },
+    { code: 'te', label: 'తెలుగు' },
+    { code: 'bn', label: 'বাংলা' },
+    { code: 'mr', label: 'मराठी' },
+    { code: 'kn', label: 'ಕನ್ನಡ' },
+  ];
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -126,21 +132,23 @@ export default function LoginScreen() {
             <Shield className="w-9 h-9 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">
-            GovTech Scheme Finder
+            CreditSetu Scheme Finder
           </h1>
           <p className="text-green-200 text-sm">
             {t('landing.trust')}
           </p>
         </div>
 
-        {/* Language Toggle */}
-        <button
-          onClick={toggleLang}
-          className="absolute top-4 right-4 flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+        {/* Language Dropdown */}
+        <select
+          value={i18n.language}
+          onChange={(e) => i18n.changeLanguage(e.target.value)}
+          className="absolute top-4 right-4 flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors bg-white/10 backdrop-blur-sm border border-white/20"
         >
-          <Globe className="w-4 h-4" />
-          {i18n.language === 'en' ? 'हिंदी' : 'English'}
-        </button>
+          {langs.map((l) => (
+            <option key={l.code} value={l.code} className="text-gray-900">{l.label}</option>
+          ))}
+        </select>
 
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-2xl p-8">
@@ -194,11 +202,8 @@ export default function LoginScreen() {
                   </button>
                 )}
               </div>
-            </div>
-
-            {otpSent && !otpVerified && (
+            </div>              {otpSent && !otpVerified && (
               <div style={{ transition: "all 0.3s ease", opacity: otpSent ? 1 : 0, maxHeight: otpSent ? "500px" : "0px", overflow: "hidden" }}>
-              >
                 <label className="block text-sm font-medium text-slate-700 mb-1">
                   Enter OTP
                 </label>

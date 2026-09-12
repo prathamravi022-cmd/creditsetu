@@ -67,8 +67,8 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      <Route path="/results" element={<ResultsDashboard />} />
-      <Route path="/find-bank" element={<PartnerLocator />} />
+      <Route path="/results" element={<ProtectedRoute><ResultsDashboard /></ProtectedRoute>} />
+      <Route path="/find-bank" element={<ProtectedRoute><PartnerLocator /></ProtectedRoute>} />
       <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
 
       {/* Admin — login page (public) */}
