@@ -14,6 +14,7 @@ import {
   Search, ArrowUpDown, Filter, Banknote, ExternalLink, Star,
   ChevronDown, ChevronUp, Map
 } from 'lucide-react';
+import PageBackdrop from '../art/PageBackdrop';
 
 export default function PartnerLocator() {
   const { t, i18n } = useTranslation();
@@ -92,6 +93,7 @@ export default function PartnerLocator() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 relative">
+      <PageBackdrop variant="findbank" />
       <div aria-hidden="true" className="cs-orb cs-orb-green w-[340px] h-[340px] -top-24 right-[-8%] opacity-50" />
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

@@ -10,6 +10,7 @@ import { useAuth } from '../../store/AuthContext';
 import { getCachedFormData, cacheFormData } from '../../utils/offlineCache';
 import { STATE_DISTRICTS, INDIAN_STATES } from '../../data/stateDistricts';
 import { User, MapPin, Users, Wallet, Save, ArrowLeft, Check, AlertCircle } from 'lucide-react';
+import PageBackdrop from '../art/PageBackdrop';
 
 function calculateAge(dob) {
   if (!dob) return '';
@@ -61,12 +62,13 @@ export default function EditProfile() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
-      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
+    <div className="max-w-2xl mx-auto px-4 py-12 relative">
+      <PageBackdrop variant="profile" />
+      <button onClick={() => navigate(-1)} className="relative z-10 flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
         <ArrowLeft className="w-4 h-4" /> Back
       </button>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 relative z-10">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-green-700 rounded-xl flex items-center justify-center">
             <User className="w-5 h-5 text-white" />

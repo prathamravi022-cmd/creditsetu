@@ -9,15 +9,19 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../store/AuthContext';
+import { SignInButton, SignUpButton, useUser } from '@clerk/react';
 import {
   Shield, Send, Check, ArrowRight, Phone
 } from 'lucide-react';
 import LanguageDropdown from '../ui/LanguageDropdown';
+import PageBackdrop from '../art/PageBackdrop';
 
 export default function LoginScreen() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { loginWithGoogle, loginWithMobile, sendOTP, isFirebaseReady } = useAuth();
+  const clerkUser = useUser();
+  const isClerkSignedIn = clerkUser?.isSignedIn;
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
@@ -120,6 +124,7 @@ export default function LoginScreen() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-4 bg-auth">
+      <PageBackdrop variant="login" />
       {/* Ambient decorative glows */}
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[380px] h-[380px] -top-28 -left-24 opacity-80" />
       <div aria-hidden="true" className="cs-orb cs-orb-green w-[440px] h-[440px] top-1/3 -right-32 opacity-90" />
@@ -153,6 +158,22 @@ export default function LoginScreen() {
 
         {/* Login Card */}
         <div className="glass-card rounded-2xl p-6 sm:p-8">
+          {/* Clerk Sign-In Button */}
+          {!isClerkSignedIn ? (
+            <SignInButton mode="modal" afterSignInUrl="/get-started">
+              <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-slate-200 rounded-xl font-medium text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                  <polyline points="10 17 15 12 10 7" />
+                  <line x1="15" y1="12" x2="3" y2="12" />
+                </svg>
+                {t('login.continue_clerk') || 'Continue with Email / SSO'}
+              </button>
+            </SignInButton>
+          ) : (
+            <div className="text-center py-2 text-sm text-green-700 font-medium">You are already signed in.</div>
+          )}
+
           {/* Google OAuth Button */}
           <button
             onClick={handleGoogleLogin}
@@ -315,6 +336,18 @@ export default function LoginScreen() {
             {t('login.dpdp') || 'Government data is handled per DPDP Act 2023.'}
           </p>
         </div>
+
+        {/* Sign Up Link */}
+        {!isClerkSignedIn && (
+          <p className="text-center text-green-300/60 text-xs mt-4">
+            {t('login.no_account') || "Don't have an account?"}{' '}
+            <SignUpButton mode="modal" afterSignUpUrl="/get-started">
+              <button className="text-green-200 font-medium hover:underline">
+                {t('login.sign_up') || 'Sign up'}
+              </button>
+            </SignUpButton>
+          </p>
+        )}
 
         {/* Admin Notice */}
         <p className="text-center text-green-300/60 text-xs mt-4">

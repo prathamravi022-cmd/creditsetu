@@ -295,6 +295,32 @@
   }
 }
 
+/* ---------- Per-page SVG art layer ---------- */
+.page-art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-art-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* Dark mode: brighter strokes read on dark shells */
+.dark .page-art-svg [stroke='#000080'] { stroke: #93c5fd; }
+.dark .page-art-svg [fill='#000080'] { fill: #93c5fd; }
+.dark .page-art-svg [stroke='#138808'] { stroke: #4ade80; }
+.dark .page-art-svg [fill='#138808'] { fill: #4ade80; }
+.dark .page-art-svg [stroke='#FF9933'] { stroke: #fdba74; }
+.dark .page-art-svg [fill='#FF9933'] { fill: #fdba74; }
+
+/* Mobile: soften art so content dominates small screens */
+@media (max-width: 640px) {
+  .page-art { opacity: 0.65; }
+}
+
 /* ---------- Motion & performance ---------- */
 @media (prefers-reduced-motion: reduce) {
   .cs-ambient::after,

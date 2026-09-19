@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, ArrowLeft } from 'lucide-react';
+import PageBackdrop from '../art/PageBackdrop';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <Link to="/" className="inline-flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
+    <div className="max-w-4xl mx-auto px-4 py-12 relative">
+      <PageBackdrop variant="legal" />
+      <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
         <ArrowLeft className="w-4 h-4" /> Back to Home
       </Link>
 

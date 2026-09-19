@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, AlertTriangle } from 'lucide-react';
+import PageBackdrop from '../art/PageBackdrop';
 
 export default function Page404() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center p-4">
-      <div className="text-center">
+    <div className="min-h-[60vh] flex items-center justify-center p-4 relative">
+      <PageBackdrop variant="notfound" />
+      <div className="text-center relative z-10">
         <div className="w-24 h-24 mx-auto mb-6 bg-slate-100 rounded-full flex items-center justify-center">
           <AlertTriangle className="w-12 h-12 text-slate-400" />
         </div>

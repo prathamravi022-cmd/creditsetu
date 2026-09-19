@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, MessageSquare, Send, CheckCircle, AlertTriangle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import PageBackdrop from '../art/PageBackdrop';
 
 export default function FeedbackPage() {
   const [form, setForm] = useState({
@@ -26,7 +27,8 @@ export default function FeedbackPage() {
 
   if (submitted) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-20 text-center">
+      <div className="max-w-2xl mx-auto px-4 py-20 text-center relative">
+        <PageBackdrop variant="legal" />
         <div className="glass-card rounded-2xl p-12 relative z-10">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-green-700" />
@@ -50,8 +52,9 @@ export default function FeedbackPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      <Link to="/" className="inline-flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
+    <div className="max-w-3xl mx-auto px-4 py-12 relative">
+      <PageBackdrop variant="legal" />
+      <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
         <ArrowLeft className="w-4 h-4" /> Back to Home
       </Link>
 

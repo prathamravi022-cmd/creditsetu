@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PageBackdrop from "../art/PageBackdrop";
 
 import {
   LayoutDashboard, Users, FileText, Building2, Activity,
@@ -239,6 +240,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen relative p-4 sm:p-0">
+      <PageBackdrop variant="dashboard" />
       <div aria-hidden="true" className="cs-orb cs-orb-green w-[380px] h-[380px] -top-40 right-[-8%] opacity-50" />
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] bottom-[-10%] left-[-6%] opacity-40" />
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">

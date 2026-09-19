@@ -13,6 +13,7 @@ import Glossary from './Glossary';
 import ShareButton from '../common/ShareButton';
 import SkeletonCard from './SkeletonCard';
 import ScrollReveal from '../ui/ScrollReveal';
+import PageBackdrop from '../art/PageBackdrop';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -82,7 +83,9 @@ export default function ResultsDashboard() {
 
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-12 relative">
+        <PageBackdrop variant="results" />
+        <div className="relative z-10">
         <div className="mb-8">
           <div className="h-8 w-64 bg-slate-200 rounded skeleton mb-2" />
           <div className="h-4 w-48 bg-slate-200 rounded skeleton" />
@@ -92,13 +95,15 @@ export default function ResultsDashboard() {
             <SkeletonCard key={i} />
           ))}
         </div>
+        </div>
       </div>
     );
   }
 
   if (!recommendations || recommendations.count === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center relative">
+        <PageBackdrop variant="results" />
         <AlertCircle className="w-16 h-16 text-slate-300 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-slate-700 mb-2">No Schemes Found</h2>
         <p className="text-slate-500 mb-6">
@@ -115,8 +120,9 @@ export default function ResultsDashboard() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      {/* Eligibility Banner */}
+    <div className="max-w-6xl mx-auto px-4 py-12 relative">
+      <PageBackdrop variant="results" />
+      <div className="relative z-10">
       <ScrollReveal className="mb-6">
         <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
           <div className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center">
@@ -352,6 +358,7 @@ export default function ResultsDashboard() {
         </h2>
         <Glossary />
       </ScrollReveal>
+      </div>
     </div>
   );
 }

@@ -383,7 +383,10 @@
     "terms_prefix": "By continuing, you agree to our",
     "terms_link": "Terms of Service",
     "dpdp": "Government data is handled per DPDP Act 2023.",
-    "admin_access": "Admin access is restricted to authorized personnel."
+    "admin_access": "Admin access is restricted to authorized personnel.",
+    "continue_clerk": "Continue with Email / SSO",
+    "no_account": "Don't have an account?",
+    "sign_up": "Sign up"
   },
   "admin": {
     "unauthorized": "Unauthorized! This phone number does not have admin access.",

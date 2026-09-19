@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/AuthContext";
 import { Shield, Phone, Lock, ArrowRight, AlertCircle, Clock, RefreshCw } from "lucide-react";
+import PageBackdrop from "../art/PageBackdrop";
 
 var ADMIN_PHONE = "9259609658";
 
@@ -75,6 +76,7 @@ export default function AdminLogin() {
   }
 
   return (<div className="min-h-screen flex items-center justify-center px-4 relative">
+    <PageBackdrop variant="admin" />
     <div aria-hidden="true" className="cs-orb cs-orb-green w-[380px] h-[380px] -top-32 -left-28 opacity-60" />
     <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -bottom-32 -right-24 opacity-60" />
     <div className="w-full max-w-md">

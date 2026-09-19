@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../store/AuthContext';
 import { useDarkMode } from '../../store/DarkModeContext';
+import { UserButton, useAuth as useClerkAuth } from '@clerk/react';
 import { Menu, X, Shield, LogIn, LogOut, User } from 'lucide-react';
 import LanguageDropdown from '../ui/LanguageDropdown';
 
@@ -11,6 +12,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const clerkAuth = useClerkAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -110,37 +112,44 @@ export default function Navbar() {
 
             <LanguageDropdown compact />
 
-            {/* Auth controls */}
-            {isAuthenticated ? (
-              <div className="hidden sm:flex items-center gap-1.5">
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                  <User className="w-3.5 h-3.5 text-slate-500" />
-                  <span className="text-xs text-slate-700 dark:text-gray-300 max-w-[80px] truncate">
-                    {user?.name || user?.mobile}
-                  </span>
-                  {isAdmin && (
-                    <span className="text-[9px] font-bold text-white bg-orange-500 px-1 py-0.5 rounded">
-                      ADMIN
-                    </span>
-                  )}
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="p-1.5 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
-                  title="Logout"
-                  aria-label="Logout"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
+            {/* Clerk UserButton (when signed in via Clerk) */}
+            {clerkAuth?.isSignedIn ? (
+              <div className="hidden sm:flex items-center">
+                <UserButton afterSignOutUrl="/" />
               </div>
             ) : (
-              <Link
-                to="/login"
-                className="hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Login</span>
-              </Link>
+              /* Auth controls (custom auth) */
+              isAuthenticated ? (
+                <div className="hidden sm:flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                    <User className="w-3.5 h-3.5 text-slate-500" />
+                    <span className="text-xs text-slate-700 dark:text-gray-300 max-w-[80px] truncate">
+                      {user?.name || user?.mobile}
+                    </span>
+                    {isAdmin && (
+                      <span className="text-[9px] font-bold text-white bg-orange-500 px-1 py-0.5 rounded">
+                        ADMIN
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="p-1.5 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                    title="Logout"
+                    aria-label="Logout"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Login</span>
+                </Link>
+              )
             )}
 
             {/* Mobile menu toggle */}
@@ -183,27 +192,34 @@ export default function Navbar() {
             >
               {t('nav.admin') || 'Admin Panel'}
             </Link>
-            {isAuthenticated ? (
-              <>
-                <div className="px-3 py-2 text-xs text-slate-500">
-                  Signed in as {user?.name || user?.mobile}
-                  {isAdmin && <span className="ml-2 text-orange-600 font-bold">ADMIN</span>}
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50"
-                >
-                  Logout
-                </button>
-              </>
+            {/* Clerk UserButton in mobile menu */}
+            {clerkAuth?.isSignedIn ? (
+              <div className="px-3 py-2">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             ) : (
-              <Link
-                to="/login"
-                onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2.5 rounded-lg text-sm font-medium text-green-700 hover:bg-green-50"
-              >
-                Login
-              </Link>
+              isAuthenticated ? (
+                <>
+                  <div className="px-3 py-2 text-xs text-slate-500">
+                    Signed in as {user?.name || user?.mobile}
+                    {isAdmin && <span className="ml-2 text-orange-600 font-bold">ADMIN</span>}
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-green-700 hover:bg-green-50"
+                >
+                  Login
+                </Link>
+              )
             )}
           </div>
         )}

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldOff, Home } from 'lucide-react';
+import PageBackdrop from '../art/PageBackdrop';
 
 export default function ForbiddenPage() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center p-4">
-      <div className="text-center max-w-md">
+    <div className="min-h-[60vh] flex items-center justify-center p-4 relative">
+      <PageBackdrop variant="admin" />
+      <div className="text-center max-w-md relative z-10">
         <div className="w-20 h-20 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
           <ShieldOff className="w-10 h-10 text-red-600" />
         </div>

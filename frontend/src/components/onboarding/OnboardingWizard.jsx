@@ -17,6 +17,7 @@ import {
   Wallet, Check, Mic, MicOff, Calendar, AlertCircle,
   Building2, TreePine, Save, Info, Clock, User
 } from 'lucide-react';
+import PageBackdrop from '../art/PageBackdrop';
 
 const TOTAL_STEPS = 4;
 const STEPS = [
@@ -213,6 +214,7 @@ export default function OnboardingWizard() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-4 relative">
+      <PageBackdrop variant="onboarding" />
       {/* Decorative corner glows */}
       <div aria-hidden="true" className="cs-orb cs-orb-green w-[360px] h-[360px] -top-32 -right-28 opacity-60" />
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -bottom-32 -left-24 opacity-50" />
