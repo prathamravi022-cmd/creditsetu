@@ -27,24 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           },
         }}
       />
-      <ClerkProvider 
-        afterSignOutUrl="/"
-        appearance={{
-          variables: {
-            colorPrimary: '#15803d',
-            colorBackground: '#ffffff',
-            colorText: '#1e293b',
-            borderRadius: '0.75rem',
-          },
-          elements: {
-            card: 'shadow-xl',
-            formButtonPrimary: 'bg-green-700 hover:bg-green-800 text-white',
-            socialButtonsBlockButton: 'border-slate-200 text-slate-700',
-            headerTitle: 'text-slate-900',
-            headerSubtitle: 'text-slate-500',
-          }
-        }}
-      >
+      <ClerkProvider afterSignOutUrl="/">
       <App />
     </ClerkProvider>
     </BrowserRouter>
