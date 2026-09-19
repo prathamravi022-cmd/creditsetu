@@ -5,7 +5,6 @@ import { AuthProvider, useAuth } from './store/AuthContext';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
-import LoginScreen from './components/auth/LoginScreen';
 import LandingPage from './components/landing/LandingPage';
 import OnboardingWizard from './components/onboarding/OnboardingWizard';
 import ResultsDashboard from './components/results/ResultsDashboard';
@@ -32,7 +31,7 @@ function ProtectedRoute({ children, requireAdmin = false }) {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (requireAdmin && !isAdmin) {
@@ -45,11 +44,8 @@ function ProtectedRoute({ children, requireAdmin = false }) {
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public routes */}
-      <Route path="/login" element={<LoginScreen />} />
-      <Route path="/forbidden" element={<ForbiddenPage />} />
-
       {/* Legal pages (public) */}
+      <Route path="/forbidden" element={<ForbiddenPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsConditions />} />
       <Route path="/feedback" element={<FeedbackPage />} />
@@ -70,7 +66,7 @@ function AppRoutes() {
       <Route path="/find-bank" element={<ProtectedRoute><PartnerLocator /></ProtectedRoute>} />
       <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
 
-      {/* Admin — login page (public) */}
+      {/* Admin — login page (public, uses Clerk modal) */}
       <Route path="/admin" element={<AdminLogin />} />
       {/* Admin — dashboard (requires admin auth) */}
       <Route
@@ -90,7 +86,7 @@ function AppRoutes() {
 export default function App() {
   const location = useLocation();
   const isLanding = location.pathname === "/";
-  const isAuthPage = location.pathname === "/login" || location.pathname === "/admin";
+  const isAuthPage = location.pathname === "/admin";
   return (
     <ErrorBoundary>
       <AuthProvider>

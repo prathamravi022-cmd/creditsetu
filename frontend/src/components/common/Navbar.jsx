@@ -12,7 +12,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
-  const clerkAuth = useClerkAuth();
+  
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -51,11 +51,7 @@ export default function Navbar() {
       : []),
   ];
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-    setMobileOpen(false);
-  };
+  const handleLogout = async () => { await logout(); navigate("/"); setMobileOpen(false); };
 
   return (
     <nav className="cs-nav sticky top-0 z-50" role="navigation" aria-label="Main navigation">
