@@ -94,8 +94,8 @@
     },
     "stats": {
       "schemes": "Schemes",
-      "partners": "Bank Partners",
-      "disbursed": "Disbursed",
+      "partners": "States Covered",
+      "disbursed": "Partner Banks & CSCs",
       "districts": "Districts"
     },
     "badge": "Helping users discover government credit schemes",

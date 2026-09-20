@@ -112,8 +112,8 @@ export default function LandingPage() {
   var [testiRef, testiVisible] = useScrollReveal(0.15);
   var [ctaRef, ctaVisible] = useScrollReveal(0.15);
   var [s1Ref, s1Val] = AnimatedCounter(21, "+");
-  var [s2Ref, s2Val] = AnimatedCounter(500, "+");
-  var [s3Ref, s3Val] = AnimatedCounter(500, "Cr+");
+  var [s2Ref, s2Val] = AnimatedCounter(36, "+");
+  var [s3Ref, s3Val] = AnimatedCounter(35, "+");
   var [s4Ref, s4Val] = AnimatedCounter(690, "");
 
   // Sidebar drawer: lock body scroll while open
@@ -145,6 +145,9 @@ export default function LandingPage() {
     { name: "Suresh Patel", loc: "Ahmedabad, Gujarat", quote: "The nearest bank locator saved me hours. I applied online and got approval within a week.", scheme: "NSFDC Term Loan" },
   ];
   var helpline = "1800-11-0031";
+  var [searchQuery, setSearchQuery] = useState("");
+  var [selectedCategory, setSelectedCategory] = useState("all");
+  var categories = [{id:"all",label:"All Schemes",icon:"🏛️"},{id:"agriculture",label:"Agriculture",icon:"🌾"},{id:"education",label:"Education",icon:"📚"},{id:"health",label:"Health",icon:"🏥"},{id:"business",label:"Business/MSME",icon:"💼"},{id:"women",label:"Women Empowerment",icon:"👩"},{id:"sc-st",label:"SC/ST/OBC",icon:"🤝"},{id:"housing",label:"Housing",icon:"🏠"}];
 
   var animBase = "transition-all duration-700 ease-out";
   var fadeUp = animBase + (heroVisible ? " opacity-100 translate-y-0" : " opacity-0 translate-y-8");
@@ -215,7 +218,41 @@ export default function LandingPage() {
         </div>
       </div>
     </section>
-    <section className="bg-stats py-10 sm:py-12 px-4 sm:px-6 lg:px-16 relative overflow-hidden"><div aria-hidden="true" className="cs-orb cs-orb-navy w-[300px] h-[300px] -bottom-40 right-[-4%] opacity-60" /><div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"><div ref={s1Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s1Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.schemes")}</div></div><div ref={s2Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s2Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.partners")}</div></div><div ref={s3Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">₹{s3Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.disbursed")}</div></div><div ref={s4Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s4Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.districts")}</div></div></div></section>
+    <section className="bg-stats py-10 sm:py-12 px-4 sm:px-6 lg:px-16 relative overflow-hidden"><div aria-hidden="true" className="cs-orb cs-orb-navy w-[300px] h-[300px] -bottom-40 right-[-4%] opacity-60" /><div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"><div ref={s1Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s1Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.schemes")}</div></div><div ref={s2Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s2Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.partners")}</div></div><div ref={s3Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s3Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.disbursed")}</div></div><div ref={s4Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s4Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.districts")}</div></div></div></section>
+
+
+    {/* Search Bar Section */}
+    <section className="bg-white dark:bg-gray-900 py-8 sm:py-12 px-4 sm:px-6 lg:px-16">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#000080] dark:text-white mb-2">Find the Right Scheme for You</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Search from 21+ government credit schemes or browse by category</p>
+        </div>
+        <div className="relative mb-6">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={function(e){setSearchQuery(e.target.value)}}
+            placeholder="Search schemes by name, category, or keyword..."
+            className="w-full px-5 py-4 pl-12 rounded-xl border-2 border-gray-200 dark:border-gray-700 focus:border-[#138808] focus:ring-2 focus:ring-[#138808]/20 outline-none text-base bg-gray-50 dark:bg-gray-800 dark:text-white transition-all"
+          />
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        </div>
+        <div className="flex flex-wrap gap-2 justify-center">
+          {categories.map(function(cat) {
+            return (
+              <button
+                key={cat.id}
+                onClick={function(){setSelectedCategory(cat.id)}}
+                className={"px-4 py-2 rounded-full text-sm font-medium transition-all " + (selectedCategory === cat.id ? "bg-[#138808] text-white shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#138808]/10 hover:text-[#138808]")}
+              >
+                <span className="mr-1.5">{cat.icon}</span>{cat.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
 
     <section id="how-it-works" ref={stepsRef} className="bg-steps py-16 sm:py-20 px-4 sm:px-6 lg:px-16 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -277,8 +314,40 @@ export default function LandingPage() {
       </div>
     </section>
 
-    <section id="schemes" ref={schemesRef} className="bg-schemes relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden"><div className="max-w-7xl mx-auto relative z-10"><div className={"text-center mb-16 transition-all duration-700 " + (schemesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><h2 className="text-3xl md:text-4xl font-bold text-[#000080] dark:text-white mb-4">{t("landing.schemes.title")}</h2><div className="w-16 h-1 bg-[#138808] mx-auto rounded-full" /></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">{schemes.map(function(scheme, i) { var SchemeIcon = scheme.icon; return (<div key={i} className={"relative p-5 sm:p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 " + (schemesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay: (i*150)+"ms"}}><div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold bg-[#FF9933]/10 text-[#FF9933] border border-[#FF9933]/20">{scheme.badge}</div><div className="w-14 h-14 rounded-xl bg-[#138808]/10 flex items-center justify-center mb-6"><SchemeIcon className="w-7 h-7 text-[#138808]" /></div><h3 className="text-xl font-bold text-[#000080] dark:text-white mb-3">{scheme.name}</h3><p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">{scheme.desc}</p><div className="flex items-center justify-between pt-5 border-t border-gray-100"><span className="text-sm text-gray-500 dark:text-gray-400">{scheme.range}</span><span className="text-sm font-bold text-[#138808]">{scheme.rate}</span></div></div>);})}</div></div></section>
-    <section id="features" ref={testiRef} className="bg-process py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16"><div className="max-w-7xl mx-auto"><div className={"text-center mb-8 sm:mb-12 md:mb-16 transition-all duration-700 " + (testiVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#000080] dark:text-white mb-3 sm:mb-4">{t("landing.process.title")}</h2><div className="w-16 h-1 bg-[#FF9933] mx-auto rounded-full" /><p className="text-gray-500 mt-3 sm:mt-4 max-w-xl mx-auto text-sm sm:text-base">{t("landing.process.subtitle")}</p></div><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">{[{ icon: "form", step: "01", title: t("landing.process.step1.title"), desc: t("landing.process.step1.desc") },{ icon: "ai", step: "02", title: t("landing.process.step2.title"), desc: t("landing.process.step2.desc") },{ icon: "doc", step: "03", title: t("landing.process.step3.title"), desc: t("landing.process.step3.desc") },{ icon: "bank", step: "04", title: t("landing.process.step4.title"), desc: t("landing.process.step4.desc") }].map(function(item, i) { var iconEl; if (item.icon === "form") iconEl = (<svg className="w-10 h-10" viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="4" stroke="#FF9933" strokeWidth="2.5" fill="none"/><line x1="14" y1="16" x2="34" y2="16" stroke="#FF9933" strokeWidth="2" strokeLinecap="round"/><line x1="14" y1="22" x2="30" y2="22" stroke="#FF9933" strokeWidth="2" strokeLinecap="round"/><line x1="14" y1="28" x2="26" y2="28" stroke="#FF9933" strokeWidth="2" strokeLinecap="round"/><circle cx="34" cy="34" r="6" fill="#138808"/><path d="M31 34l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>); else if (item.icon === "ai") iconEl = (<svg className="w-10 h-10" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#138808" strokeWidth="2.5" fill="none"/><circle cx="24" cy="24" r="6" fill="#138808" opacity="0.2"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4" stroke="#138808" strokeWidth="2" strokeLinecap="round"/><path d="M13 13l3 3M32 32l3 3M13 35l3-3M32 16l3-3" stroke="#138808" strokeWidth="2" strokeLinecap="round"/></svg>); else if (item.icon === "doc") iconEl = (<svg className="w-10 h-10" viewBox="0 0 48 48" fill="none"><path d="M12 8h18l8 8v24a4 4 0 01-4 4H12a4 4 0 01-4-4V12a4 4 0 014-4z" stroke="#FF9933" strokeWidth="2.5" fill="none"/><path d="M30 8v8h8" stroke="#FF9933" strokeWidth="2.5" fill="none"/><path d="M16 24h16M16 30h10" stroke="#FF9933" strokeWidth="2" strokeLinecap="round"/><circle cx="34" cy="34" r="6" fill="#138808"/><path d="M31 34l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>); else iconEl = (<svg className="w-10 h-10" viewBox="0 0 48 48" fill="none"><rect x="6" y="20" width="36" height="22" rx="3" stroke="#138808" strokeWidth="2.5" fill="none"/><path d="M16 20V14a8 8 0 0116 0v6" stroke="#138808" strokeWidth="2.5" fill="none"/><circle cx="24" cy="31" r="3" fill="#138808"/><path d="M24 34v3" stroke="#138808" strokeWidth="2" strokeLinecap="round"/><path d="M14 12l4 4M34 12l-4 4" stroke="#138808" strokeWidth="2" strokeLinecap="round"/></svg>); return (<div key={i} className={"relative p-6 rounded-2xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border border-white/60 dark:border-white/10 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-center " + (testiVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay: (i*150)+"ms"}}><div className="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-[#FF9933] text-white flex items-center justify-center font-bold text-xs shadow-md">{item.step}</div><div className="flex justify-center mb-4 mt-2">{iconEl}</div><h3 className="font-bold text-[#000080] dark:text-white mb-2">{item.title}</h3><p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{item.desc}</p></div>);})}</div></div></section><section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><Link to={ctaPath} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></Link></div></section>
+    <section id="schemes" ref={schemesRef} className="bg-schemes relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden"><div className="max-w-7xl mx-auto relative z-10"><div className={"text-center mb-16 transition-all duration-700 " + (schemesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><h2 className="text-3xl md:text-4xl font-bold text-[#000080] dark:text-white mb-4">{t("landing.schemes.title")}</h2><div className="w-16 h-1 bg-[#138808] mx-auto rounded-full" /></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">{schemes.map(function(scheme, i) { var SchemeIcon = scheme.icon; return (<div key={i} className={"relative p-5 sm:p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 " + (schemesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay: (i*150)+"ms"}}><div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold bg-[#FF9933]/10 text-[#FF9933] border border-[#FF9933]/20">{scheme.badge}</div><div className="w-14 h-14 rounded-xl bg-[#138808]/10 flex items-center justify-center mb-6"><SchemeIcon className="w-7 h-7 text-[#138808]" /></div><h3 className="text-xl font-bold text-[#000080] dark:text-white mb-3">{scheme.name}</h3><p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">{scheme.desc}</p><div className="flex items-center justify-between pt-5 border-t border-gray-100"><span className="text-sm text-gray-500 dark:text-gray-400">{scheme.range}</span><span className="text-sm font-bold text-[#138808]">{scheme.rate}</span></div><a href={"https://www.myscheme.gov.in/search?q=" + encodeURIComponent(scheme.name)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-[#138808] hover:underline mt-4">Apply on myScheme →</a></div>);})}</div></div></section>
+    
+    {/* FAQ Section */}
+    <section className="bg-gray-50 dark:bg-gray-900 py-12 sm:py-16 px-4 sm:px-6 lg:px-16">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#000080] dark:text-white mb-3">Frequently Asked Questions</h2>
+          <div className="w-16 h-1 bg-[#FF9933] mx-auto rounded-full" />
+        </div>
+        <div className="space-y-4">
+          {[
+            { q: "What is CreditSetu?", a: "CreditSetu is an AI-powered government scheme discovery platform that helps marginalized entrepreneurs find and apply for the right government credit schemes based on their profile." },
+            { q: "How does the AI matching work?", a: "Our AI engine analyzes your personal details, business type, income, and location to match you with eligible government schemes. It ranks schemes by eligibility probability." },
+            { q: "Is CreditSetu free to use?", a: "Yes, CreditSetu is completely free. We help you discover government schemes and guide you to official application portals." },
+            { q: "Which schemes are available?", a: "We cover 21+ government credit schemes including PM MUDRA, NSFDC Term Loan, Stand-Up India, Educational Loan Scheme, and more from both central and state governments." },
+            { q: "How do I apply for a scheme?", a: "After finding eligible schemes, CreditSetu provides a document checklist and redirects you to the official application portal (myScheme/JanSamarth) to complete your application." },
+            { q: "Is my data safe?", a: "Yes. We follow DPDP Act 2023 guidelines. Your data is encrypted and never shared with third parties without your consent." },
+          ].map(function(item, i) {
+            return (
+              <details key={i} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <summary className="px-5 py-4 cursor-pointer font-semibold text-[#000080] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm sm:text-base">
+                  {item.q}
+                </summary>
+                <div className="px-5 pb-4 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                  {item.a}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><Link to={ctaPath} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></Link></div></section>
 
     <footer id="contact" className="relative overflow-hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-16" style={{ background: "linear-gradient(160deg, #050f3c 0%, #000050 55%, #061a3f 100%)" }}>
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[340px] h-[340px] -top-40 right-[-8%] opacity-60" />
