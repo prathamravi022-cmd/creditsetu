@@ -150,7 +150,56 @@ export function AuthProvider({ children }) {
     return verifyOTP(mobile, otp);
   }, [verifyOTP]);
 
-  const logout = useCallback(() => {
+  
+  // Firebase Email/Password: Signup
+  const signupWithEmail = useCallback(async (email, password, name) => {
+    if (!auth) throw new Error('Firebase not configured');
+    try {
+      const { createUserWithEmailAndPassword } = await import('firebase/auth');
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const fbUser = result.user;
+      const isAdmin = false;
+      const userData = {
+        id: fbUser.uid,
+        name: name || email.split('@')[0],
+        email: fbUser.email || email,
+        mobile: '',
+        authMethod: 'firebase-email',
+        isAdmin,
+      };
+      setUser(userData);
+      return userData;
+    } catch (err) {
+      console.error('[Auth] signupWithEmail failed:', err.message);
+      throw err;
+    }
+  }, []);
+
+  // Firebase Email/Password: Login
+  const loginWithEmail = useCallback(async (email, password) => {
+    if (!auth) throw new Error('Firebase not configured');
+    try {
+      const { signInWithEmailAndPassword } = await import('firebase/auth');
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const fbUser = result.user;
+      const isAdmin = fbUser.email === 'prathamravi022@gmail.com';
+      const userData = {
+        id: fbUser.uid,
+        name: fbUser.displayName || fbUser.email?.split('@')[0] || 'User',
+        email: fbUser.email || '',
+        mobile: fbUser.phoneNumber || '',
+        authMethod: 'firebase-email',
+        isAdmin,
+      };
+      setUser(userData);
+      return userData;
+    } catch (err) {
+      console.error('[Auth] loginWithEmail failed:', err.message);
+      throw err;
+    }
+  }, []);
+
+const logout = useCallback(() => {
     setUser(null);
     setConfirmationResult(null);
     localStorage.removeItem(STORAGE_KEY);
@@ -167,7 +216,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user, setUser, loading, isAdmin,
-        loginWithGoogle, loginWithMobile, sendOTP, verifyOTP, logout,
+        loginWithGoogle, loginWithMobile, sendOTP, verifyOTP, logout, loginWithEmail, signupWithEmail,
         isAuthenticated: !!user,
         isFirebaseReady: isFirebaseConfigured && !!auth,
       }}

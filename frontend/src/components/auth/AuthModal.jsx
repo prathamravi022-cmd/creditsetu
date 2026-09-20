@@ -44,7 +44,7 @@ function ensureStyles() {
 /* ─── Main component ─── */
 export default function AuthModal({ open, onClose }) {
   const navigate = useNavigate();
-  const { setUser, loginWithGoogle } = useAuth();
+  const { setUser, loginWithGoogle, loginWithEmail, signupWithEmail } = useAuth();
 
   const [mode, setMode] = useState('login'); // login | signup | phone | otp
   const [email, setEmail] = useState('');
@@ -125,8 +125,17 @@ export default function AuthModal({ open, onClose }) {
           navigate(admin ? '/admin/dashboard' : '/get-started');
         }, 600);
       } else {
-        // Supabase not configured — use Firebase fallback
-        throw new Error('Supabase not configured');
+        // Firebase email/password fallback
+        const userData = await loginWithEmail(email, password);
+        const admin = isAdminUser(userData.email, userData.mobile);
+        if (admin) userData.isAdmin = true;
+        setUser(userData);
+        setSuccess(true);
+        setTimeout(() => {
+          onClose();
+          navigate(admin ? "/admin/dashboard" : "/get-started");
+        }, 600);
+        return;
       }
     } catch (err) {
       const msg = err.message || 'Login failed';
@@ -137,12 +146,18 @@ export default function AuthModal({ open, onClose }) {
       } else {
         // Fallback to Firebase
         try {
-          await loginWithGoogle();
-          setSuccess(true);
-          setTimeout(() => { onClose(); navigate('/get-started'); }, 600);
+          const userData = await loginWithGoogle();
+        const admin = isAdminUser(userData.email, userData.mobile);
+        if (admin) userData.isAdmin = true;
+        setUser(userData);
+        setSuccess(true);
+        setTimeout(() => {
+          onClose();
+          navigate(admin ? "/admin/dashboard" : "/get-started");
+        }, 600);
           return;
-        } catch {
-          handleError(msg, 'email');
+        } catch (fbErr) {
+          handleError(fbErr.message || msg, "email");
         }
       }
     } finally {
@@ -169,7 +184,15 @@ export default function AuthModal({ open, onClose }) {
         setError('');
         // Show success message briefly
       } else {
-        throw new Error('Supabase not configured');
+        // Firebase email/password fallback
+        const userData = await signupWithEmail(email, password, email.split("@")[0]);
+        setUser(userData);
+        setSuccess(true);
+        setTimeout(() => {
+          onClose();
+          navigate("/get-started");
+        }, 800);
+        return;
       }
     } catch (err) {
       const msg = err.message || 'Signup failed';
