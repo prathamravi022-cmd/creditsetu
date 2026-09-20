@@ -226,7 +226,7 @@ export default function LandingPage() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-6">
           <h2 className="text-xl sm:text-2xl font-bold text-[#000080] dark:text-white mb-2">Find the Right Scheme for You</h2>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">Search from 21+ government credit schemes or browse by category</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Discover schemes across Agriculture, Education, Business & more — powered by AI matching</p>
         </div>
         <div className="relative mb-6">
           <input
