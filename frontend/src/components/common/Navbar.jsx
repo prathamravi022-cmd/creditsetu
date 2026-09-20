@@ -7,7 +7,7 @@ import { UserButton, useAuth as useClerkAuth } from '@clerk/react';
 import { Menu, X, Shield, LogIn, LogOut, User } from 'lucide-react';
 import LanguageDropdown from '../ui/LanguageDropdown';
 
-export default function Navbar() {
+export default function Navbar({ onAuthOpen }) {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
     setMobileOpen(false);
   };
 
@@ -142,13 +142,13 @@ export default function Navbar() {
                   </button>
                 </div>
               ) : (
-                <Link
-                  to="/login"
+                <button
+                  onClick={() => onAuthOpen && onAuthOpen()}
                   className="hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>Login</span>
-                </Link>
+                </button>
               )
             )}
 
@@ -212,13 +212,12 @@ export default function Navbar() {
                   </button>
                 </>
               ) : (
-                <Link
-                  to="/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-green-700 hover:bg-green-50"
+                <button
+                  onClick={() => { setMobileOpen(false); onAuthOpen && onAuthOpen(); }}
+                  className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-green-700 hover:bg-green-50"
                 >
                   Login
-                </Link>
+                </button>
               )
             )}
           </div>

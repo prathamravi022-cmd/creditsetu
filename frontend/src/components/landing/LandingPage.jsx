@@ -101,10 +101,10 @@ function LangToggle() {
   return (<button onClick={function(){i18n.changeLanguage(next.c)}} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-600 hover:border-[#138808] hover:bg-[#138808]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-all text-gray-600" aria-label={"Switch language to " + next.l} title={"Switch to " + next.l}><Globe className="w-3.5 h-3.5" />{next.l}</button>);
 }
 
-export default function LandingPage() {
+export default function LandingPage({ onAuthOpen }) {
   var { t } = useTranslation();
   var { isAuthenticated } = useAuth();
-  var ctaPath = isAuthenticated ? "/get-started" : "/login";
+  var ctaPath = isAuthenticated ? "/get-started" : null;
   var [menuOpen, setMenuOpen] = useState(false);
   var [heroRef, heroVisible] = useScrollReveal(0.1);
   var [stepsRef, stepsVisible] = useScrollReveal(0.1);
@@ -189,7 +189,7 @@ export default function LandingPage() {
               : (<a key={i} href={item.to} className={cls} onClick={onClick}>{inner}</a>);
           })}
           <div className="pt-4 mt-2 border-t border-gray-100 dark:border-gray-800">
-            <Link to={ctaPath} onClick={function(){setMenuOpen(false)}} className="flex items-center justify-center gap-2 px-5 py-3.5 min-h-[48px] rounded-xl text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors shadow-md">{t("landing.hero.get_started_btn")} <ArrowRight className="w-4 h-4" /></Link>
+            <button onClick={function(){setMenuOpen(false); if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="flex items-center justify-center gap-2 px-5 py-3.5 min-h-[48px] rounded-xl text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors shadow-md">{t("landing.hero.get_started_btn")} <ArrowRight className="w-4 h-4" /></button>
           </div>
         </nav>
         <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-center gap-4 text-xs text-gray-400">
@@ -212,8 +212,8 @@ export default function LandingPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#000080] dark:text-white leading-tight mb-5">{t("landing.hero.title")}</h1>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed max-w-xl">{t("landing.hero.subtitle")}</p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <Link to={ctaPath} className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg text-white font-semibold bg-[#138808] hover:bg-[#0f6d06] transition-colors shadow-lg text-sm sm:text-base">{t("landing.hero.cta")} <ArrowRight className="w-5 h-5" /></Link>
-            <Link to="/get-started" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-semibold border-2 border-[#FF9933] text-[#FF9933] hover:bg-[#FF9933]/10 transition-colors text-sm sm:text-base">{t("landing.hero.view_all")}</Link>
+            <button onClick={function(){if(ctaPath){}else{onAuthOpen && onAuthOpen();}}} className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg text-white font-semibold bg-[#138808] hover:bg-[#0f6d06] transition-colors shadow-lg text-sm sm:text-base">{t("landing.hero.cta")} <ArrowRight className="w-5 h-5" /></button>
+            <button onClick={function(){if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-semibold border-2 border-[#FF9933] text-[#FF9933] hover:bg-[#FF9933]/10 transition-colors text-sm sm:text-base">{t("landing.hero.view_all")}</button>
           </div>
         </div>
       </div>
@@ -347,7 +347,7 @@ export default function LandingPage() {
       </div>
     </section>
 
-    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><Link to={ctaPath} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></Link></div></section>
+    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><button onClick={function(){if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></button></div></section>
 
     <footer id="contact" className="relative overflow-hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-16" style={{ background: "linear-gradient(160deg, #050f3c 0%, #000050 55%, #061a3f 100%)" }}>
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[340px] h-[340px] -top-40 right-[-8%] opacity-60" />
