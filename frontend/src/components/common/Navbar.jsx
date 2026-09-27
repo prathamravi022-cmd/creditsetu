@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../store/AuthContext';
@@ -6,6 +6,7 @@ import { useDarkMode } from '../../store/DarkModeContext';
 import { UserButton, useAuth as useClerkAuth } from '@clerk/react';
 import { Menu, X, Shield, LogIn, LogOut, User } from 'lucide-react';
 import LanguageDropdown from '../ui/LanguageDropdown';
+import MobileMenu from './MobileMenu';
 
 export default function Navbar({ onAuthOpen }) {
   const { t, i18n } = useTranslation();
@@ -14,48 +15,29 @@ export default function Navbar({ onAuthOpen }) {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const clerkAuth = useClerkAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    function handleClick(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMobileOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [mobileOpen]);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    function handleKey(e) {
-      if (e.key === 'Escape') setMobileOpen(false);
-    }
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
-  }, [mobileOpen]);
 
   const { dark, toggleDark } = useDarkMode();
 
 
 
-  const navLinks = [
-    { path: '/', label: t('nav.home') || 'Home' },
-    ...(isAuthenticated
-      ? [
-          { path: '/get-started', label: t('nav.check_eligibility') || 'Check Eligibility' },
-          { path: '/results', label: t('nav.results') || 'Results' },
-          { path: '/find-bank', label: t('nav.find_bank') || 'Find Bank' },
-        ]
-      : []),
-  ];
-
+  // Public links are always visible so visitors can navigate without signing in.
   const handleLogout = () => {
     logout();
     navigate('/');
     setMobileOpen(false);
   };
+
+  const navLinks = [
+    { path: '/', label: t('nav.home') || 'Home' },
+    { path: '/get-started', label: t('nav.check_eligibility') || 'Check Eligibility' },
+    { path: '/find-bank', label: t('nav.find_bank') || 'Find Bank' },
+    ...(isAuthenticated
+      ? [{ path: '/results', label: t('nav.results') || 'Results' }]
+      : []),
+    ...(isAdmin
+      ? [{ path: '/admin/dashboard', label: t('nav.admin') || 'Admin' }]
+      : []),
+  ];
 
   return (
     <nav className="cs-nav sticky top-0 z-50" role="navigation" aria-label="Main navigation">
@@ -86,16 +68,6 @@ export default function Navbar({ onAuthOpen }) {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/admin"
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                location.pathname === '/admin'
-                  ? 'bg-green-700/10 text-green-700'
-                  : 'text-slate-600 hover:text-green-900 hover:bg-gray-100'
-              }`}
-            >
-              {t('nav.admin') || 'Admin'}
-            </Link>
           </div>
 
           {/* Right Controls — condensed */}
@@ -103,7 +75,7 @@ export default function Navbar({ onAuthOpen }) {
             {/* Dark mode toggle */}
             <button
               onClick={toggleDark}
-              className="p-2 rounded-lg text-slate-600 hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
               title={dark ? 'Light mode' : 'Dark mode'}
               aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
@@ -144,7 +116,7 @@ export default function Navbar({ onAuthOpen }) {
               ) : (
                 <button
                   onClick={() => onAuthOpen && onAuthOpen()}
-                  className="hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
+                  className="mi-press mi-shine hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>Login</span>
@@ -155,7 +127,7 @@ export default function Navbar({ onAuthOpen }) {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-gray-100"
+              className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
             >
@@ -164,65 +136,10 @@ export default function Navbar({ onAuthOpen }) {
           </div>
         </div>
 
-        {/* Mobile Nav */}
-        {mobileOpen && (
-          <div ref={menuRef} className="lg:hidden pb-4 border-t border-gray-100 dark:border-gray-700 animate-slide-down">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setMobileOpen(false)}
-                className={`block px-4 py-3 rounded-lg text-base font-medium min-h-[44px] flex items-center ${
-                  location.pathname === link.path
-                    ? 'bg-green-700/10 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-                    : 'text-slate-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              to="/admin"
-              onClick={() => setMobileOpen(false)}
-              className={`block px-4 py-3 rounded-lg text-base font-medium min-h-[44px] flex items-center ${
-                location.pathname === '/admin'
-                  ? 'bg-green-700/10 text-green-700'
-                  : 'text-slate-600 hover:bg-gray-100'
-              }`}
-            >
-              {t('nav.admin') || 'Admin Panel'}
-            </Link>
-            {/* Clerk UserButton in mobile menu */}
-            {clerkAuth?.isSignedIn ? (
-              <div className="px-3 py-2">
-                <UserButton afterSignOutUrl="/" />
-              </div>
-            ) : (
-              isAuthenticated ? (
-                <>
-                  <div className="px-3 py-2 text-xs text-slate-500">
-                    Signed in as {user?.name || user?.mobile}
-                    {isAdmin && <span className="ml-2 text-orange-600 font-bold">ADMIN</span>}
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => { setMobileOpen(false); onAuthOpen && onAuthOpen(); }}
-                  className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-green-700 hover:bg-green-50"
-                >
-                  Login
-                </button>
-              )
-            )}
-          </div>
-        )}
       </div>
+
+      {/* Single shared mobile drawer for every page */}
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
     </nav>
   );
 }

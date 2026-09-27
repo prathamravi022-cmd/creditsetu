@@ -2,17 +2,28 @@
 <html lang="en">
   <head>
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#15803d">
+    <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="AI-Driven Scheme Matching for Marginalized Entrepreneurs — Government of India" />
+    <meta name="description" content="AI-driven discovery of Indian government credit schemes for entrepreneurs — in 7 languages." />
     <title>CreditSetu — AI-Driven Government Scheme Finder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script>
+      // Resolve the theme before first paint so there is no dark->light flash.
+      // Light is the default; only an explicit user choice turns dark mode on.
+      (function () {
+        try {
+          if (localStorage.getItem('creditsetu_dark') === 'true') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased">
+  <body class="antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

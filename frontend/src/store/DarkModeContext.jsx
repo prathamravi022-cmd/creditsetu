@@ -2,8 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const DarkModeContext = createContext();
 export function DarkModeProvider({ children }) {
   const [dark, setDark] = useState(() => {
-    const saved = localStorage.getItem('creditsetu_dark');
-    return saved === 'true';
+    // Light is the default experience; only an explicit user choice turns on dark.
+    // Matches the pre-paint script in index.html so there is no flash.
+    return localStorage.getItem('creditsetu_dark') === 'true';
   });
   useEffect(() => {
     localStorage.setItem('creditsetu_dark', dark);

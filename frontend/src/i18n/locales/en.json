@@ -48,10 +48,10 @@
       "for_students": "For Students"
     },
     "cta": {
-      "title": "Ready to Find Your Perfect Scheme?",
-      "subtitle": "Join thousands of entrepreneurs who have already benefited from government credit schemes. Start your application today.",
-      "ready": "Ready to find your perfect scheme?",
-      "join_thousands": "Join thousands of entrepreneurs who have already benefited from government loan schemes. Start your application today."
+      "title": "Ready to Find the Right Scheme?",
+      "subtitle": "Discover government credit schemes you may qualify for and start your application today.",
+      "ready": "Ready to find the right scheme?",
+      "join_thousands": "Discover government credit schemes you may qualify for and start your application today."
     },
     "trust_badge": "Built to help users discover relevant government credit schemes",
     "nav_home": "Home",
@@ -175,6 +175,10 @@
     "not_eligible": "Income above ₹5L — standard schemes apply",
     "business_desc": "Business/Enterprise loan",
     "education_desc": "Education/Skill loan",
+    "subsidy": "Subsidy / Grant",
+    "housing": "Housing loan",
+    "education": "Education",
+    "selected_category_label": "Selected category",
     "male_short": "Male",
     "female_short": "Female",
     "other_short": "Other",
@@ -273,6 +277,8 @@
     "call_vle": "Call VLE",
     "funds": "Funds",
     "show_map": "Show Map",
+    "hero_text": "Find a partner bank or CSC near you to submit your scheme application.",
+    "find_scheme": "Find Scheme",
     "show_list": "Show List",
     "banks_tab": "Banks",
     "csc_tab": "Jan Seva Kendra",

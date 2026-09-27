@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../store/AuthContext";
 import i18n from "../../i18n/config";
-import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone, ChevronLeft, ChevronRight, Home } from "lucide-react";
+import Tilt3D from "../ui/Tilt3D";
+import MagneticButton from "../ui/MagneticButton";
+import { Reveal, RevealGroup, RevealItem } from "../ui/Reveal";
+import Marquee from "../ui/Marquee";
+import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone, Sun, Moon } from "lucide-react";
+import { useDarkMode } from "../../store/DarkModeContext";
+import MobileMenu from "../common/MobileMenu";
 
 function useScrollReveal(threshold) {
   var ref = useRef(null);
@@ -98,7 +104,12 @@ function LangToggle() {
   var idx = langs.findIndex(function(x){return x.c===current});
   if(idx===-1) idx=0;
   var next = langs[(idx+1)%langs.length];
-  return (<button onClick={function(){i18n.changeLanguage(next.c)}} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-600 hover:border-[#138808] hover:bg-[#138808]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-all text-gray-600" aria-label={"Switch language to " + next.l} title={"Switch to " + next.l}><Globe className="w-3.5 h-3.5" />{next.l}</button>);
+  return (<button onClick={function(){i18n.changeLanguage(next.c)}} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-600 hover:border-[#138808] hover:bg-[#138808]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-all text-gray-600 dark:text-gray-300" aria-label={"Switch language to " + next.l} title={"Switch to " + next.l}><Globe className="w-3.5 h-3.5" />{next.l}</button>);
+}
+
+function ThemeToggle() {
+  var { dark, toggleDark } = useDarkMode();
+  return (<button onClick={toggleDark} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-600 hover:border-[#138808] hover:bg-[#138808]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-all text-gray-600 dark:text-gray-300" aria-pressed={dark} aria-label={dark ? "Switch to light mode" : "Switch to dark mode"} title={dark ? "Light mode" : "Dark mode"}>{dark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}{dark ? "Light" : "Dark"}</button>);
 }
 
 export default function LandingPage({ onAuthOpen }) {
@@ -108,11 +119,11 @@ export default function LandingPage({ onAuthOpen }) {
   var [menuOpen, setMenuOpen] = useState(false);
   var [heroRef, heroVisible] = useScrollReveal(0.1);
   var [stepsRef, stepsVisible] = useScrollReveal(0.1);
-  var [schemesRef, schemesVisible] = useScrollReveal(0.1);
   var [testiRef, testiVisible] = useScrollReveal(0.15);
   var [ctaRef, ctaVisible] = useScrollReveal(0.15);
   var [s1Ref, s1Val] = AnimatedCounter(21, "+");
-  var [s2Ref, s2Val] = AnimatedCounter(36, "+");
+  // India has 28 states + 8 union territories = 36, so a "+" here was factually wrong.
+  var [s2Ref, s2Val] = AnimatedCounter(36, "");
   var [s3Ref, s3Val] = AnimatedCounter(35, "+");
   var [s4Ref, s4Val] = AnimatedCounter(690, "");
 
@@ -135,9 +146,9 @@ export default function LandingPage({ onAuthOpen }) {
     { icon: LocationPinIcon, title: t("landing.features.step3.title"), desc: t("landing.features.step3.desc") },
   ];
   var schemes = [
-    { icon: IndianRupee, name: t("landing.schemes.micro.name"), desc: t("landing.schemes.micro.desc"), range: "Up to ₹1.40 Lakh", rate: "6.5% p.a.", badge: t("results.highly_recommended") },
-    { icon: TrendingUp, name: t("landing.schemes.term.name"), desc: t("landing.schemes.term.desc"), range: "₹1.40L - ₹50L", rate: "8% p.a.", badge: "Popular" },
-    { icon: Landmark, name: t("landing.schemes.edu.name"), desc: t("landing.schemes.edu.desc"), range: "Up to ₹10 Lakh", rate: "7.5% p.a.", badge: "For Students" },
+    { icon: IndianRupee, cat: "business", img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80", name: t("landing.schemes.micro.name"), desc: t("landing.schemes.micro.desc"), range: "Up to ₹1.40 Lakh", rate: "6.5% p.a.", badge: t("results.highly_recommended") },
+    { icon: TrendingUp, cat: "sc-st", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80", name: t("landing.schemes.term.name"), desc: t("landing.schemes.term.desc"), range: "₹1.40L - ₹50L", rate: "8% p.a.", badge: "Popular" },
+    { icon: Landmark, cat: "education", img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80", name: t("landing.schemes.edu.name"), desc: t("landing.schemes.edu.desc"), range: "Up to ₹10 Lakh", rate: "7.5% p.a.", badge: "For Students" },
   ];
   var testimonials = [
     { name: "Ramesh Kumar", loc: "Lucknow, UP", quote: "I got ₹2.5 lakh loan for my tailoring business in just 3 days. The AI matched me with the perfect MUDRA scheme.", scheme: "PM MUDRA" },
@@ -149,110 +160,142 @@ export default function LandingPage({ onAuthOpen }) {
   var [selectedCategory, setSelectedCategory] = useState("all");
   var categories = [{id:"all",label:"All Schemes",icon:"🏛️"},{id:"agriculture",label:"Agriculture",icon:"🌾"},{id:"education",label:"Education",icon:"📚"},{id:"health",label:"Health",icon:"🏥"},{id:"business",label:"Business/MSME",icon:"💼"},{id:"women",label:"Women Empowerment",icon:"👩"},{id:"sc-st",label:"SC/ST/OBC",icon:"🤝"},{id:"housing",label:"Housing",icon:"🏠"}];
 
-  var animBase = "transition-all duration-700 ease-out";
-  var fadeUp = animBase + (heroVisible ? " opacity-100 translate-y-0" : " opacity-0 translate-y-8");
-  var fadeUpS = animBase + (stepsVisible ? " opacity-100 translate-y-0" : " opacity-0 translate-y-8");
-  var fadeUpSc = animBase + (schemesVisible ? " opacity-100 translate-y-0" : " opacity-0 translate-y-8");
-  var fadeUpT = animBase + (testiVisible ? " opacity-100 translate-y-0" : " opacity-0 translate-y-8");
-  var fadeUpC = animBase + (ctaVisible ? " opacity-100 translate-y-0" : " opacity-0 translate-y-8");
+  // Live filtering for the search box + category chips (fully client-side)
+  var q = searchQuery.trim().toLowerCase();
+  var filteredSchemes = schemes.filter(function(s) {
+    var matchesCategory = selectedCategory === "all" || s.cat === selectedCategory;
+    var matchesQuery = !q || (s.name + " " + s.desc + " " + s.badge).toLowerCase().indexOf(q) !== -1;
+    return matchesCategory && matchesQuery;
+  });
 
   return (<div className="min-h-screen">
     <TricolorStripe />
     <nav className="fixed top-1 left-0 right-0 z-50 cs-nav shadow-sm">
       <div className="max-w-7xl mx-auto px-6 lg:px-16 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3"><div className="w-10 h-10 rounded-lg bg-[#138808] flex items-center justify-center"><Landmark className="w-5 h-5 text-white" /></div><div className="flex flex-col"><span className="text-[#000080] dark:text-white font-bold text-lg leading-tight">CreditSetu</span><span className="text-gray-500 text-[10px] uppercase tracking-wider">Scheme Finder</span></div></Link>
-        <div className="hidden lg:flex items-center gap-8"><a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.features")}</a><a href="#schemes" className="text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.schemes")}</a><a href="#how-it-works" className="text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.how_it_works")}</a><a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.contact")}</a></div>
-        <div className="flex items-center gap-3"><LangToggle /><Link to={ctaPath} className="hidden sm:inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors shadow-md">{t("landing.hero.get_started_btn")}</Link><button onClick={function(){setMenuOpen(!menuOpen)}} className="lg:hidden w-10 h-10 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808]" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} title={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</button></div>
+        <div className="hidden lg:flex items-center gap-8"><a href="#how-it-works" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.how_it_works")}</a><a href="#schemes" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.schemes")}</a><a href="#faq" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">FAQ</a><a href="#contact" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.contact")}</a></div>
+        <div className="flex items-center gap-3"><LangToggle /><ThemeToggle /><Link to={ctaPath} className="mi-press mi-shine glow-accent hidden sm:inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors">{t("landing.hero.get_started_btn")}</Link><button onClick={function(){setMenuOpen(!menuOpen)}} className="lg:hidden w-10 h-10 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808]" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} title={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</button></div>
       </div></nav>
-    {/* Mobile/Tablet Sidebar Drawer (slides in from the right) */}
-    <div className={"fixed inset-0 z-[70] lg:hidden transition-all duration-300 " + (menuOpen ? "" : "pointer-events-none invisible")} aria-hidden={!menuOpen}>
-      <div onClick={function(){setMenuOpen(false)}} className={"absolute inset-0 bg-[#0a1017]/50 backdrop-blur-sm transition-opacity duration-300 " + (menuOpen ? "opacity-100" : "opacity-0")} />
-      <aside role="dialog" aria-modal="true" aria-label="Navigation menu" className={"absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-white dark:bg-gray-900 border-l border-gray-100 dark:border-gray-800 shadow-2xl flex flex-col transition-transform duration-300 ease-out " + (menuOpen ? "translate-x-0" : "translate-x-full")}>
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
-          <div className="flex items-center gap-2.5"><div className="w-9 h-9 rounded-lg bg-[#138808] flex items-center justify-center"><Landmark className="w-5 h-5 text-white" /></div><div className="flex flex-col"><span className="text-[#000080] dark:text-white font-bold leading-tight">CreditSetu</span><span className="text-gray-400 text-[9px] uppercase tracking-wider">Scheme Finder</span></div></div>
-          <button onClick={function(){setMenuOpen(false)}} className="w-10 h-10 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-colors" aria-label="Close menu" title="Close menu"><X className="w-5 h-5" /></button>
-        </div>
-        <nav className="flex-1 overflow-y-auto px-4 py-5 space-y-1.5">
-          <div className="pb-3"><LangToggle /></div>
-          {[
-            { to: "/", icon: Home, label: t("landing.footer.home"), route: true },
-            { to: "#features", icon: Shield, label: t("landing.nav.features") },
-            { to: "#schemes", icon: IndianRupee, label: t("landing.nav.schemes") },
-            { to: "#how-it-works", icon: ArrowRight, label: t("landing.nav.how_it_works") },
-            { to: "#contact", icon: Phone, label: t("landing.nav.contact") },
-          ].map(function(item, i) {
-            var cls = "flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl font-medium text-slate-700 dark:text-gray-200 hover:bg-[#138808]/5 hover:text-[#138808] dark:hover:bg-[#138808]/10 transition-colors";
-            var inner = (<><span className="w-8 h-8 rounded-lg bg-[#138808]/10 text-[#138808] flex items-center justify-center flex-shrink-0"><item.icon className="w-4 h-4" /></span>{item.label}</>);
-            var onClick = function(){ setMenuOpen(false); };
-            return item.route
-              ? (<Link key={i} to={item.to} className={cls} onClick={onClick}>{inner}</Link>)
-              : (<a key={i} href={item.to} className={cls} onClick={onClick}>{inner}</a>);
-          })}
-          <div className="pt-4 mt-2 border-t border-gray-100 dark:border-gray-800">
-            <button onClick={function(){setMenuOpen(false); if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="flex items-center justify-center gap-2 px-5 py-3.5 min-h-[48px] rounded-xl text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors shadow-md">{t("landing.hero.get_started_btn")} <ArrowRight className="w-4 h-4" /></button>
-          </div>
-        </nav>
-        <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-center gap-4 text-xs text-gray-400">
-          <Link to="/privacy-policy" onClick={function(){setMenuOpen(false)}} className="hover:text-[#138808] transition-colors">{t("landing.footer.privacy")}</Link>
-          <span aria-hidden="true">·</span>
-          <Link to="/terms" onClick={function(){setMenuOpen(false)}} className="hover:text-[#138808] transition-colors">{t("landing.footer.terms")}</Link>
-          <span aria-hidden="true">·</span>
-          <Link to="/feedback" onClick={function(){setMenuOpen(false)}} className="hover:text-[#138808] transition-colors">{t("landing.footer.feedback")}</Link>
-        </div>
-      </aside>
-    </div>
-    <section ref={heroRef} className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-16 min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80" alt="" className="w-full h-full object-cover" /><div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/50" /><div className="absolute inset-0 bg-[#065f46]/5" /></div>
+    {/* Shared slide-in drawer (same menu on every page) */}
+    <MobileMenu open={menuOpen} onClose={function(){setMenuOpen(false)}} />
+    <section ref={heroRef} className="relative pt-20 pb-16 lg:pb-24 px-4 sm:px-6 lg:px-16 min-h-[72vh] md:min-h-[86vh] flex items-center overflow-hidden">
+      {/* Static hero background image — no parallax, stays put on scroll */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80"
+          alt="Two hands joined in partnership — citizens and government credit schemes working together"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div className="absolute inset-0 hero-scrim" />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10 w-full">
-        <div className={"max-w-2xl transition-all duration-700 ease-out " + (heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay:"0.1s"}}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#138808]/10 border border-[#138808]/20 mb-5">
-            <Shield className="w-4 h-4 text-[#138808]" />
-            <span className="text-[#138808] text-sm font-medium">{t("landing.hero.badge")}</span>
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          {/* Left: message */}
+          <div className={"lg:col-span-7 transition-all duration-700 ease-out " + (heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay:"0.1s"}}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#138808]/10 border border-[#138808]/20 mb-5 mi-float">
+              <Shield className="w-4 h-4 text-[#138808]" />
+              <span className="text-[#138808] text-sm font-medium">{t("landing.hero.badge")}</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5 bg-gradient-to-br from-[#000080] via-[#123a8f] to-[#138808] dark:from-white dark:via-sky-200 dark:to-emerald-300 bg-clip-text text-transparent mi-gradient-text">{t("landing.hero.title")}</h1>
+            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed max-w-xl">{t("landing.hero.subtitle")}</p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
+              <MagneticButton onClick={function(){ if (ctaPath) { window.location.href = "/get-started"; } else { onAuthOpen && onAuthOpen(); } }} className="mi-shine glow-accent px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-white font-semibold bg-[#138808] hover:bg-[#0f6d06] text-sm sm:text-base">
+                <span className="inline-flex items-center gap-2">{t("landing.hero.cta")} <ArrowRight className="w-5 h-5" /></span>
+              </MagneticButton>
+              <MagneticButton strength={0.2} onClick={function(){ if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();} }} className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-semibold border-2 border-[#FF9933] text-[#FF9933] hover:bg-[#FF9933]/10 text-sm sm:text-base">
+                {t("landing.hero.view_all")}
+              </MagneticButton>
+            </div>
+            {/* Factual product capabilities — no invented ratings or testimonials */}
+            <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+              {["21+ central & state schemes", "Available in 7 languages", "Free to use"].map(function(item) {
+                return (
+                  <li key={item} className="inline-flex items-center gap-1.5">
+                    <svg className="w-4 h-4 text-[#138808] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#000080] dark:text-white leading-tight mb-5">{t("landing.hero.title")}</h1>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed max-w-xl">{t("landing.hero.subtitle")}</p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button onClick={function(){if(ctaPath){}else{onAuthOpen && onAuthOpen();}}} className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg text-white font-semibold bg-[#138808] hover:bg-[#0f6d06] transition-colors shadow-lg text-sm sm:text-base">{t("landing.hero.cta")} <ArrowRight className="w-5 h-5" /></button>
-            <button onClick={function(){if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-semibold border-2 border-[#FF9933] text-[#FF9933] hover:bg-[#FF9933]/10 transition-colors text-sm sm:text-base">{t("landing.hero.view_all")}</button>
+
+          {/* Right: floating 3D match preview */}
+          <div className="lg:col-span-5 hidden lg:block">
+            <Reveal delay={0.25} y={40}>
+              <Tilt3D max={11} className="relative">
+                <div className="cs-hero-glass glow-accent rounded-3xl p-6 relative z-10">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#138808] animate-pulse" />
+                      <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">AI Match Result</span>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#138808]/10 text-[#138808] border border-[#138808]/20">Top match</span>
+                  </div>
+                  <div className="rounded-2xl bg-white/70 dark:bg-gray-900/60 border border-white/70 dark:border-white/10 p-4 mb-4">
+                    <div className="flex items-start gap-4">
+                      <div className="relative w-16 h-16 shrink-0">
+                        <svg viewBox="0 0 36 36" className="w-16 h-16 -rotate-90">
+                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor" className="text-gray-200 dark:text-gray-700" strokeWidth="3" />
+                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="#138808" strokeWidth="3" strokeLinecap="round" strokeDasharray="100" strokeDashoffset="8" />
+                        </svg>
+                        <span className="absolute inset-0 flex items-center justify-center text-sm font-extrabold text-[#138808]">92%</span>
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-[#000080] dark:text-white text-sm">PM MUDRA Micro Finance</h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Collateral-free loan up to Rs.10 lakh</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="px-2 py-0.5 rounded-md bg-[#FF9933]/10 text-[#FF9933] text-[10px] font-semibold">6.5% p.a.</span>
+                          <span className="px-2 py-0.5 rounded-md bg-[#000080]/10 text-[#000080] dark:text-sky-300 text-[10px] font-semibold">Rs.1.40 Lakh</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {[["Stand-Up India","78%"],["NSFDC Term Loan","64%"]].map(function(row) {
+                      return (
+                        <div key={row[0]} className="flex items-center gap-3">
+                          <span className="text-xs font-medium text-gray-600 dark:text-gray-300 flex-1 truncate">{row[0]}</span>
+                          <div className="w-24 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                            <div className="h-full rounded-full bg-gradient-to-r from-[#138808] to-[#FF9933]" style={{width: row[1]}} />
+                          </div>
+                          <span className="text-xs font-bold text-gray-500 dark:text-gray-400 w-8 text-right">{row[1]}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-white/60 dark:border-white/10 flex items-center justify-between">
+                    <span className="text-[11px] text-gray-500 dark:text-gray-400">Nearest branch found</span>
+                    <span className="text-[11px] font-semibold text-[#138808]">SBI &middot; 2.4 km &rarr;</span>
+                  </div>
+                </div>
+                <div className="absolute -left-4 -bottom-14 z-20 px-3 py-2 rounded-xl bg-white dark:bg-[#0e151c] shadow-xl border border-gray-100 dark:border-white/10 mi-float">
+                  <div className="text-[10px] text-gray-400 uppercase tracking-wide">Docs ready</div>
+                  <div className="text-sm font-bold text-[#138808]">5 / 7</div>
+                </div>
+                <div className="absolute -right-4 -top-4 z-20 px-3 py-2 rounded-xl bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 mi-float" style={{animationDelay:"1.2s"}}>
+                  <div className="text-[10px] text-gray-400 uppercase tracking-wide">Approval ETA</div>
+                  <div className="text-sm font-bold text-[#000080] dark:text-white">3 days</div>
+                </div>
+              </Tilt3D>
+            </Reveal>
           </div>
         </div>
       </div>
     </section>
+    {/* Trust marquee — partner banks & schemes */}
+    <section aria-label="Partner banks and government schemes" className="bg-white dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800 py-5">
+      <Marquee speed={40} gap="3rem">
+        {["State Bank of India","Punjab National Bank","Bank of Baroda","Canara Bank","Union Bank of India","NABARD","SIDBI","PM MUDRA Yojana","Stand-Up India","NSFDC","myScheme","JanSamarth"].map(function(name, i) {
+          return (<span key={i} className="flex items-center gap-2 text-sm font-semibold text-gray-400 dark:text-gray-500 whitespace-nowrap hover:text-[#138808] transition-colors"><Landmark className="w-4 h-4" />{name}</span>);
+        })}
+      </Marquee>
+    </section>
+
     <section className="bg-stats py-10 sm:py-12 px-4 sm:px-6 lg:px-16 relative overflow-hidden"><div aria-hidden="true" className="cs-orb cs-orb-navy w-[300px] h-[300px] -bottom-40 right-[-4%] opacity-60" /><div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"><div ref={s1Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s1Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.schemes")}</div></div><div ref={s2Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s2Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.partners")}</div></div><div ref={s3Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s3Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.disbursed")}</div></div><div ref={s4Ref} className="text-center"><div className="text-3xl md:text-4xl font-extrabold text-white mb-1">{s4Val}</div><div className="text-sm text-white/70 uppercase tracking-wider">{t("landing.stats.districts")}</div></div></div></section>
 
-
-    {/* Search Bar Section */}
-    <section className="bg-white dark:bg-gray-900 py-8 sm:py-12 px-4 sm:px-6 lg:px-16">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-[#000080] dark:text-white mb-2">Find the Right Scheme for You</h2>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">Discover schemes across Agriculture, Education, Business & more — powered by AI matching</p>
-        </div>
-        <div className="relative mb-6">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={function(e){setSearchQuery(e.target.value)}}
-            placeholder="Search schemes by name, category, or keyword..."
-            className="w-full px-5 py-4 pl-12 rounded-xl border-2 border-gray-200 dark:border-gray-700 focus:border-[#138808] focus:ring-2 focus:ring-[#138808]/20 outline-none text-base bg-gray-50 dark:bg-gray-800 dark:text-white transition-all"
-          />
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-        </div>
-        <div className="flex flex-wrap gap-2 justify-center">
-          {categories.map(function(cat) {
-            return (
-              <button
-                key={cat.id}
-                onClick={function(){setSelectedCategory(cat.id)}}
-                className={"px-4 py-2 rounded-full text-sm font-medium transition-all " + (selectedCategory === cat.id ? "bg-[#138808] text-white shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#138808]/10 hover:text-[#138808]")}
-              >
-                <span className="mr-1.5">{cat.icon}</span>{cat.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </section>
 
     <section id="how-it-works" ref={stepsRef} className="bg-steps py-16 sm:py-20 px-4 sm:px-6 lg:px-16 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -261,6 +304,12 @@ export default function LandingPage({ onAuthOpen }) {
           <div className="w-16 h-1 bg-[#FF9933] mx-auto rounded-full mb-4" />
           <p className="text-gray-500 dark:text-gray-400 max-w-lg mx-auto text-sm sm:text-base">A simple 4-step journey to discover and apply for the right government credit scheme</p>
         </div>
+        <Reveal className="mb-12 sm:mb-16">
+          <div className="mi-zoom relative rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 aspect-[21/8] bg-gradient-to-br from-[#138808]/25 to-[#FF9933]/25">                          <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1400&q=80" alt="Everyday scene from India — the families and small businesses that government credit schemes are designed to support" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+            <p className="absolute bottom-4 left-5 right-5 text-white text-sm sm:text-base font-medium">From a 2-minute profile to a routed application at your nearest branch.</p>
+          </div>
+        </Reveal>
         {/* Desktop: horizontal journey with connecting lines */}
         <div className="hidden md:grid grid-cols-4 gap-4 relative">
           {/* Connecting line */}
@@ -314,10 +363,119 @@ export default function LandingPage({ onAuthOpen }) {
       </div>
     </section>
 
-    <section id="schemes" ref={schemesRef} className="bg-schemes relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden"><div className="max-w-7xl mx-auto relative z-10"><div className={"text-center mb-16 transition-all duration-700 " + (schemesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><h2 className="text-3xl md:text-4xl font-bold text-[#000080] dark:text-white mb-4">{t("landing.schemes.title")}</h2><div className="w-16 h-1 bg-[#138808] mx-auto rounded-full" /></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">{schemes.map(function(scheme, i) { var SchemeIcon = scheme.icon; return (<div key={i} className={"relative p-5 sm:p-6 md:p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 " + (schemesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay: (i*150)+"ms"}}><div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold bg-[#FF9933]/10 text-[#FF9933] border border-[#FF9933]/20">{scheme.badge}</div><div className="w-14 h-14 rounded-xl bg-[#138808]/10 flex items-center justify-center mb-6"><SchemeIcon className="w-7 h-7 text-[#138808]" /></div><h3 className="text-xl font-bold text-[#000080] dark:text-white mb-3">{scheme.name}</h3><p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">{scheme.desc}</p><div className="flex items-center justify-between pt-5 border-t border-gray-100"><span className="text-sm text-gray-500 dark:text-gray-400">{scheme.range}</span><span className="text-sm font-bold text-[#138808]">{scheme.rate}</span></div><a href={"https://www.myscheme.gov.in/search?q=" + encodeURIComponent(scheme.name)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-[#138808] hover:underline mt-4">Apply on myScheme →</a></div>);})}</div></div></section>
+    <section id="schemes" className="scroll-mt-20 bg-schemes relative py-16 sm:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Search + category filter — the primary "find a scheme" action, kept
+            in the same block as the results grid so the journey reads as one step. */}
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#000080] dark:text-white mb-3">Find the Right Scheme for You</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">Search 21+ central and state schemes, or filter by the category that fits you.</p>
+          </div>
+          <div className="relative mb-5">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={function(e){setSearchQuery(e.target.value)}}
+              placeholder="Search schemes by name, category, or keyword..."
+              aria-label="Search schemes"
+              className="w-full px-5 py-4 pl-12 rounded-xl border-2 border-gray-200 dark:border-white/10 focus:border-[#138808] focus:ring-2 focus:ring-[#138808]/20 outline-none text-base bg-gray-50 dark:bg-white/5 dark:text-white transition-all"
+            />
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </div>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {categories.map(function(cat) {
+              return (
+                <button
+                  key={cat.id}
+                  onClick={function(){setSelectedCategory(cat.id)}}
+                  aria-pressed={selectedCategory === cat.id}
+                  className={"mi-press px-4 py-2 rounded-full text-sm font-medium transition-all " + (selectedCategory === cat.id ? "bg-[#138808] text-white glow-accent" : "bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-[#138808]/10 hover:text-[#138808]")}
+                >
+                  <span className="mr-1.5">{cat.icon}</span>{cat.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center justify-center gap-3 mt-6 mb-12 text-xs sm:text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
+            <span><strong className="text-[#138808]">{filteredSchemes.length}</strong> scheme{filteredSchemes.length === 1 ? "" : "s"} found</span>
+            {(q || selectedCategory !== "all") && (
+              <button onClick={function(){ setSearchQuery(""); setSelectedCategory("all"); }} className="mi-underline font-semibold text-[#FF9933]">Clear filters</button>
+            )}
+          </div>
+        </div>
+
+        {filteredSchemes.length === 0 ? (
+          <div className="max-w-md mx-auto text-center glass-card rounded-2xl p-10">
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">No schemes match your search.</p>
+            <button onClick={function(){ setSearchQuery(""); setSelectedCategory("all"); }} className="px-5 py-2.5 rounded-xl bg-[#138808] text-white text-sm font-semibold mi-press mi-shine">Show all schemes</button>
+          </div>
+        ) : (
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8" stagger={0.12}>
+            {filteredSchemes.map(function(scheme) {
+              var SchemeIcon = scheme.icon;
+              return (
+                <RevealItem key={scheme.name} className="h-full">
+                  <Tilt3D max={8} className="h-full">
+                    <article className="h-full flex flex-col rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 mi-lift mi-glow overflow-hidden">
+                      <div className="mi-zoom relative h-40 overflow-hidden bg-gradient-to-br from-[#138808]/20 to-[#FF9933]/20">
+                        <img src={scheme.img} alt={scheme.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                        <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-[#FF9933] border border-[#FF9933]/25">{scheme.badge}</span>
+                        <div className="absolute bottom-3 left-4 flex items-center gap-2 text-white">
+                          <SchemeIcon className="w-5 h-5" />
+                          <span className="text-sm font-bold">{scheme.rate}</span>
+                        </div>
+                      </div>
+                      <div className="p-5 sm:p-6 flex flex-col flex-1">
+                        <h3 className="text-lg font-bold text-[#000080] dark:text-white mb-2">{scheme.name}</h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-5 flex-1">{scheme.desc}</p>
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                          <span className="text-sm text-gray-500 dark:text-gray-400">{scheme.range}</span>
+                          <a href={"https://www.myscheme.gov.in/search?q=" + encodeURIComponent(scheme.name)} target="_blank" rel="noopener noreferrer" className="mi-underline inline-flex items-center gap-1 text-sm font-semibold text-[#138808]">Apply on myScheme &rarr;</a>
+                        </div>
+                      </div>
+                    </article>
+                  </Tilt3D>
+                </RevealItem>
+              );
+            })}
+          </RevealGroup>
+        )}
+      </div>
+    </section>
     
+    {/* Testimonials marquee */}
+    <section ref={testiRef} className="bg-process py-12 sm:py-16 px-4 sm:px-6 lg:px-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className={"text-center mb-10 transition-all duration-700 " + (testiVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#000080] dark:text-white mb-3">The journeys CreditSetu is built for</h2>
+          <div className="w-16 h-1 bg-[#FF9933] mx-auto rounded-full mb-3" />
+          <p className="text-xs sm:text-sm text-gray-400">Illustrative examples of the user journeys this prototype targets.</p>
+        </div>
+      </div>
+      <Marquee speed={46} gap="1.5rem">
+        {testimonials.map(function(item, i) {
+          var tones = ["bg-[#FF9933]","bg-[#138808]","bg-[#000080]"];
+          return (
+            <figure key={i} className="w-[300px] sm:w-[360px] shrink-0 glass-card rounded-2xl p-5 mi-lift">
+              <div className="flex items-center gap-3 mb-3">
+                <span className={"w-10 h-10 rounded-full text-white font-bold flex items-center justify-center shrink-0 " + tones[i % tones.length]}>{item.name.split(" ").map(function(w){return w[0]}).join("")}</span>
+                <div className="min-w-0">
+                  <div className="text-sm font-bold text-[#000080] dark:text-white">{item.name}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{item.loc}</div>
+                </div>
+                <span className="ml-auto shrink-0 text-[10px] font-semibold px-2 py-1 rounded-full bg-[#138808]/10 text-[#138808]">{item.scheme}</span>
+              </div>
+              <blockquote className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">&ldquo;{item.quote}&rdquo;</blockquote>
+            </figure>
+          );
+        })}
+      </Marquee>
+    </section>
+
     {/* FAQ Section */}
-    <section className="bg-gray-50 dark:bg-gray-900 py-12 sm:py-16 px-4 sm:px-6 lg:px-16">
+    <section id="faq" className="scroll-mt-20 bg-gray-50 dark:bg-gray-900 py-12 sm:py-16 px-4 sm:px-6 lg:px-16">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#000080] dark:text-white mb-3">Frequently Asked Questions</h2>
@@ -347,7 +505,7 @@ export default function LandingPage({ onAuthOpen }) {
       </div>
     </section>
 
-    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><button onClick={function(){if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></button></div></section>
+    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><button onClick={function(){if(isAuthenticated){window.location.href="/get-started";}else{onAuthOpen && onAuthOpen();}}} className="mi-press mi-shine inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></button></div></section>
 
     <footer id="contact" className="relative overflow-hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-16" style={{ background: "linear-gradient(160deg, #050f3c 0%, #000050 55%, #061a3f 100%)" }}>
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[340px] h-[340px] -top-40 right-[-8%] opacity-60" />
@@ -359,7 +517,7 @@ export default function LandingPage({ onAuthOpen }) {
           <div><div className="flex items-center gap-2 mb-4"><div className="w-8 h-8 rounded-lg bg-[#138808] flex items-center justify-center"><Landmark className="w-4 h-4 text-white" /></div><span className="text-white font-semibold text-lg">CreditSetu</span></div><p className="text-white/60 text-sm mb-4">{t("landing.footer.government_scheme_finder")}</p><div className="flex items-center gap-3"><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.148 0 7.372 2.96 7.372 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.633 0 12.017 0z"/></svg></a><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></a></div></div>
           <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.quick_links")}</h4><ul className="space-y-2.5"><li><Link to="/" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.home")}</Link></li><li><Link to="/get-started" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.check_eligibility")}</Link></li><li><Link to="/find-bank" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.find_bank")}</Link></li></ul></div>
           <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.legal")}</h4><ul className="space-y-2.5"><li><Link to="/privacy-policy" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.privacy")}</Link></li><li><Link to="/terms" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.terms")}</Link></li><li><Link to="/feedback" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.feedback")}</Link></li></ul></div>
-          <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.ministry")}</h4><div className="flex items-center gap-2 mb-3"><AshokaChakra /><div className="text-white/70 text-xs leading-tight">Government of India<br/>Ministry of Social Justice<br/>&amp; Empowerment</div></div><ul className="space-y-2.5"><li><span className="text-white/40 text-xs">SIH — PS 26092</span></li></ul></div>
+          <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">Problem Statement</h4><div className="flex items-center gap-2 mb-3"><AshokaChakra /><div className="text-white/70 text-xs leading-tight">Smart India Hackathon 2026<br/>PS 26092 — Ministry of Social<br/>Justice &amp; Empowerment</div></div></div>
         </div>
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4"><AshokaChakra /><p className="text-white/50 text-sm">Made with ❤️ by Team Codivra — Smart India Hackathon 2026</p></div>

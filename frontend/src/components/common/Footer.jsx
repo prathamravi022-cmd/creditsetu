@@ -22,7 +22,7 @@ export default function Footer() {
               <span className="font-bold text-lg">CreditSetu Scheme Finder</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
-              {t('footer.disclaimer')}
+              Government scheme finder for marginalized entrepreneurs across India.
             </p>
           </div>
 
@@ -44,21 +44,18 @@ export default function Footer() {
               <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
               <li><Link to="/feedback" className="hover:text-white transition-colors">Feedback / Grievance</Link></li>
-              <li><Link to="/feedback" className="hover:text-white transition-colors">Report an Issue</Link></li>
             </ul>
           </div>
 
           {/* Ministry */}
           <div>
-            <h3 className="font-semibold mb-3 text-slate-300">Ministry</h3>
+            <h3 className="font-semibold mb-3 text-slate-300">Problem Statement</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Ministry of Social Justice & Empowerment<br />
-              Government of India<br />
-              Smart India Hackathon — PS 26092
+              Smart India Hackathon 2026 — PS 26092<br />
+              Theme: Ministry of Social Justice &amp; Empowerment
             </p>
             <p className="text-xs text-slate-500 mt-3">
-              Helpline: 1800-11-0031<br />
-              (Toll Free, Mon–Sat 9AM–6PM)
+              Helpline: 1800-11-0031
             </p>
           </div>
         </div>

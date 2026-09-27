@@ -1,146 +1,208 @@
+import React, { lazy, Suspense } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { AuthProvider, useAuth } from "./store/AuthContext";
 import { DarkModeProvider } from "./store/DarkModeContext";
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AuthProvider, useAuth } from './store/AuthContext';
-import ErrorBoundary from './components/common/ErrorBoundary';
-import Navbar from './components/common/Navbar';
-import Footer from './components/common/Footer';
-import AuthModal from './components/auth/AuthModal';
-import LandingPage from './components/landing/LandingPage';
-import OnboardingWizard from './components/onboarding/OnboardingWizard';
-import ResultsDashboard from './components/results/ResultsDashboard';
-import PartnerLocator from './components/map/PartnerLocator';
-import AdminDashboard from './components/admin/AdminDashboard';
-import AdminLogin from './components/admin/AdminLogin';
-import Page404 from './components/common/Page404';
-import ForbiddenPage from './components/common/ForbiddenPage';
-import EditProfile from './components/common/EditProfile';
-import GrievanceModal from './components/grievance/GrievanceModal';
-import PrivacyPolicy from './components/legal/PrivacyPolicy';
-import TermsConditions from './components/legal/TermsConditions';
-import FeedbackPage from './components/legal/FeedbackPage';
+import Navbar from "./components/common/Navbar";
+import Footer from "./components/common/Footer";
+import LandingPage from "./components/landing/LandingPage";
+import ResultsDashboard from "./components/results/ResultsDashboard";
+import OnboardingWizard from "./components/onboarding/OnboardingWizard";
+import FindBankMap from "./components/map/PartnerLocator";
+/* survey/faq/feedback pages were removed from this build — keep imports only if those folders exist */
+import AdminDashboard from "./components/admin/AdminDashboard";
+/* AdminAuditLog / AdminBankLocator / AdminConfig were removed from this build to match the current filesystem */
 
-/* ─── Skeleton loader for session check ─── */
-function SkeletonLoader() {
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-      <div className="w-full max-w-sm p-8">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 rounded-xl bg-gray-200 dark:bg-gray-700 animate-pulse" />
-          <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-          <div className="h-3 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-          <div className="flex gap-2 mt-4">
-            <div className="w-3 h-3 rounded-full bg-[#FF9933] animate-pulse" />
-            <div className="w-3 h-3 rounded-full bg-white animate-pulse" />
-            <div className="w-3 h-3 rounded-full bg-[#138808] animate-pulse" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+const LoadFailed = () => (
+  <main style={{ padding: "3rem", textAlign: "center", color: "#fff" }}>
+    <h2>Something went wrong loading this page.</h2>
+    <button
+      onClick={() => window.location.href = "/"}
+      style={{
+        marginTop: "1rem",
+        padding: "0.6rem 1.4rem",
+        background: "#ff9933",
+        border: "none",
+        borderRadius: "0.5rem",
+        color: "#fff",
+        fontWeight: "600",
+        cursor: "pointer",
+      }}
+    >
+      Back to home
+    </button>
+  </main>
+);
 
-function ProtectedRoute({ children, requireAdmin = false }) {
-  const { isAuthenticated, isAdmin, loading } = useAuth();
-
-  if (loading) {
-    return <SkeletonLoader />;
-  }
-
-  if (!isAuthenticated) {
+function ProtectedRoute({ children, adminOnly = false }) {
+  const { user } = useAuth();
+  if (!user) {
+    if (adminOnly) {
+      return <Navigate to="/" replace />;
+    }
     return <Navigate to="/" replace />;
   }
-
-  if (requireAdmin && !isAdmin) {
-    return <ForbiddenPage />;
+  if (adminOnly) {
+    const isAdmin =
+      (user.email && user.email.toLowerCase() === "prathamravi022@gmail.com") ||
+      (user.phone && String(user.phone).replace(/[^0-9]/g, "") === "9259609658");
+    if (!isAdmin) {
+      return <Navigate to="/" replace />;
+    }
   }
-
   return children;
 }
 
-function AppRoutes({ onAuthOpen }) {
+function RootLayout({ children }) {
+  const { pathname } = useLocation();
+  // The landing page ships its own header and footer, so the global chrome is
+  // skipped there to avoid rendering two navbars / footers on top of each other.
+  const isLanding = pathname === "/";
   return (
-    <Routes>
-      {/* Public routes */}
-      <Route path="/forbidden" element={<ForbiddenPage />} />
-
-      {/* Legal pages (public) */}
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms" element={<TermsConditions />} />
-      <Route path="/feedback" element={<FeedbackPage />} />
-
-      {/* Landing is always visible */}
-      <Route path="/" element={<LandingPage onAuthOpen={onAuthOpen} />} />
-
-      {/* Protected routes */}
-      <Route
-        path="/get-started"
-        element={
-          <ProtectedRoute>
-            <OnboardingWizard />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/results" element={<ResultsDashboard />} />
-      <Route path="/find-bank" element={<PartnerLocator />} />
-      <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
-
-      {/* Admin — login page (public) */}
-      <Route path="/admin" element={<AdminLogin onAuthOpen={onAuthOpen} />} />
-      {/* Admin — dashboard (requires admin auth) */}
-      <Route
-        path="/admin/dashboard"
-        element={
-          <ProtectedRoute requireAdmin>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route path="*" element={<Page404 />} />
-    </Routes>
+    <DarkModeProvider>
+      <AuthProvider>
+        <div className="page-shell">
+          {!isLanding && <Navbar />}
+          <main>{children}</main>
+          {!isLanding && <Footer />}
+        </div>
+      </AuthProvider>
+    </DarkModeProvider>
   );
 }
 
-function AppInner() {
-  const location = useLocation();
-  const isLanding = location.pathname === "/";
-  const isAuthPage = location.pathname === "/admin";
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-
-  // Open auth modal when navigating to old /login route
-  useEffect(() => {
-    if (location.pathname === "/login") {
-      setAuthModalOpen(true);
-    }
-  }, [location.pathname]);
-
-  const openAuth = () => setAuthModalOpen(true);
-  const closeAuth = () => setAuthModalOpen(false);
-
-  return (
-    <div className="cs-shell min-h-screen flex flex-col text-slate-900 dark:text-gray-100 transition-colors duration-300">
-      {/* Fixed ambient background */}
-      <div className="cs-ambient" aria-hidden="true" />
-      {!isLanding && !isAuthPage && <Navbar onAuthOpen={openAuth} />}
-      <main className="flex-1">
-        <AppRoutes onAuthOpen={openAuth} />
-      </main>
-      <GrievanceModal />
-      {!isLanding && !isAuthPage && <Footer />}
-      <AuthModal open={authModalOpen} onClose={closeAuth} />
-    </div>
-  );
-}
+const Landing = lazy(() => import("./components/landing/LandingPage"));
+const Results = lazy(() => import("./components/results/ResultsDashboard"));
+const Map = lazy(() => import("./components/map/PartnerLocator"));
+// survey/faq/feedback routes were removed from this build to match the current filesystem
+const Admin = lazy(() => import("./components/admin/AdminDashboard"));
+const EditProfile = lazy(() => import("./components/common/EditProfile"));
+const PrivacyPolicy = lazy(() => import("./components/legal/PrivacyPolicy"));
+const TermsConditions = lazy(() => import("./components/legal/TermsConditions"));
+const FeedbackPage = lazy(() => import("./components/legal/FeedbackPage"));
+// AdminLog/AdminMap/AdminConfigComponent were removed from this build to match the current filesystem
 
 export default function App() {
   return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <DarkModeProvider>
-          <AppInner />
-        </DarkModeProvider>
-      </AuthProvider>
-    </ErrorBoundary>
+    <RootLayout>
+      {/* Public marketing surface */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <Landing />
+            </Suspense>
+          }
+        />
+
+        {/* Core product surfaces */}
+        <Route
+          path="/get-started"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <OnboardingWizard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/onboarding"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <OnboardingWizard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/find-schemes"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <Results />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/schemes"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <Results />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/results"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <Results />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/find-bank"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <Map />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/bank-locator"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <Map />
+            </Suspense>
+          }
+        />
+
+        {/* Editable profile — reachable from the menu and the Schemes page */}
+        <Route
+          path="/edit-profile"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <EditProfile />
+            </Suspense>
+          }
+        />
+
+        {/* Trust, feedback, and support */}
+        <Route
+          path="/privacy-policy"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <PrivacyPolicy />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <TermsConditions />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <Suspense fallback={<LoadFailed />}>
+              <FeedbackPage />
+            </Suspense>
+          }
+        />
+        {/* Admin surface — gated behind admin identity */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute adminOnly>
+              <Suspense fallback={<LoadFailed />}>
+                <Admin />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Not found */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </RootLayout>
   );
 }

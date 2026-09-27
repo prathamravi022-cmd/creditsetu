@@ -119,3 +119,502 @@ input[type='range']::-moz-range-thumb {
   border: 3px solid white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
+
+/* ============================================================
+   Motion primitives — 3D tilt, magnetic buttons, marquee
+   ============================================================ */
+
+/* ---------- Tilt3D ---------- */
+.tilt3d {
+  position: relative;
+  border-radius: inherit;
+}
+.tilt3d__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+/* ---------- MagneticButton ---------- */
+.magnetic-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.magnetic-btn__ripples {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.magnetic-btn__ripple {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.45);
+  transform: translate(-50%, -50%) scale(0);
+  animation: miRipple 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes miRipple {
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.marquee--fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee__track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: max-content;
+  animation-name: miMarquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes miMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee--pause:hover .marquee__track,
+.marquee--pause:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   Micro-interactions — applied with small utility classes.
+   All hover states are gated behind (hover: hover) so touch
+   devices don't get sticky hover states.
+   ============================================================ */
+
+/* Lift + deepen shadow on hover */
+.mi-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .mi-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -18px rgba(15, 36, 64, 0.35);
+  }
+}
+
+/* Press feedback for buttons/links */
+.mi-press {
+  transition: transform 0.12s ease-out, box-shadow 0.25s ease;
+}
+.mi-press:active {
+  transform: scale(0.965);
+}
+
+/* Diagonal light sweep across a surface */
+.mi-shine {
+  position: relative;
+  overflow: hidden;
+}
+.mi-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;    background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 153, 51, 0.45) 45%,
+    rgba(255, 153, 51, 0.16) 60%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+@media (hover: hover) {
+  .mi-shine:hover::after {
+    opacity: 1;
+    animation: miShine 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+@keyframes miShine {
+  from { left: -60%; }
+  to   { left: 130%; }
+}
+
+/* Animated underline that grows from the left on hover */
+.mi-underline {
+  position: relative;
+}
+.mi-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mi-underline:hover::after,
+.mi-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Image zoom-on-hover container */
+.mi-zoom {
+  overflow: hidden;
+}
+.mi-zoom img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .mi-zoom:hover img {
+    transform: scale(1.07);
+  }
+}
+
+/* Soft colored glow ring on focus/hover for interactive cards */
+.mi-glow {
+  transition: box-shadow 0.4s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) {
+  .mi-glow:hover {
+    box-shadow: 0 0 0 1px rgba(19, 136, 8, 0.35),
+                0 20px 46px -20px rgba(19, 136, 8, 0.5);
+  }
+}
+
+/* Consistent, visible keyboard focus ring across the app */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #138808;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Animated gradient text for headings */
+.mi-gradient-text {
+  background-size: 220% 220%;
+  animation: miGradient 7s ease infinite;
+}
+@keyframes miGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Floating accent (gently bobs) for decorative badges/stat chips */
+.mi-float {
+  animation: miFloat 6s ease-in-out infinite;
+}
+@keyframes miFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track,
+  .mi-float,
+  .mi-gradient-text {
+    animation: none;
+  }
+  .mi-lift:hover,
+  .mi-press:active,
+  .mi-zoom:hover img {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Premium theme — deep base, elevated surfaces, glowing accents
+   Dark is the default experience.
+   ============================================================ */
+
+:root {
+  --cs-bg: #f6f9f7;
+  --cs-glow: 19, 136, 8;
+  --cs-border: rgba(15, 36, 64, 0.10);
+}
+
+.dark {
+  --cs-bg: #070b0f;
+  --cs-glow: 52, 211, 153;
+  --cs-border: rgba(148, 197, 255, 0.10);
+}
+
+html {
+  background: var(--cs-bg);
+}
+
+body {
+  background: var(--cs-bg);
+}
+
+.dark .cs-shell {
+  background: var(--cs-bg);
+}
+
+/* Modern display typography — tighter tracking for headings */
+h1, h2, h3, .font-display {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Elevated dark surfaces (upgrade the light-oriented glass tokens) */
+.dark .glass-card {
+  background: linear-gradient(160deg, rgba(18, 27, 36, 0.92), rgba(11, 17, 23, 0.86));
+  border: 1px solid rgba(148, 197, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 44px -24px rgba(0, 0, 0, 0.9);
+}
+.dark .glass-panel {
+  background: rgba(14, 21, 28, 0.86);
+  border: 1px solid rgba(148, 197, 255, 0.10);
+}
+.dark .cs-nav {
+  background: rgba(7, 11, 15, 0.82);
+  border-bottom: 1px solid rgba(148, 197, 255, 0.08);
+}
+
+/* Subtle glowing accent ring for primary interactive surfaces */
+.glow-accent {
+  box-shadow: 0 0 0 1px rgba(var(--cs-glow), 0.25),
+              0 10px 34px -12px rgba(var(--cs-glow), 0.45);
+}
+.dark .glow-accent {
+  box-shadow: 0 0 0 1px rgba(var(--cs-glow), 0.30),
+              0 0 26px -8px rgba(var(--cs-glow), 0.40),
+              0 20px 54px -24px rgba(var(--cs-glow), 0.55);
+}
+
+/* Soft halo behind key headings */
+.glow-text {
+  text-shadow: 0 0 28px rgba(var(--cs-glow), 0.28);
+}
+.dark .glow-text {
+  text-shadow: 0 0 36px rgba(var(--cs-glow), 0.38);
+}
+
+/* Gradient hairline divider */
+.divider-glow {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, rgba(var(--cs-glow), 0.45), transparent);
+}
+
+/* Hero legibility scrim — explicit CSS rather than Tailwind arbitrary dark
+   variants, which do not reliably compile for gradient color stops. */
+.hero-scrim {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.88),
+    rgba(255, 255, 255, 0.55)
+  );
+}
+.dark .hero-scrim {
+  background: linear-gradient(
+    to right,
+    rgba(7, 11, 15, 0.94),
+    rgba(7, 11, 15, 0.80),
+    rgba(7, 11, 15, 0.42)
+  );
+}/* Consistent vertical rhythm between page sections */
+.section-y {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+@media (min-width: 768px) {
+  .section-y {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* ---------- Universal brand tokens (inner pages inherit these) ---------- */
+/* Saffron glow accent — the single brand colour used across the site.
+   Defined once here so every inner page can reference it without
+   inventing its own green-only palette. */
+:root {
+  --cs-brand: #FF9933;
+  --cs-brand-soft: rgba(255, 153, 51, 0.14);
+  --cs-brand-line: rgba(255, 153, 51, 0.35);
+  --cs-glow: 255, 153, 51;
+  --cs-brand-hover: #ffa84d;
+  --cs-brand-soft-strong: rgba(255, 153, 51, 0.22);
+}
+
+/* Card surfaces that feel premium in both themes. Light is the base;
+   the dark block below overrides for dark mode. */
+.scale-card {
+  background: #ffffff;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease;
+}
+.scale-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 153, 51, 0.45);
+  box-shadow: 0 18px 40px -18px rgba(255, 153, 51, 0.35);
+}
+.dark .scale-card {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+.dark .scale-card:hover {
+  border-color: var(--cs-brand-line);
+}
+
+/* Scroll-triggered reveal (used by Results + inner pages). */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Brand gradient text — subtle, only on headings that can carry it. */
+.gradient-brand {
+  background: linear-gradient(120deg, var(--cs-brand), #ffd29a 60%, var(--cs-brand));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft brand divider */
+.divider-brand {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cs-brand-soft), transparent);
+  border: 0;
+}
+
+/* ---------- Global UX polish (applies to every page) ---------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Keyboard users get a visible, branded focus ring everywhere. */
+*:focus-visible {
+  outline: 2px solid var(--cs-brand, #ff9933);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(255, 153, 51, 0.3);
+}
+
+/* Interactive elements always feel clickable. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+summary,
+select,
+label[for] {
+  cursor: pointer;
+}
+
+/* Anchor targets clear the sticky navbar instead of hiding underneath it. */
+section[id],
+[id].scroll-mt-20 {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Images get a soft placeholder tint while loading — avoids white flashes. */
+img {
+  background-color: rgba(15, 23, 42, 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Brand utility classes — consumed by PartnerLocator and inner-page accents.
+   Defined explicitly because the Tailwind config has no `brand` color token. */
+:root {
+  --cs-brand: #ff9933;
+  --cs-brand-hover: #ffa84d;
+  --cs-brand-soft: rgba(255, 153, 51, 0.14);
+  --cs-brand-line: rgba(255, 153, 51, 0.35);
+}
+.text-brand {
+  color: var(--cs-brand);
+}
+.bg-brand {
+  background-color: var(--cs-brand);
+}
+.bg-brand-hover,
+.hover\:bg-brand-hover:hover {
+  background-color: var(--cs-brand-hover);
+}
+.bg-brand-soft {
+  background-color: var(--cs-brand-soft);
+}
+.text-brand-hover {
+  color: var(--cs-brand-hover);
+}
+.border-brand {
+  border-color: var(--cs-brand);
+}
+.border-brand-light,
+.hover\:border-brand-light:hover {
+  border-color: var(--cs-brand-line);
+}
+.shadow-brand {
+  box-shadow: 0 10px 30px -12px rgba(255, 153, 51, 0.45);
+}
+.bg-brand\/10 {
+  background-color: rgba(255, 153, 51, 0.1);
+}
+.bg-brand\/20 {
+  background-color: rgba(255, 153, 51, 0.2);
+}
+.border-brand\/30 {
+  border-color: rgba(255, 153, 51, 0.3);
+}
+
+
+
+
