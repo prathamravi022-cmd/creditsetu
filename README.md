@@ -22,7 +22,7 @@
 
 India has **200+ government credit schemes** for marginalized entrepreneurs (SC/ST/Women, annual income ≤ ₹5 Lakhs), but most beneficiaries **cannot find or access** the right schemes. Complex eligibility criteria, language barriers, and lack of digital literacy prevent millions from benefiting.
 
-**CreditSetu bridges this gap** with AI-powered scheme matching, multilingual support, and voice-based interaction.
+**CreditSetu bridges this gap** with AI-powered scheme matching, multilingual support, and a mobile-first experience.
 
 ---
 
@@ -56,10 +56,6 @@ India has **200+ government credit schemes** for marginalized entrepreneurs (SC/
 ### 📱 Offline PWA Support
 - Progressive Web App — works offline on weak internet
 - Installable on mobile and desktop
-
-### 🎤 Voice Input
-- Web Speech API integration for hands-free form filling
-- Ideal for low-literacy users
 
 ### 📤 Share & Export
 - SMS / WhatsApp share buttons for scheme results
@@ -181,18 +177,18 @@ CreditSetu/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── landing/               # Hero, features, CTA sections
-│   │   │   ├── onboarding/            # 4-step progressive wizard
+│   │   │   ├── onboarding/            # 5-step progressive wizard
 │   │   │   ├── results/               # Scheme cards, EMI calculator, glossary
 │   │   │   ├── map/                   # Bank locator with Leaflet
-│   │   │   ├── admin/                 # Admin dashboard + login
-│   │   │   ├── auth/                  # Login screen
+│   │   │   ├── admin/                 # Admin dashboard
+│   │   │   ├── auth/                  # Auth modal
 │   │   │   ├── grievance/             # Complaint ticketing
 │   │   │   ├── legal/                 # Privacy policy, terms
-│   │   │   ├── common/                # Navbar, Footer, ErrorBoundary, 404
+│   │   │   ├── common/                # Navbar, Footer, BottomNav, ErrorBoundary
 │   │   │   └── ui/                    # Reusable UI components
 │   │   ├── config/                    # Firebase config
 │   │   ├── data/                      # Static data (schemes, etc.)
-│   │   ├── hooks/                     # Custom hooks (voice input, etc.)
+│   │   ├── hooks/                     # Custom hooks
 │   │   ├── i18n/                      # Internationalization
 │   │   │   ├── config.js              # i18n configuration
 │   │   │   └── locales/               # 7 language files (en, hi, ta, te, bn, mr, kn)
