@@ -14,6 +14,7 @@ import PageTransition from "./components/common/PageTransition";
 import LandingPage from "./components/landing/LandingPage";
 import ResultsDashboard from "./components/results/ResultsDashboard";
 import ProfileWizard from "./components/profile/ProfileWizard";
+import OnboardingWizard from "./components/onboarding/OnboardingWizard";
 import FindBankMap from "./components/map/PartnerLocator";
 /* survey/faq/feedback pages were removed from this build — keep imports only if those folders exist */
 import AdminDashboard from "./components/admin/AdminDashboard";
@@ -131,11 +132,12 @@ export default function App() {
         />
 
         {/* Core product surfaces */}
+        {/* First-timers get the classic 5-step wizard; returning users edit via /edit-profile */}
         <Route
           path="/get-started"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <ProfileWizard mode="onboarding" />
+              <OnboardingWizard />
             </Suspense>
           }
         />
@@ -143,7 +145,7 @@ export default function App() {
           path="/onboarding"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <ProfileWizard mode="onboarding" />
+              <OnboardingWizard />
             </Suspense>
           }
         />
