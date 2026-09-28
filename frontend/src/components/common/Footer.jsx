@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { eligibilityTarget } from '../../services/recommender';
+import { useAuth } from '../../store/AuthContext';
 import { Shield } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { user, isAdmin } = useAuth();
 
   return (
     <footer className="relative overflow-hidden text-white mt-auto" style={{ background: "linear-gradient(160deg, #052e1b 0%, #14532d 55%, #0b2b1a 100%)" }}>
@@ -31,9 +34,11 @@ export default function Footer() {
             <h3 className="font-semibold mb-3 text-slate-300">Quick Links</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/get-started" className="hover:text-white transition-colors">Check Eligibility</Link></li>
+              <li><Link to={eligibilityTarget(user)} className="hover:text-white transition-colors">Check Eligibility</Link></li>
               <li><Link to="/find-bank" className="hover:text-white transition-colors">Find a Bank</Link></li>
-              <li><Link to="/admin" className="hover:text-white transition-colors">Admin Dashboard</Link></li>
+              {isAdmin && (
+                <li><Link to="/admin/dashboard" className="hover:text-white transition-colors">Admin Dashboard</Link></li>
+              )}
             </ul>
           </div>
 

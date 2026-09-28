@@ -2,11 +2,18 @@ import React, { lazy, Suspense } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./store/AuthContext";
 import { DarkModeProvider } from "./store/DarkModeContext";
+import { AuthModalProvider, useAuthModal } from "./store/AuthModalContext";
+import { MobileMenuProvider, useMobileMenu } from "./store/MobileMenuContext";
+import AuthModal from "./components/auth/AuthModal";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
+import BottomNav from "./components/common/BottomNav";
+import MobileMenu from "./components/common/MobileMenu";
+import MobileStickyCta from "./components/common/MobileStickyCta";
+import PageTransition from "./components/common/PageTransition";
 import LandingPage from "./components/landing/LandingPage";
 import ResultsDashboard from "./components/results/ResultsDashboard";
-import OnboardingWizard from "./components/onboarding/OnboardingWizard";
+import ProfileWizard from "./components/profile/ProfileWizard";
 import FindBankMap from "./components/map/PartnerLocator";
 /* survey/faq/feedback pages were removed from this build — keep imports only if those folders exist */
 import AdminDashboard from "./components/admin/AdminDashboard";
@@ -34,11 +41,12 @@ const LoadFailed = () => (
 );
 
 function ProtectedRoute({ children, adminOnly = false }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  // Wait for the saved session to be restored, otherwise a hard reload on a
+  // protected URL (e.g. /admin/dashboard) bounces the user home before the
+  // stored account has been read back from localStorage.
+  if (loading) return null;
   if (!user) {
-    if (adminOnly) {
-      return <Navigate to="/" replace />;
-    }
     return <Navigate to="/" replace />;
   }
   if (adminOnly) {
@@ -53,20 +61,51 @@ function ProtectedRoute({ children, adminOnly = false }) {
 }
 
 function RootLayout({ children }) {
+  return (
+    <DarkModeProvider>
+      <AuthProvider>
+        <AuthModalProvider>
+          <MobileMenuProvider>
+            <Shell>{children}</Shell>
+          </MobileMenuProvider>
+        </AuthModalProvider>
+      </AuthProvider>
+    </DarkModeProvider>
+  );
+}
+
+/** Renders the global chrome plus the one, shared auth modal. */
+function Shell({ children }) {
+  const { authOpen, openAuth, closeAuth } = useAuthModal();
+  const { menuOpen, closeMenu } = useMobileMenu();
   const { pathname } = useLocation();
   // The landing page ships its own header and footer, so the global chrome is
   // skipped there to avoid rendering two navbars / footers on top of each other.
   const isLanding = pathname === "/";
   return (
-    <DarkModeProvider>
-      <AuthProvider>
-        <div className="page-shell">
-          {!isLanding && <Navbar />}
-          <main>{children}</main>
-          {!isLanding && <Footer />}
-        </div>
-      </AuthProvider>
-    </DarkModeProvider>
+    <div className="page-shell has-bottom-nav">
+      {!isLanding && <Navbar onAuthOpen={openAuth} />}
+      <main>
+        <PageTransition>{children}</PageTransition>
+      </main>
+      {!isLanding && <Footer />}
+
+      {/* The single mobile drawer — opened by the app bar and the Settings tab */}
+      <MobileMenu open={menuOpen} onClose={closeMenu} />
+      <MobileStickyCta />
+      <BottomNav />
+      <AuthModal open={authOpen} onClose={closeAuth} />
+    </div>
+  );
+}
+
+/** Landing route wired to the shared auth modal so its CTAs are never dead. */
+function LandingRoute() {
+  const { openAuth } = useAuthModal();
+  return (
+    <Suspense fallback={<LoadFailed />}>
+      <Landing onAuthOpen={openAuth} />
+    </Suspense>
   );
 }
 
@@ -75,7 +114,7 @@ const Results = lazy(() => import("./components/results/ResultsDashboard"));
 const Map = lazy(() => import("./components/map/PartnerLocator"));
 // survey/faq/feedback routes were removed from this build to match the current filesystem
 const Admin = lazy(() => import("./components/admin/AdminDashboard"));
-const EditProfile = lazy(() => import("./components/common/EditProfile"));
+
 const PrivacyPolicy = lazy(() => import("./components/legal/PrivacyPolicy"));
 const TermsConditions = lazy(() => import("./components/legal/TermsConditions"));
 const FeedbackPage = lazy(() => import("./components/legal/FeedbackPage"));
@@ -88,11 +127,7 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <Suspense fallback={<LoadFailed />}>
-              <Landing />
-            </Suspense>
-          }
+          element={<LandingRoute />}
         />
 
         {/* Core product surfaces */}
@@ -100,7 +135,7 @@ export default function App() {
           path="/get-started"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <OnboardingWizard />
+              <ProfileWizard mode="onboarding" />
             </Suspense>
           }
         />
@@ -108,7 +143,7 @@ export default function App() {
           path="/onboarding"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <OnboardingWizard />
+              <ProfileWizard mode="onboarding" />
             </Suspense>
           }
         />
@@ -158,7 +193,7 @@ export default function App() {
           path="/edit-profile"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <EditProfile />
+              <ProfileWizard mode="edit" />
             </Suspense>
           }
         />

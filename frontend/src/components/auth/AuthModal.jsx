@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase, isSupabaseConfigured } from '../../config/supabase';
 import { useAuth } from '../../store/AuthContext';
+import { eligibilityTarget } from '../../services/recommender';
 
 const ADMIN_EMAIL = 'prathamravi022@gmail.com';
 const ADMIN_PHONE = '9259609658';
@@ -125,7 +126,7 @@ export default function AuthModal({ open, onClose }) {
         setSuccess(true);
         setTimeout(() => {
           onClose();
-          navigate(userData.isAdmin ? '/admin/dashboard' : '/get-started');
+          navigate(userData.isAdmin ? '/admin/dashboard' : eligibilityTarget(userData));
         }, 800);
         return;
       }
@@ -143,7 +144,7 @@ export default function AuthModal({ open, onClose }) {
         setSuccess(true);
         setTimeout(() => {
           onClose();
-          navigate(admin ? '/admin/dashboard' : '/get-started');
+          navigate(admin ? '/admin/dashboard' : eligibilityTarget(userData));
         }, 600);
       } else {
         // Firebase email/password fallback
@@ -154,7 +155,7 @@ export default function AuthModal({ open, onClose }) {
         setSuccess(true);
         setTimeout(() => {
           onClose();
-          navigate(admin ? "/admin/dashboard" : "/get-started");
+          navigate(admin ? "/admin/dashboard" : eligibilityTarget(userData));
         }, 600);
         return;
       }
@@ -194,7 +195,7 @@ export default function AuthModal({ open, onClose }) {
       setSuccess(true);
       setTimeout(() => {
         onClose();
-        navigate(admin ? '/admin/dashboard' : '/get-started');
+        navigate(admin ? '/admin/dashboard' : eligibilityTarget(userData));
       }, 800);
       return;
     }
@@ -216,7 +217,7 @@ export default function AuthModal({ open, onClose }) {
         setSuccess(true);
         setTimeout(() => {
           onClose();
-          navigate("/get-started");
+          navigate(eligibilityTarget(userData));
         }, 800);
         return;
       }
@@ -253,7 +254,7 @@ export default function AuthModal({ open, onClose }) {
       setSuccess(true);
       setTimeout(() => {
         onClose();
-        navigate(userData.isAdmin ? '/admin/dashboard' : '/get-started');
+        navigate(userData.isAdmin ? '/admin/dashboard' : eligibilityTarget(userData));
       }, 800);
       return;
     }
@@ -309,7 +310,7 @@ export default function AuthModal({ open, onClose }) {
       setSuccess(true);
       setTimeout(() => {
         onClose();
-        navigate(isAdminUser('', phone) ? '/admin/dashboard' : '/get-started');
+        navigate(isAdminUser('', phone) ? '/admin/dashboard' : eligibilityTarget({ phone }));
       }, 600);
     } catch (err) {
       const msg = err.message || 'OTP verification failed';
@@ -336,7 +337,7 @@ export default function AuthModal({ open, onClose }) {
       } else {
         await loginWithGoogle();
         setSuccess(true);
-        setTimeout(() => { onClose(); navigate('/get-started'); }, 600);
+        setTimeout(() => { onClose(); navigate(eligibilityTarget()); }, 600);
       }
     } catch (err) {
       handleError(err.message || 'Google login failed');

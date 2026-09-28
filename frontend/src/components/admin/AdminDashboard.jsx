@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PageBackdrop from "../art/PageBackdrop";
+import { useAuth } from "../../store/AuthContext";
 
 import {
   LayoutDashboard, Users, FileText, Building2, Activity,
@@ -211,6 +212,7 @@ function ActivityTab() {
   );
 }
 export default function AdminDashboard() {
+  const { logout } = useAuth();
   var [tab, setTab] = useState("overview");
   var [adminPhone, setAdminPhone] = useState(sessionStorage.getItem("admin_phone") || "Admin");
   var [stats, setStats] = useState({
@@ -225,9 +227,12 @@ export default function AdminDashboard() {
   }, []);
 
   function handleLogout() {
+    // Clear the real session too — otherwise the admin stays signed in and can
+    // walk straight back into /admin/dashboard.
     sessionStorage.removeItem("admin_auth");
     sessionStorage.removeItem("admin_phone");
-    window.location.href = "/admin";
+    logout();
+    window.location.href = "/";
   }
 
   var tabs = [

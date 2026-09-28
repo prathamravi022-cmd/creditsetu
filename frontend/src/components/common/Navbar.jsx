@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../store/AuthContext';
-import { useDarkMode } from '../../store/DarkModeContext';
+import { useAuthModal } from '../../store/AuthModalContext';
+import { useMobileMenu } from '../../store/MobileMenuContext';
+import { eligibilityTarget } from '../../services/recommender';
 import { UserButton, useAuth as useClerkAuth } from '@clerk/react';
 import { Menu, X, Shield, LogIn, LogOut, User } from 'lucide-react';
 import LanguageDropdown from '../ui/LanguageDropdown';
-import MobileMenu from './MobileMenu';
+import ThemeToggle from '../ui/ThemeToggle';
 
 export default function Navbar({ onAuthOpen }) {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const { openAuth: openAuthFromContext } = useAuthModal();
+  const openAuthModal = onAuthOpen || openAuthFromContext;
+  const { menuOpen: mobileOpen, openMenu, closeMenu } = useMobileMenu();
   const clerkAuth = useClerkAuth();
-  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const { dark, toggleDark } = useDarkMode();
-
-
-
-  // Public links are always visible so visitors can navigate without signing in.
   const handleLogout = () => {
     logout();
     navigate('/');
-    setMobileOpen(false);
+    closeMenu();
   };
 
   const navLinks = [
     { path: '/', label: t('nav.home') || 'Home' },
-    { path: '/get-started', label: t('nav.check_eligibility') || 'Check Eligibility' },
+    // Returning users (details already filled) go to their Schemes page;
+    // first-timers get the onboarding form.
+    { path: eligibilityTarget(user), label: t('nav.check_eligibility') || 'Check Eligibility' },
     { path: '/find-bank', label: t('nav.find_bank') || 'Find Bank' },
     ...(isAuthenticated
       ? [{ path: '/results', label: t('nav.results') || 'Results' }]
@@ -37,7 +38,8 @@ export default function Navbar({ onAuthOpen }) {
     ...(isAdmin
       ? [{ path: '/admin/dashboard', label: t('nav.admin') || 'Admin' }]
       : []),
-  ];
+    // Keep keys/links unique once eligibilityTarget() resolves to /results.
+  ].filter((link, i, all) => all.findIndex((l) => l.path === link.path) === i);
 
   return (
     <nav className="cs-nav sticky top-0 z-50" role="navigation" aria-label="Main navigation">
@@ -73,14 +75,7 @@ export default function Navbar({ onAuthOpen }) {
           {/* Right Controls — condensed */}
           <div className="flex items-center gap-1 sm:gap-2">
             {/* Dark mode toggle */}
-            <button
-              onClick={toggleDark}
-              className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
-              title={dark ? 'Light mode' : 'Dark mode'}
-              aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {dark ? '☀️' : '🌙'}
-            </button>
+            <ThemeToggle />
 
             <LanguageDropdown compact />
 
@@ -115,7 +110,7 @@ export default function Navbar({ onAuthOpen }) {
                 </div>
               ) : (
                 <button
-                  onClick={() => onAuthOpen && onAuthOpen()}
+                  onClick={openAuthModal}
                   className="mi-press mi-shine hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
                 >
                   <LogIn className="w-3.5 h-3.5" />
@@ -124,10 +119,10 @@ export default function Navbar({ onAuthOpen }) {
               )
             )}
 
-            {/* Mobile menu toggle */}
+            {/* Mobile menu toggle — opens the single shared drawer mounted by the shell */}
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
+              onClick={() => (mobileOpen ? closeMenu() : openMenu())}
+              className="tap-spring lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
             >
@@ -137,9 +132,6 @@ export default function Navbar({ onAuthOpen }) {
         </div>
 
       </div>
-
-      {/* Single shared mobile drawer for every page */}
-      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
     </nav>
   );
 }

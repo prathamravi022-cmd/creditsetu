@@ -16,6 +16,7 @@ import PageBackdrop from '../art/PageBackdrop';
 import ScaleCard from '../ui/ScaleCard';
 import ScrollReveal from '../ui/ScrollReveal';
 import { loadProfile, generateAndCache } from '../../services/recommender';
+import { useAuth } from '../../store/AuthContext';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -39,6 +40,7 @@ function getLabelColor(label) {
 }
 
 export default function ResultsDashboard() {
+  const { user } = useAuth();
   const { t } = useTranslation();
   const [recommendations, setRecommendations] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,8 +53,8 @@ export default function ResultsDashboard() {
       if (data) {
         setRecommendations(JSON.parse(data));
       } else {
-        // A saved profile means matches can always be rebuilt (new tab, reload).
-        const profile = loadProfile();
+        // Remembered details mean matches can always be rebuilt (new tab, reload).
+        const profile = loadProfile(user);
         if (profile) setRecommendations(generateAndCache(profile));
       }
     } catch (e) {
@@ -60,7 +62,7 @@ export default function ResultsDashboard() {
     }
     const timer = setTimeout(() => setLoading(false), 900);
     return () => clearTimeout(timer);
-  }, []);
+  }, [user?.email, user?.phone]);
 
   const handleDownloadPDF = async (scheme) => {
     try {
@@ -195,9 +197,11 @@ export default function ResultsDashboard() {
             amount={0.15}
             once={true}
           >
+            {/* `m-card` only takes effect below 768px: a glass surface plus a
+                glowing border while tapped. Desktop keeps the plain card. */}
             <div
               id={`scheme-${scheme.scheme_id}`}
-              className="bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-gray-700 overflow-hidden mi-lift mi-glow"
+              className="m-card tap-spring bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-gray-700 overflow-hidden mi-lift mi-glow"
             >
             {/* Card Header */}
             <div className="p-6">

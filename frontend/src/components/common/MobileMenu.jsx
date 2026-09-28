@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../store/AuthContext';
 import { useDarkMode } from '../../store/DarkModeContext';
+import ThemeToggle from '../ui/ThemeToggle';
+import { eligibilityTarget } from '../../services/recommender';
 
 const LANGUAGES = [
   { code: 'en', native: 'English' },
@@ -34,7 +36,7 @@ function Icon({ as: As }) {
 export default function MobileMenu({ open, onClose }) {
   const { t, i18n } = useTranslation();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
-  const { dark, toggleDark } = useDarkMode();
+  const { dark } = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
   const panelRef = useRef(null);
@@ -162,14 +164,12 @@ export default function MobileMenu({ open, onClose }) {
             <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <SettingsIcon className="w-3 h-3" /> Settings
             </p>
-            <button
-              type="button"
-              onClick={toggleDark}
-              className={`${itemCls} text-left`}
-              aria-pressed={dark}
-            >
-              <Icon as={dark ? Sun : Moon} /> {dark ? 'Light mode' : 'Dark mode'}
-            </button>
+            <div className="flex items-center justify-between gap-3 px-3.5 py-2 rounded-xl">
+              <span className="flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200">
+                <Icon as={dark ? Moon : Sun} /> {dark ? 'Dark mode' : 'Light mode'}
+              </span>
+              <ThemeToggle />
+            </div>
             <div className="px-3.5 pt-2.5">
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-2">{t('onboarding.step1.language') || 'Preferred Language'}</p>
               <div className="grid grid-cols-2 gap-1.5">
@@ -223,7 +223,7 @@ export default function MobileMenu({ open, onClose }) {
           ) : (
             <button
               type="button"
-              onClick={() => go('/get-started')}
+              onClick={() => go(eligibilityTarget(user))}
               className="w-full flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold text-white bg-[#138808] hover:bg-[#0f6d06] transition-colors shadow-md"
             >
               <LogIn className="w-4 h-4" /> Get Started

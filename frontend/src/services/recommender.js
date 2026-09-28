@@ -10,6 +10,9 @@ import SCHEMES_JSON from './schemesData.json';
 const ALL_SCHEMES = Array.isArray(SCHEMES_JSON) ? SCHEMES_JSON : SCHEMES_JSON.schemes || [];
 
 export const PROFILE_KEY = 'creditsetu_profile';
+// Per-account caches are stored as `<base>::<account>`, so a shared device still
+// remembers each user's own details without them overwriting each other.
+const SCOPE_SEPARATOR = '::';
 export const RESULTS_KEY = 'recommendations';
 
 /* ---------- state name <-> code so 'UP' and 'Uttar Pradesh' both match ---------- */
@@ -106,39 +109,77 @@ export function normalizeProfile(raw = {}) {
   };
 }
 
-export function saveProfile(raw) {
-  const profile = normalizeProfile(raw);
-  try {
-    localStorage.setItem(
-      PROFILE_KEY,
-      JSON.stringify({ ...raw, ...profile, updatedAt: new Date().toISOString() })
-    );
-  } catch {
-    /* storage may be unavailable — recommendations still work for this session */
-  }
-  return profile;
+/**
+ * Scopes an storage key to the signed-in account (email / phone / uid) so two
+ * people sharing one device don't overwrite each other's details. Anonymous
+ * visits share the single device-level slot.
+ */
+export function scopedStorageKey(base, user) {
+  if (!user) return base;
+  const id = user.email || user.phone || user.uid || user.id;
+  return id ? `${base}${SCOPE_SEPARATOR}${String(id).trim().toLowerCase()}` : base;
 }
 
-export function loadProfile() {
+/** Cache key for this user's own details. */
+export function profileKeyFor(user) {
+  return scopedStorageKey(PROFILE_KEY, user);
+}
+
+function readProfileAt(key) {
   try {
-    const raw = localStorage.getItem(PROFILE_KEY);
+    const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
   }
 }
 
-export function hasProfile() {
-  return Boolean(loadProfile());
+/**
+ * Saves the profile. Always mirrors into the device cache so anonymous reads keep
+ * working, and additionally into this account's own slot when we know who it is.
+ */
+export function saveProfile(raw, user) {
+  const profile = normalizeProfile(raw);
+  const payload = JSON.stringify({ ...raw, ...profile, updatedAt: new Date().toISOString() });
+  try {
+    localStorage.setItem(PROFILE_KEY, payload);
+    const scopedKey = profileKeyFor(user);
+    if (scopedKey !== PROFILE_KEY) localStorage.setItem(scopedKey, payload);
+  } catch {
+    /* storage may be unavailable — recommendations still work for this session */
+  }
+  return profile;
 }
 
-export function clearProfile() {
+/**
+ * Reads the remembered details: this account's own cache first, then the device
+ * cache as a fallback so a returning visitor is never asked to refill the form.
+ */
+export function loadProfile(user) {
+  return readProfileAt(profileKeyFor(user)) || readProfileAt(PROFILE_KEY);
+}
+
+export function hasProfile(user) {
+  return Boolean(loadProfile(user));
+}
+
+export function clearProfile(user) {
   try {
+    localStorage.removeItem(profileKeyFor(user));
     localStorage.removeItem(PROFILE_KEY);
     sessionStorage.removeItem(RESULTS_KEY);
   } catch {
     /* ignore */
   }
+}
+
+/**
+ * Where a profile-driven CTA should send this user:
+ * returning users (details already saved) go straight to their Schemes page,
+ * first-time users land on the details form.
+ */
+export function eligibilityTarget(user) {
+  return hasProfile(user) ? '/results' : '/get-started';
 }
 
 /* ---------- scoring ---------- */
