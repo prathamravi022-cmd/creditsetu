@@ -399,6 +399,29 @@ export default function OnboardingWizard() {
           padding: 1.25rem;
           color: rgba(255,255,255,0.9);
         }
+        .onboarding-scheme-preview {
+          margin-top: 1rem;
+          padding: 1rem;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 1rem;
+          color: rgba(255,255,255,0.9);
+        }
+        .sc-preview-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.75rem;
+        }
+        .sc-preview-badge {
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          padding: 0.2rem 0.6rem;
+          border-radius: 999px;
+          background: rgba(255,153,51,0.18);
+          color: #ff9933;
+        }
         .onboarding-stepper {
           display: flex;
           gap: 0.5rem;
@@ -490,10 +513,13 @@ export default function OnboardingWizard() {
           box-shadow: 0 0 0 4px rgba(255,153,51,0.2);
         }
 
-        /* Keep the Back/Continue row clear of the mobile tab bar. */
+        /* Keep the Back/Continue row clear of the mobile tab bar: start from
+           the top instead of centering (centering would clip the overflow),
+           and reserve the tab bar's height as bottom padding. */
         @media (max-width: 767px) {
           .onboarding-page {
-            padding: 1.5rem 0.85rem 2.5rem;
+            justify-content: flex-start;
+            padding: 1.5rem 0.85rem calc(5.25rem + 4rem);
           }
         }
 
@@ -507,6 +533,8 @@ export default function OnboardingWizard() {
         html:not(.dark) .onboarding-option-desc { opacity: 0.65; }
         html:not(.dark) .onboarding-range-input { background: rgba(15,23,42,0.12); }
         html:not(.dark) .onboarding-summary-card { background: #ffffff; border-color: rgba(15,23,42,0.1); color: #1e293b; }
+        html:not(.dark) .onboarding-scheme-preview { background: #ffffff; border-color: rgba(15,23,42,0.1); color: #1e293b; }
+        html:not(.dark) .sc-preview-badge { background: rgba(255,153,51,0.15); color: #b45309; }
         html:not(.dark) .onboarding-stepper-dot { background: rgba(15,23,42,0.05); border-color: rgba(15,23,42,0.12); color: rgba(15,23,42,0.6); }
         html:not(.dark) .onboarding-btn-secondary { background: rgba(15,23,42,0.04); color: rgba(15,23,42,0.8); border-color: rgba(15,23,42,0.14); }
         html:not(.dark) .onboarding-btn-secondary:hover { background: rgba(15,23,42,0.08); }

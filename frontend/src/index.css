@@ -659,15 +659,18 @@ textarea {
 
 /* ---- 44px minimum touch targets ---------------------------- */
 /* Applied to controls only: forcing min-height on inline text links would wreck
-   the legal/footer typography. Declared in `base` so it is a *floor* only — any
-   explicit min-height (Tailwind utility or component class) still wins. */
+   the legal/footer typography. Wrapped in :where() so it is a *floor* with zero
+   specificity — any explicit min-height (Tailwind utility or component class)
+   still wins even though the build flattens Tailwind's layers. */
 @layer base {
   @media (max-width: 767px) {
-    button:not(.tap-compact),
-    [role='button']:not(.tap-compact),
-    select:not(.tap-compact),
-    input:not([type='range']):not([type='checkbox']):not([type='radio']),
-    textarea {
+    :where(
+      button:not(.tap-compact),
+      [role='button']:not(.tap-compact),
+      select:not(.tap-compact),
+      input:not([type='range']):not([type='checkbox']):not([type='radio']),
+      textarea
+    ) {
       min-height: 44px;
     }
   }
