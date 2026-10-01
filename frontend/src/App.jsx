@@ -7,7 +7,6 @@ import { MobileMenuProvider, useMobileMenu } from "./store/MobileMenuContext";
 import AuthModal from "./components/auth/AuthModal";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
-import BottomNav from "./components/common/BottomNav";
 import MobileMenu from "./components/common/MobileMenu";
 import MobileStickyCta from "./components/common/MobileStickyCta";
 import PageTransition from "./components/common/PageTransition";
@@ -83,18 +82,22 @@ function Shell({ children }) {
   // The landing page ships its own header and footer, so the global chrome is
   // skipped there to avoid rendering two navbars / footers on top of each other.
   const isLanding = pathname === "/";
+  // MobileStickyCta floats over the page on exactly these routes, so the footer
+  // reserves the CTA's height here (see MobileStickyCta's route map) to keep
+  // its link row readable behind the button. Everywhere else the content runs
+  // all the way down to the bottom edge.
+  const hasFloatingCta = pathname === "/" || pathname === "/results";
   return (
-    <div className="page-shell has-bottom-nav">
+    <div className={hasFloatingCta ? "page-shell has-floating-cta" : "page-shell"}>
       {!isLanding && <Navbar onAuthOpen={openAuth} />}
       <main>
         <PageTransition>{children}</PageTransition>
       </main>
       {!isLanding && <Footer />}
 
-      {/* The single mobile drawer — opened by the app bar and the Settings tab */}
+      {/* The single mobile drawer — opened by the hamburger in the app bar */}
       <MobileMenu open={menuOpen} onClose={closeMenu} />
       <MobileStickyCta />
-      <BottomNav />
       <AuthModal open={authOpen} onClose={closeAuth} />
     </div>
   );

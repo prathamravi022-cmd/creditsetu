@@ -462,13 +462,13 @@
   box-shadow: 0 0 0 5px rgba(52, 211, 153, 0.2);
 }
 
-/* ---- Mobile: sticky action bar above the tab bar --------------- */
+/* ---- Mobile: sticky action bar pinned to the bottom edge -------- */
 .wz-sticky {
   display: none;
 }
 @media (max-width: 767px) {
   .wz-page {
-    padding: 1rem 0.875rem calc(11rem + env(safe-area-inset-bottom, 0px));
+    padding: 1rem 0.875rem calc(6.5rem + env(safe-area-inset-bottom, 0px));
   }
   .wz-nav {
     display: none;
@@ -481,7 +481,7 @@
     position: fixed;
     inset-inline: 0;
     z-index: 40;
-    bottom: calc(5.1rem + env(safe-area-inset-bottom, 0px));
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   }
   .wz-card {
     padding: 1.1rem;

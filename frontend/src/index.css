@@ -642,8 +642,8 @@ img {
 
 /* ============================================================
    MOBILE APP EXPERIENCE  (< 768px)
-   Native-app feel: floating tab bar, springy taps, glass cards,
-   floating field labels and sliding page transitions.
+   Native-app feel: springy taps, glass cards, floating field labels
+   and sliding page transitions.
    Desktop is deliberately untouched — every rule here is scoped.
    ============================================================ */
 
@@ -827,12 +827,15 @@ textarea {
   }
 }
 
-/* ---- Bottom tab bar spacing -------------------------------- */
-/* Reserve room so the floating bar never covers the last card,
-   and honour the iOS home-indicator inset. */
+/* ---- Floating mobile CTA spacing --------------------------- */
+/* The bottom tab bar is gone, so pages end flush with the screen edge. The
+   only thing that still floats over content is MobileStickyCta, and just on
+   the routes that render it. Grow the footer's own bottom padding there (not
+   the page shell's) so the reserved strip keeps the footer's dark surface
+   instead of showing a plain background band beneath it. */
 @media (max-width: 767px) {
-  .page-shell.has-bottom-nav {
-    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+  .page-shell.has-floating-cta footer {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
   }
 }
 

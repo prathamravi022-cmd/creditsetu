@@ -609,7 +609,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
         <p className="wz-swipe-hint">Swipe left or right to move between steps</p>
       </div>
 
-      {/* Mobile sticky action bar, sits above the bottom tab bar */}
+      {/* Mobile sticky action bar, pinned to the bottom edge */}
       <div className="wz-sticky">
         <div className="mx-auto max-w-sm px-3">
           <div className="flex items-center gap-2 rounded-2xl border border-gray-200/80 bg-white/92 p-2 shadow-[0_18px_44px_-18px_rgba(15,36,64,0.5)] backdrop-blur-xl dark:border-white/10 dark:bg-[#1b1b1d]/92">

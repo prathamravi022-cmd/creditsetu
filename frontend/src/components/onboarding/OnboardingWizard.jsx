@@ -513,13 +513,13 @@ export default function OnboardingWizard() {
           box-shadow: 0 0 0 4px rgba(255,153,51,0.2);
         }
 
-        /* Keep the Back/Continue row clear of the mobile tab bar: start from
-           the top instead of centering (centering would clip the overflow),
-           and reserve the tab bar's height as bottom padding. */
+        /* Start from the top instead of centering (centering would clip the
+           overflow). The Back/Continue row sits in flow at the end of the
+           card, so only the home-indicator inset needs clearing below. */
         @media (max-width: 767px) {
           .onboarding-page {
             justify-content: flex-start;
-            padding: 1.5rem 0.85rem calc(5.25rem + 4rem);
+            padding: 1.5rem 0.85rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
           }
         }
 

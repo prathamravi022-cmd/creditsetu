@@ -8,8 +8,8 @@ import { eligibilityTarget, hasProfile } from '../../services/recommender';
 
 /**
  * MobileStickyCta — keeps the page's primary action reachable while scrolling
- * long mobile pages. It floats just above the tab bar and picks the right
- * action for the current route:
+ * long mobile pages. It floats just above the bottom edge of the screen and
+ * picks the right action for the current route:
  *
  *   /          → Check Your Eligibility (or sign in first)
  *   /results   → Edit Details
@@ -44,7 +44,7 @@ export default function MobileStickyCta() {
   return (
     <div
       className="fixed inset-x-0 z-40 md:hidden"
-      style={{ bottom: 'calc(5.1rem + env(safe-area-inset-bottom, 0px))' }}
+      style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
     >
       <div className="mx-auto max-w-sm px-3">
         <button

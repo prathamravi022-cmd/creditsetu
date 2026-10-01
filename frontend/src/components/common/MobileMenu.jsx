@@ -137,7 +137,7 @@ export default function MobileMenu({ open, onClose }) {
           {/* Main navigation */}
           <nav className="space-y-1" aria-label="Sections">
             <Link to="/" onClick={onClose} className={itemCls}><Icon as={Home} /> Home</Link>
-            <Link to="/results" onClick={onClose} className={itemCls}><Icon as={FileText} /> {t('nav.results') || 'My Schemes'}</Link>
+            <Link to={eligibilityTarget(user)} onClick={onClose} className={itemCls}><Icon as={FileText} /> {t('nav.results') || 'My Schemes'}</Link>
             <Link to="/find-bank" onClick={onClose} className={itemCls}><Icon as={Landmark} /> {t('nav.find_bank') || 'Find a Bank'}</Link>
             <button type="button" onClick={() => go('/edit-profile')} className={`${itemCls} text-left`}>
               <Icon as={UserCog} /> Edit Details

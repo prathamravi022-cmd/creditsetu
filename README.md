@@ -182,9 +182,8 @@ CreditSetu/
 │   │   │   ├── map/                   # Bank locator with Leaflet
 │   │   │   ├── admin/                 # Admin dashboard
 │   │   │   ├── auth/                  # Auth modal
-│   │   │   ├── grievance/             # Complaint ticketing
 │   │   │   ├── legal/                 # Privacy policy, terms
-│   │   │   ├── common/                # Navbar, Footer, BottomNav, ErrorBoundary
+│   │   │   ├── common/                # Navbar, Footer, MobileMenu, ErrorBoundary
 │   │   │   └── ui/                    # Reusable UI components
 │   │   ├── config/                    # Firebase config
 │   │   ├── data/                      # Static data (schemes, etc.)

@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 /**
  * MobileMenuContext — there is exactly one mobile drawer in the app, mounted
- * once by the shell. The app bar's hamburger and the bottom tab bar's
- * "Settings" tab both open that same instance, so they never drift apart or
- * render two overlapping drawers.
+ * once by the shell. The app bar's hamburger is the only opener, on every
+ * route, so the drawer and its trigger can never drift apart or render two
+ * overlapping drawers.
  */
 const MobileMenuContext = createContext(null);
 
