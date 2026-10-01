@@ -77,6 +77,14 @@ function statesMatch(userState, schemeStates) {
   return schemeStates.some((s) => stateVariants(s).some((v) => mine.includes(v)));
 }
 
+/** Gender arrives as 'F', 'female', 'M' … from different forms — settle on one code. */
+function normalizeGender(value) {
+  const v = String(value || '').trim().toLowerCase();
+  if (v === 'f' || v === 'female' || v === 'woman') return 'F';
+  if (v === 'm' || v === 'male' || v === 'man') return 'M';
+  return v ? 'O' : '';
+}
+
 /* ---------- profile normalisation ---------- */
 /** Maps the wizard's light profile AND the edit-profile's rich form into one shape. */
 export function normalizeProfile(raw = {}) {
@@ -92,21 +100,82 @@ export function normalizeProfile(raw = {}) {
 
   const incomeRaw = raw.family_annual_income ?? raw.income;
   const amountRaw = raw.amount ?? raw.estimated_project_cost;
+  // Already-normalised profiles arrive in camelCase (saveProfile returns one),
+  // so every field is read in both spellings — otherwise re-normalising a saved
+  // profile silently reset the social category to 'general' and dropped matches.
+  const categoryRaw = raw.social_category ?? raw.category ?? raw.socialCategory;
+  const locationRaw = raw.location_type ?? raw.locationType;
 
   return {
     schemeType: wizardType || (intent === 'education' ? 'education' : intent === 'housing' ? 'housing' : 'loan'),
     purpose: purpose || loanPurpose || 'startup',
     amount: Number(amountRaw) || 50000,
     state: raw.state || raw.geography || '',
-    socialCategory: (raw.social_category || raw.category || 'general').toLowerCase(),
+    socialCategory: String(categoryRaw || 'general').toLowerCase(),
     income: incomeRaw === '' || incomeRaw === undefined ? null : Number(incomeRaw),
-    isBpl: Boolean(raw.is_bpl ?? raw.bpl),
-    hasDisability: Boolean(raw.has_disability ?? raw.disability),
-    locationType: raw.location_type || 'rural',
+    isBpl: Boolean(raw.is_bpl ?? raw.bpl ?? raw.isBpl),
+    hasDisability: Boolean(raw.has_disability ?? raw.disability ?? raw.hasDisability),
+    locationType: locationRaw || 'rural',
     age: Number(raw.age) || null,
-    gender: raw.gender || '',
+    gender: normalizeGender(raw.gender),
+    // Occupation and education are what the eligibility flow branches on
+    // (a student never sees business questions); they also feed the fit score.
+    occupation: String(raw.occupation || '').trim().toLowerCase(),
+    education: String(raw.education || '').trim().toLowerCase(),
+    isStudent: String(raw.occupation || raw.employment || '').trim().toLowerCase() === 'student',
     intent,
   };
+}
+
+/**
+ * Fit tags per scheme — the eligibility answers that the schemes' own rule JSON
+ * cannot express (occupation, education level, gender, urban/rural). Kept as an
+ * explicit table so every nudge is auditable rather than buried in heuristics.
+ *
+ * Vocabulary: student | salaried | business | farmer | artisan | looking |
+ *             women | rural | urban | school | iti | research | housing | subsidy
+ */
+const SCHEME_FITS = {
+  'NSFDC-MF-001': ['business', 'artisan', 'rural'],
+  'NSFDC-TL-002': ['business', 'farmer'],
+  'NMDFC-EL-003': ['student'],
+  'MUDRA-PM-004': ['business', 'artisan', 'urban', 'looking'],
+  'NSFDC-HP-005': ['housing', 'rural', 'subsidy'],
+  'NSFDC-SC-006': ['women', 'business', 'subsidy'],
+  'PMEGP-007': ['business', 'farmer', 'looking', 'rural', 'subsidy'],
+  'CGTMSE-008': ['business', 'urban'],
+  'NSFDC-CC-009': ['artisan', 'business'],
+  'NMDFC-TL-010': ['business', 'rural'],
+  'NRLM-011': ['women', 'rural', 'artisan', 'farmer', 'subsidy'],
+  'MJP-012': ['student', 'research'],
+  'PMS-SC-013': ['student', 'school'],
+  'NSFDC-SG-014': ['student', 'looking', 'iti'],
+  'NSFDC-WS-015': ['rural', 'farmer'],
+  'MUDRA-TP-016': ['business', 'urban'],
+  'PMMY-SH-017': ['artisan', 'rural', 'looking'],
+  'NSFDC-WC-018': ['business', 'artisan'],
+  'SCSP-019': ['rural', 'farmer', 'business', 'subsidy'],
+  'NSFDC-TR-020': ['business', 'urban'],
+  'CCLGS-021': ['artisan', 'business', 'rural'],
+};
+
+/** How well the extra eligibility answers fit this scheme (-4 … +8). */
+function fitScore(scheme, profile) {
+  const fits = SCHEME_FITS[scheme.scheme_code] || [];
+  let score = 0;
+
+  if (profile.occupation && fits.includes(profile.occupation)) score += 4;
+  if (profile.gender === 'F' && fits.includes('women')) score += 4;
+  if (fits.includes(profile.locationType)) score += 2;
+  if (profile.isStudent && fits.includes('student')) score += 4;
+  if (!profile.isStudent && fits.includes('student')) score -= 4;
+  if (profile.education === 'postgraduate' && fits.includes('research')) score += 3;
+  if (['school', 'higher_secondary'].includes(profile.education) && fits.includes('school')) score += 3;
+  if (profile.education === 'iti' && fits.includes('iti')) score += 3;
+  if (profile.schemeType === 'housing' && fits.includes('housing')) score += 4;
+  if (profile.schemeType === 'subsidy' && fits.includes('subsidy')) score += 2;
+
+  return Math.max(-4, Math.min(8, score));
 }
 
 /**
@@ -243,6 +312,9 @@ function scoreScheme(scheme, profile) {
   // BPL / disability support programmes (5)
   if ((profile.isBpl && rules.prefer_bpl) || (profile.hasDisability && rules.prefer_disability)) score += 5;
   else score += 2;
+
+  // Occupation / education / gender / area fit (-4 to +8)
+  score += fitScore(scheme, profile);
 
   const probability = Math.max(20, Math.min(96, score));
 

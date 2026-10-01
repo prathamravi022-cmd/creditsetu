@@ -1,7 +1,7 @@
 /**
  * All 36 Indian States & Union Territories with real district names.
  * Source: Census of India / data.gov.in
- * Used by OnboardingWizard for state -> district cascading dropdown.
+ * Used by the eligibility flow's state picker and the edit-profile dropdown.
  */
 
 export const STATE_DISTRICTS = {

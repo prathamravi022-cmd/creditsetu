@@ -177,7 +177,8 @@ CreditSetu/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── landing/               # Hero, features, CTA sections
-│   │   │   ├── onboarding/            # 5-step progressive wizard
+│   │   │   ├── eligibility/           # Card-based eligibility flow
+│   │   │   ├── profile/               # Edit-details wizard
 │   │   │   ├── results/               # Scheme cards, EMI calculator, glossary
 │   │   │   ├── map/                   # Bank locator with Leaflet
 │   │   │   ├── admin/                 # Admin dashboard
@@ -222,11 +223,17 @@ CreditSetu/
 
 ## 🏛️ Application Flow
 
-### Phase 1: Progressive Onboarding (4 Steps)
-1. **Auth & Basics** — Mobile OTP verification, language, gender, age
-2. **Location** — State, district, pincode, urban/rural
-3. **Social Category** — SC/ST/OBC/General, disability status
-4. **Financial Intent** — BPL status, income, loan purpose, project cost
+### Phase 1: Eligibility Flow (one question per card)
+1. **Occupation** — Student, salaried, self-employed, farmer, artisan, job-seeking
+2. **Demographics** — Age, gender, social category
+3. **Location** — Domicile state and urban/rural
+4. **Financials** — Annual family income (with BPL flag)
+5. **Education & Intent** — Current/highest education, support needed, purpose, amount
+
+The flow branches as it goes (students never see business questions) and returning
+users open on a review card with **Confirm & Proceed**. Answers are layered onto
+the details already on file, so nobody re-enters what we already hold. Deeper
+fields (district, pincode, disability) live behind `/edit-profile`.
 
 ### Phase 2: AI Recommender Engine
 - Rule-based matching against government schemes
