@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../store/AuthContext";
 import { useAuthModal } from "../../store/AuthModalContext";
-import { eligibilityTarget } from "../../services/recommender";
+import { eligibilityTarget, hasProfile } from "../../services/recommender";
 import i18n from "../../i18n/config";
 import Tilt3D from "../ui/Tilt3D";
 import MagneticButton from "../ui/MagneticButton";
 import { Reveal, RevealGroup, RevealItem } from "../ui/Reveal";
 import Marquee from "../ui/Marquee";
-import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone } from "lucide-react";
+import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone, Clock, CheckCircle2 } from "lucide-react";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useMobileMenu } from "../../store/MobileMenuContext";
 
@@ -122,6 +122,15 @@ export default function LandingPage({ onAuthOpen }) {
   // already remembered. Signed-out visitors log in first, then route on.
   var goToEligibility = function () { if (isAuthenticated) { navigate(eligibilityTarget(user)); } else { signIn(); } };
   var goGetStarted = goToEligibility;
+  // The button's promise changes with the visitor's state: first-timers start
+  // the details form, returning users jump straight to their matches.
+  var isReturning = hasProfile(user);
+  var primaryLabel = isReturning
+    ? t("landing.hero.cta_returning", "View My Schemes")
+    : t("landing.hero.cta", "Check Your Eligibility");
+  var primaryHint = isReturning
+    ? t("landing.hero.saved_hint", "Your details are saved — one tap straight to your matches.")
+    : t("landing.hero.first_hint", "Takes about 2 minutes · no paperwork.");
   // The shell owns the single mobile drawer; this header just opens it.
   var { menuOpen, openMenu, closeMenu } = useMobileMenu();
   var [heroRef, heroVisible] = useScrollReveal(0.1);
@@ -194,14 +203,21 @@ export default function LandingPage({ onAuthOpen }) {
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5 bg-gradient-to-br from-[#000080] via-[#123a8f] to-[#138808] dark:from-white dark:via-sky-200 dark:to-emerald-300 bg-clip-text text-transparent mi-gradient-text">{t("landing.hero.title")}</h1>
             <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed max-w-xl">{t("landing.hero.subtitle")}</p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
-              <MagneticButton onClick={goToEligibility} className="mi-shine glow-accent px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-white font-semibold bg-[#138808] hover:bg-[#0f6d06] text-sm sm:text-base">
-                <span className="inline-flex items-center gap-2">{t("landing.hero.cta")} <ArrowRight className="w-5 h-5" /></span>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4">
+              <MagneticButton onClick={goToEligibility} className="mi-shine glow-accent group px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-white font-semibold bg-[#138808] hover:bg-[#0f6d06] transition-shadow duration-300 text-sm sm:text-base">
+                <span className="inline-flex items-center gap-2">{primaryLabel} <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" /></span>
               </MagneticButton>
-              <MagneticButton strength={0.2} onClick={goGetStarted} className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-semibold border-2 border-[#FF9933] text-[#FF9933] hover:bg-[#FF9933]/10 text-sm sm:text-base">
+              <MagneticButton strength={0.2} onClick={goGetStarted} className="mi-press px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-semibold border-2 border-[#FF9933] text-[#FF9933] hover:bg-[#FF9933]/10 hover:shadow-[0_0_22px_-8px_rgba(255,153,51,0.75)] focus-visible:shadow-[0_0_22px_-8px_rgba(255,153,51,0.75)] transition-shadow duration-300 text-sm sm:text-base">
                 {t("landing.hero.view_all")}
               </MagneticButton>
             </div>
+            {/* One line that sets the expectation for what the click will do */}
+            <p className="mb-8 flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+              {isReturning
+                ? <CheckCircle2 className="w-4 h-4 shrink-0 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
+                : <Clock className="w-4 h-4 shrink-0 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />}
+              <span>{primaryHint}</span>
+            </p>
             {/* Factual product capabilities — no invented ratings or testimonials */}
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               {["21+ central & state schemes", "Available in 7 languages", "Free to use"].map(function(item) {
@@ -498,7 +514,7 @@ export default function LandingPage({ onAuthOpen }) {
       </div>
     </section>
 
-    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><div className="max-w-4xl mx-auto text-center"><h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><button onClick={goGetStarted} className="mi-press mi-shine inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-colors shadow-lg">{t("landing.hero.get_started")} <ArrowRight className="w-5 h-5" /></button></div></section>
+    <section ref={ctaRef} className={"bg-cta relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden transition-all duration-700 " + (ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}><div aria-hidden="true" className="cs-orb cs-orb-saffron w-[320px] h-[320px] -top-32 left-[-5%] opacity-70" /><div aria-hidden="true" className="cs-orb cs-orb-navy w-[360px] h-[360px] -bottom-40 right-[-6%] opacity-70" /><Tilt3D max={5} lift={6} scale={1.006} className="max-w-4xl mx-auto"><div className="text-center"><h2 className="glow-text text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">{t("landing.cta.title")}</h2><p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10">{t("landing.cta.subtitle")}</p><button onClick={goGetStarted} className="group mi-press mi-shine glow-accent inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-[#138808] font-semibold bg-white hover:bg-gray-100 transition-all duration-300 shadow-lg">{isReturning ? t("landing.hero.cta_returning", "View My Schemes") : t("landing.hero.get_started")} <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" /></button></div></Tilt3D></section>
 
     <footer id="contact" className="relative overflow-hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-16" style={{ background: "linear-gradient(160deg, #050f3c 0%, #000050 55%, #061a3f 100%)" }}>
       <div aria-hidden="true" className="cs-orb cs-orb-saffron w-[340px] h-[340px] -top-40 right-[-8%] opacity-60" />
@@ -508,7 +524,7 @@ export default function LandingPage({ onAuthOpen }) {
         <div className="bg-[#FF9933]/10 border border-[#FF9933]/20 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-10 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"><div className="flex items-center gap-3"><Phone className="w-6 h-6 text-[#FF9933]" /><div><div className="text-white font-semibold text-lg">{t("landing.footer.helpline")}</div><div className="text-[#FF9933] font-bold text-xl">{helpline}</div></div></div><div className="text-white/50 text-sm text-center md:text-right">{t("landing.footer.available_247")}</div></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-10 mb-8 sm:mb-12">
           <div><div className="flex items-center gap-2 mb-4"><div className="w-8 h-8 rounded-lg bg-[#138808] flex items-center justify-center"><Landmark className="w-4 h-4 text-white" /></div><span className="text-white font-semibold text-lg">CreditSetu</span></div><p className="text-white/60 text-sm mb-4">{t("landing.footer.government_scheme_finder")}</p><div className="flex items-center gap-3"><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.148 0 7.372 2.96 7.372 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.633 0 12.017 0z"/></svg></a><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></a></div></div>
-          <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.quick_links")}</h4><ul className="space-y-2.5"><li><Link to="/" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.home")}</Link></li><li><Link to={eligibilityTarget(user)} className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.check_eligibility")}</Link></li><li><Link to="/find-bank" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.find_bank")}</Link></li></ul></div>
+          <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.quick_links")}</h4><ul className="space-y-2.5"><li><Link to="/" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.home")}</Link></li><li><Link to={eligibilityTarget(user)} className="mi-underline text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.check_eligibility")}</Link></li><li><Link to="/find-bank" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.find_bank")}</Link></li></ul></div>
           <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.legal")}</h4><ul className="space-y-2.5"><li><Link to="/privacy-policy" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.privacy")}</Link></li><li><Link to="/terms" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.terms")}</Link></li><li><Link to="/feedback" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.feedback")}</Link></li></ul></div>
           <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">Problem Statement</h4><div className="flex items-center gap-2 mb-3"><AshokaChakra /><div className="text-white/70 text-xs leading-tight">Smart India Hackathon 2026<br/>PS 26092 — Ministry of Social<br/>Justice &amp; Empowerment</div></div></div>
         </div>

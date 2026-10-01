@@ -34,7 +34,7 @@ export default function Footer() {
             <h3 className="font-semibold mb-3 text-slate-300">Quick Links</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link to={eligibilityTarget(user)} className="hover:text-white transition-colors">Check Eligibility</Link></li>
+              <li><Link to={eligibilityTarget(user)} className="mi-underline hover:text-[#34d399] transition-colors">Check Eligibility</Link></li>
               <li><Link to="/find-bank" className="hover:text-white transition-colors">Find a Bank</Link></li>
               {isAdmin && (
                 <li><Link to="/admin/dashboard" className="hover:text-white transition-colors">Admin Dashboard</Link></li>

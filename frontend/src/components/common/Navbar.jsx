@@ -61,9 +61,9 @@ export default function Navbar({ onAuthOpen }) {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`mi-press px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   location.pathname === link.path
-                    ? 'bg-green-700/10 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                    ? 'bg-green-700/10 text-green-700 ring-1 ring-inset ring-green-700/25 shadow-[0_0_18px_-7px_rgba(19,136,8,0.8)] dark:bg-green-900/30 dark:text-green-300 dark:ring-green-400/30 dark:shadow-[0_0_18px_-6px_rgba(52,211,153,0.6)]'
                     : 'text-slate-600 hover:text-green-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-green-300 dark:hover:bg-gray-700'
                 }`}
               >

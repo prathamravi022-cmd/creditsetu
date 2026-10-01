@@ -13,6 +13,8 @@ import {
   ChevronDown, ChevronUp, Map, ChevronRight, Users
 } from 'lucide-react';
 import PageBackdrop from '../art/PageBackdrop';
+import { useAuth } from '../../store/AuthContext';
+import { eligibilityTarget } from '../../services/recommender';
 import { BANK_BRANCHES, BANK_TYPES, SORT_OPTIONS } from '../../data/bankBranches';
 import { CSC_CENTERS } from '../../data/cscCenters';
 
@@ -35,6 +37,7 @@ export default function PartnerLocator() {
   const heroRef = useRef(null);
   const inView = useInView(heroRef, { once: true, amount: 0.2 });
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
@@ -136,7 +139,7 @@ export default function PartnerLocator() {
               <Map className="w-4 h-4 text-brand" /> {showMap ? t('map.show_list') : t('map.show_map')}
             </button>
             <button
-              onClick={() => navigate('/get-started')}
+              onClick={() => navigate(eligibilityTarget(user))}
               className="inline-flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-xl text-sm font-medium hover:bg-brand-hover transition-colors shadow-sm"
             >
               <ChevronRight className="w-3.5 h-3.5" /> {t('map.find_scheme')}

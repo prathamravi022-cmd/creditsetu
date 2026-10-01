@@ -334,7 +334,9 @@ input[type='range']::-moz-range-thumb {
 @media (prefers-reduced-motion: reduce) {
   .marquee__track,
   .mi-float,
-  .mi-gradient-text {
+  .mi-gradient-text,
+  .page-slide-forward,
+  .page-slide-back {
     animation: none;
   }
   .mi-lift:hover,
@@ -410,6 +412,22 @@ h1, h2, h3, .font-display {
   box-shadow: 0 0 0 1px rgba(var(--cs-glow), 0.30),
               0 0 26px -8px rgba(var(--cs-glow), 0.40),
               0 20px 54px -24px rgba(var(--cs-glow), 0.55);
+}
+
+/* Active-state bloom — the same accent token, brighter, while the pointer is
+   over the control or it is being pressed. One rule drives every glow-accent
+   surface (hero CTA, sticky bar, bottom CTA), so the glow always matches the
+   site's single brand colour. */
+@media (hover: hover) {
+  .glow-accent:hover {
+    box-shadow: 0 0 0 1px rgba(var(--cs-glow), 0.50),
+                0 0 30px -6px rgba(var(--cs-glow), 0.75),
+                0 24px 52px -26px rgba(var(--cs-glow), 0.55);
+  }
+}
+.glow-accent:active {
+  box-shadow: 0 0 0 1px rgba(var(--cs-glow), 0.60),
+              0 0 26px -6px rgba(var(--cs-glow), 0.85);
 }
 
 /* Soft halo behind key headings */
@@ -794,6 +812,18 @@ textarea {
   }
   .page-slide-back {
     animation: cs-slide-in-left 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+/* Desktop keeps navigation calm: a quick opacity fade instead of a slide, so
+   route changes read as one continuous surface rather than a hard cut. */
+@keyframes cs-page-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (min-width: 768px) {
+  .page-slide-forward,
+  .page-slide-back {
+    animation: cs-page-fade 0.24s ease both;
   }
 }
 

@@ -62,6 +62,9 @@
       "title": "AI-Driven Credit Scheme Matching",
       "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
       "cta": "Check Your Eligibility",
+      "cta_returning": "View My Schemes",
+      "first_hint": "Takes about 2 minutes · no paperwork.",
+      "saved_hint": "Your details are saved — one tap straight to your matches.",
       "view_all": "View All Schemes",
       "get_started": "Get Started Now",
       "get_started_btn": "Get Started"

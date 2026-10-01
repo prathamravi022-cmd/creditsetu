@@ -4,7 +4,7 @@ import { ArrowRight, Pencil } from 'lucide-react';
 import { useAuth } from '../../store/AuthContext';
 import { useAuthModal } from '../../store/AuthModalContext';
 import { useMobileMenu } from '../../store/MobileMenuContext';
-import { eligibilityTarget } from '../../services/recommender';
+import { eligibilityTarget, hasProfile } from '../../services/recommender';
 
 /**
  * MobileStickyCta — keeps the page's primary action reachable while scrolling
@@ -26,8 +26,10 @@ export default function MobileStickyCta() {
 
   let cta = null;
   if (pathname === '/') {
+    // Same button, two promises: first-timers are told they'll start the form,
+    // returning users are told the tap opens their saved matches.
     cta = {
-      label: 'Check Your Eligibility',
+      label: hasProfile(user) ? 'View My Schemes' : 'Check Your Eligibility',
       Icon: ArrowRight,
       run: () => (isAuthenticated ? navigate(eligibilityTarget(user)) : openAuth()),
     };
@@ -48,7 +50,7 @@ export default function MobileStickyCta() {
         <button
           type="button"
           onClick={run}
-          className="tap-spring mi-shine glow-accent flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#138808] px-5 text-sm font-semibold text-white shadow-[0_16px_34px_-14px_rgba(19,136,8,0.75)]"
+          className="tap-spring mi-shine glow-accent flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#138808] px-5 text-sm font-semibold text-white shadow-[0_16px_34px_-14px_rgba(19,136,8,0.75)] transition-shadow duration-300"
         >
           {label}
           <Icon aria-hidden="true" className="h-4 w-4" />
