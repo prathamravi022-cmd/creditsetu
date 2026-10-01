@@ -61,7 +61,10 @@
       "badge": "Helping users discover government credit schemes",
       "title": "AI-Driven Credit Scheme Matching",
       "subtitle": "Find the right government scheme for your business. Simple, fast, and in your language.",
-      "cta": "Check Your Eligibility",
+      "cta": "আপনার যোগ্যতা পরীক্ষা করুন",
+      "cta_returning": "আমার স্কিমগুলো দেখুন",
+      "first_hint": "প্রায় 2 মিনিট · কোনো কাগজপত্র লাগবে না।",
+      "saved_hint": "আপনার তথ্য সংরক্ষিত আছে — এক ট্যাপেই আপনার ম্যাচ দেখুন।",
       "view_all": "View All Schemes",
       "get_started": "Get Started Now",
       "get_started_btn": "Get Started"
