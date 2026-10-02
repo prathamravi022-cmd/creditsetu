@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import {
-  CheckCircle, Clock, AlertCircle, MapPin, Download,
+  CheckCircle, AlertCircle, MapPin, Download,
   Calculator, FileText, ChevronDown, ChevronUp, Info,
-  TrendingUp, Shield, Percent, IndianRupee, ExternalLink, Globe, Pencil
+  Shield, ExternalLink, Globe, Pencil
 } from 'lucide-react';
 import EMICalculator from './EMICalculator';
 import Glossary from './Glossary';
@@ -17,11 +16,6 @@ import ScaleCard from '../ui/ScaleCard';
 import ScrollReveal from '../ui/ScrollReveal';
 import { loadProfile, generateAndCache } from '../../services/recommender';
 import { useAuth } from '../../store/AuthContext';
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
 
 function getProbabilityColor(prob) {
   if (prob >= 80) return 'text-green-700 bg-green-100 dark:text-green-300 dark:bg-green-900/40';

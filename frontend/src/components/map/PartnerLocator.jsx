@@ -2,7 +2,7 @@
  * PartnerLocator — scrollable card list with search, sort, filter.
  * Theme-aware: readable in both light and dark mode.
  */
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';

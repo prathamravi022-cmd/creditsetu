@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 
 /**
  * MobileMenuContext — there is exactly one mobile drawer in the app, mounted

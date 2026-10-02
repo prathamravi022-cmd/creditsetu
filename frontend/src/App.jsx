@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./store/AuthContext";
 import { DarkModeProvider } from "./store/DarkModeContext";
@@ -10,14 +10,8 @@ import Footer from "./components/common/Footer";
 import MobileMenu from "./components/common/MobileMenu";
 import MobileStickyCta from "./components/common/MobileStickyCta";
 import PageTransition from "./components/common/PageTransition";
-import LandingPage from "./components/landing/LandingPage";
-import ResultsDashboard from "./components/results/ResultsDashboard";
 import ProfileWizard from "./components/profile/ProfileWizard";
 import EligibilityFlow from "./components/eligibility/EligibilityFlow";
-import FindBankMap from "./components/map/PartnerLocator";
-/* survey/faq/feedback pages were removed from this build — keep imports only if those folders exist */
-import AdminDashboard from "./components/admin/AdminDashboard";
-/* AdminAuditLog / AdminBankLocator / AdminConfig were removed from this build to match the current filesystem */
 
 const LoadFailed = () => (
   <main style={{ padding: "3rem", textAlign: "center", color: "#fff" }}>

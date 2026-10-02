@@ -44,5 +44,3 @@ export const STATE_DISTRICTS = {
 };
 
 export const INDIAN_STATES = Object.keys(STATE_DISTRICTS).sort();
-
-export const TOTAL_DISTRICTS = 690;

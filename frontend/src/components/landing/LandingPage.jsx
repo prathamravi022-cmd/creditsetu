@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../store/AuthContext";
@@ -10,7 +10,7 @@ import MagneticButton from "../ui/MagneticButton";
 import { Reveal, RevealGroup, RevealItem } from "../ui/Reveal";
 import Marquee from "../ui/Marquee";
 import { LANDING_SCHEMES } from "../../data/landingSchemes";
-import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone, Clock, CheckCircle2, Mail } from "lucide-react";
+import { Shield, ArrowRight, Menu, X, Landmark, Globe, Phone, Clock, CheckCircle2, Mail } from "lucide-react";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useMobileMenu } from "../../store/MobileMenuContext";
 
@@ -65,42 +65,6 @@ function TricolorStripe() {
 function AshokaChakra() {
   return (<svg viewBox="0 0 100 100" className="w-8 h-8" fill="none" stroke="#FF9933" strokeWidth="1.5"><circle cx="50" cy="50" r="45" /><circle cx="50" cy="50" r="12" />{Array.from({length:24},function(_,i){var a=(i*15)*Math.PI/180;return <line key={i} x1={50+12*Math.cos(a)} y1={50+12*Math.sin(a)} x2={50+45*Math.cos(a)} y2={50+45*Math.sin(a)} />})}</svg>);
 }
-function HeroIllustration() {
-  return (<svg viewBox="0 0 400 350" className="w-full h-full" fill="none">
-    <rect x="50" y="80" width="120" height="180" rx="8" fill="#138808" opacity="0.1" />
-    <rect x="60" y="100" width="100" height="140" rx="4" fill="white" stroke="#138808" strokeWidth="2" />
-    <rect x="70" y="115" width="80" height="8" rx="2" fill="#FF9933" />
-    <rect x="70" y="130" width="60" height="6" rx="1" fill="#e5e7eb" />
-    <rect x="70" y="142" width="70" height="6" rx="1" fill="#e5e7eb" />
-    <rect x="70" y="154" width="50" height="6" rx="1" fill="#e5e7eb" />
-    <circle cx="110" cy="200" r="20" fill="#FF9933" opacity="0.2" />
-    <text x="110" y="206" textAnchor="middle" fill="#FF9933" fontSize="16" fontWeight="bold">₹</text>
-    <rect x="230" y="60" width="140" height="100" rx="12" fill="white" stroke="#138808" strokeWidth="2" />
-    <circle cx="270" cy="100" r="15" fill="#FF9933" />
-    <rect x="300" y="90" width="50" height="6" rx="1" fill="#e5e7eb" />
-    <rect x="300" y="102" width="40" height="6" rx="1" fill="#e5e7eb" />
-    <rect x="250" y="125" width="100" height="20" rx="4" fill="#138808" />
-    <text x="300" y="139" textAnchor="middle" fill="white" fontSize="10">Apply Now</text>
-    <circle cx="300" cy="250" r="50" fill="#138808" opacity="0.1" />
-    <circle cx="300" cy="250" r="35" fill="#138808" opacity="0.2" />
-    <path d="M300 220 L300 280 M270 250 L330 250" stroke="#138808" strokeWidth="3" strokeLinecap="round" />
-    <rect x="80" y="280" width="240" height="40" rx="20" fill="white" stroke="#FF9933" strokeWidth="2" />
-    <text x="200" y="305" textAnchor="middle" fill="#000080" fontSize="12" fontWeight="600">Government Scheme Finder</text>
-    <circle cx="100" cy="50" r="8" fill="#FF9933" opacity="0.3" />
-    <circle cx="350" cy="30" r="6" fill="#138808" opacity="0.3" />
-    <circle cx="380" cy="150" r="10" fill="#FF9933" opacity="0.2" />
-  </svg>);
-}
-function BuildingIcon() {
-  return (<svg viewBox="0 0 200 200" className="w-16 h-16" xmlns="http://www.w3.org/2000/svg"><g transform="translate(28,50) scale(2.25)"><path d="M32 6L58 20H6L32 6Z" fill="#6b4226"/><rect x="10" y="24" width="44" height="30" rx="2" fill="#6b4226"/><rect x="16" y="28" width="5" height="22" fill="#f4c98b"/><rect x="29.5" y="28" width="5" height="22" fill="#f4c98b"/><rect x="43" y="28" width="5" height="22" fill="#f4c98b"/><rect x="6" y="54" width="52" height="5" rx="1" fill="#6b4226"/><circle cx="32" cy="34" r="10" fill="#f4c98b" stroke="#6b4226" strokeWidth="2"/><text x="32" y="38.5" fontFamily="Arial" fontSize="15" fontWeight="bold" textAnchor="middle" fill="#6b4226">₹</text></g></svg>);
-}
-function DocumentIcon() {
-  return (<svg viewBox="0 0 200 200" className="w-16 h-16" xmlns="http://www.w3.org/2000/svg"><g transform="translate(30,55) scale(2.2)"><path d="M32 4L60 18L32 32L4 18L32 4Z" fill="#d9827a"/><path d="M16 24V36C16 40 23 44 32 44C41 44 48 40 48 36V24L32 32L16 24Z" fill="#d9827a"/><line x1="58" y1="19" x2="58" y2="34" stroke="#d9827a" strokeWidth="2.5" strokeLinecap="round"/><circle cx="58" cy="37" r="3.5" fill="#d9827a"/></g></svg>);
-}
-function LocationPinIcon() {
-  return (<svg viewBox="0 0 200 200" className="w-16 h-16" xmlns="http://www.w3.org/2000/svg"><g transform="translate(28,25) scale(2.3)"><path d="M32 56C32 56 8 40 8 22C8 12 15 6 23 6C27 6 30.5 8 32 12C33.5 8 37 6 41 6C49 6 56 12 56 22C56 40 32 56 32 56Z" fill="#4fa8a3"/><rect x="24" y="16" width="16" height="16" rx="3" fill="white"/><rect x="30" y="19" width="4" height="10" rx="1" fill="#4fa8a3"/><rect x="27" y="22" width="10" height="4" rx="1" fill="#4fa8a3"/></g></svg>);
-}
-
 function LangToggle() {
   var langs = [{c:"en",l:"EN"},{c:"hi",l:"HI"},{c:"ta",l:"TA"},{c:"te",l:"TE"},{c:"bn",l:"BN"},{c:"mr",l:"MR"},{c:"kn",l:"KN"}];
   var current = i18n.language || "en";
@@ -145,11 +109,6 @@ export default function LandingPage({ onAuthOpen }) {
   var [s4Ref, s4Val] = AnimatedCounter(690, "");
 
 
-  var steps = [
-    { icon: BuildingIcon, title: t("landing.features.step1.title"), desc: t("landing.features.step1.desc") },
-    { icon: DocumentIcon, title: t("landing.features.step2.title"), desc: t("landing.features.step2.desc") },
-    { icon: LocationPinIcon, title: t("landing.features.step3.title"), desc: t("landing.features.step3.desc") },
-  ];
   // Showcase catalogue — three cards for every category chip (see
   // data/landingSchemes.js). Entries carrying a tKey reuse the existing
   // landing.schemes translations rather than dropping them.

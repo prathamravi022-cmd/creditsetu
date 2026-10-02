@@ -232,16 +232,6 @@ export function hasProfile(user) {
   return Boolean(loadProfile(user));
 }
 
-export function clearProfile(user) {
-  try {
-    localStorage.removeItem(profileKeyFor(user));
-    localStorage.removeItem(PROFILE_KEY);
-    sessionStorage.removeItem(RESULTS_KEY);
-  } catch {
-    /* ignore */
-  }
-}
-
 /**
  * Where a profile-driven CTA should send this user:
  * returning users (details already saved) go straight to their Schemes page,

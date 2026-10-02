@@ -1,4 +1,3 @@
-import React from 'react';
 import { Share2, MessageCircle, Copy } from 'lucide-react';
 
 export default function ShareButton({ scheme }) {

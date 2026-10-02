@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PageBackdrop from "../art/PageBackdrop";
 import { useAuth } from "../../store/AuthContext";
 
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
   const { logout } = useAuth();
   var [tab, setTab] = useState("overview");
   var [adminPhone, setAdminPhone] = useState(sessionStorage.getItem("admin_phone") || "Admin");
-  var [stats, setStats] = useState({
+  var [stats] = useState({
     totalUsers: 0,
     totalSchemes: 0,
     totalBanks: 0,

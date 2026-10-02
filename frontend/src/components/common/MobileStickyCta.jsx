@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Pencil } from 'lucide-react';
 import { useAuth } from '../../store/AuthContext';

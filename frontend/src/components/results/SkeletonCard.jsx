@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * SkeletonCard — placeholder shown while scheme matches are being ranked.

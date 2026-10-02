@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../store/AuthContext';
@@ -11,7 +10,7 @@ import LanguageDropdown from '../ui/LanguageDropdown';
 import ThemeToggle from '../ui/ThemeToggle';
 
 export default function Navbar({ onAuthOpen }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();

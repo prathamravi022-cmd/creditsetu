@@ -52,17 +52,6 @@ async function put(storeName, data) {
   });
 }
 
-async function get(storeName, key) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(storeName, 'readonly');
-    const store = tx.objectStore(storeName);
-    const req = store.get(key);
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
-
 async function getAll(storeName) {
   const db = await openDB();
   return new Promise((resolve, reject) => {
@@ -89,44 +78,6 @@ async function deleteItem(storeName, key) {
 
 export async function cacheFormData(key, data) {
   await put(STORES.formData, { key, data, timestamp: Date.now() });
-}
-
-export async function getCachedFormData(key) {
-  const result = await get(STORES.formData, key);
-  return result ? result.data : null;
-}
-
-export async function cacheSchemes(recommendations) {
-  await put(STORES.schemes, {
-    key: 'latest',
-    data: recommendations,
-    timestamp: Date.now(),
-  });
-}
-
-export async function getCachedSchemes() {
-  const result = await get(STORES.schemes, 'latest');
-  return result ? result.data : null;
-}
-
-export async function cacheChecklist(schemeId, documents) {
-  await put(STORES.checklists, {
-    key: schemeId,
-    data: documents,
-    timestamp: Date.now(),
-  });
-}
-
-export async function getCachedChecklist(schemeId) {
-  const result = await get(STORES.checklists, schemeId);
-  return result ? result.data : null;
-}
-
-export async function queueSync(action) {
-  await put(STORES.syncQueue, {
-    ...action,
-    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-  });
 }
 
 export async function processSyncQueue() {

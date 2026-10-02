@@ -26,11 +26,3 @@ export const CSC_CENTERS = [
   { id: 'csc19', name: 'CSC Azamgarh City', address: 'Ghazipur Road, Azamgarh', district: 'Azamgarh', state: 'Uttar Pradesh', pincode: '276001', lat: 26.0736, lng: 83.1855, distance_km: 195, vle_name: 'Pradeep Maurya', contact: '9876543019', services: ['Aadhaar Enrollment', 'PAN Card', 'Income Certificate', 'Caste Certificate', 'PM Kisan Registration', 'Udyog Aadhaar'], is_active: true },
   { id: 'csc20', name: 'CSC Ballia City', address: 'Tilliani Road, Ballia', district: 'Ballia', state: 'Uttar Pradesh', pincode: '277001', lat: 25.7553, lng: 84.1448, distance_km: 180, vle_name: 'Anand Dubey', contact: '9876543020', services: ['Aadhaar Enrollment', 'PAN Card', 'Caste Certificate', 'Income Certificate', 'Birth Certificate'], is_active: true },
 ];
-
-export const CSC_SERVICES_LIST = [
-  'Aadhaar Enrollment', 'PAN Card', 'Voter ID', 'Birth Certificate',
-  'Caste Certificate', 'Income Certificate', 'Passport Application',
-  'PM Kisan Registration', 'Ayushman Card', 'Udyog Aadhaar',
-  'Ration Card Application', 'Land Records', 'Driving License',
-  'Vehicle Registration',
-];

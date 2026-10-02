@@ -4,7 +4,7 @@
  * Features: fade-in, slide-up, backdrop-blur, shake animation,
  * inline errors, loading spinner, skeleton loader, admin redirect.
  */
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase, isSupabaseConfigured } from '../../config/supabase';
 import { useAuth } from '../../store/AuthContext';
@@ -54,7 +54,6 @@ export default function AuthModal({ open, onClose }) {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [shakeField, setShakeField] = useState('');

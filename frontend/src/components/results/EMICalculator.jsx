@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IndianRupee, TrendingDown, Clock, Percent } from 'lucide-react';
+import { IndianRupee } from 'lucide-react';
 
 export default function EMICalculator({ scheme, onClose }) {
   const { t } = useTranslation();

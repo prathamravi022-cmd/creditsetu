@@ -9,7 +9,7 @@
  * Returning users open on the review card — "Confirm & Proceed" — so they never
  * re-enter details we already hold. First-time users walk the questions instead.
  */
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {

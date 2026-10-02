@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 /** Delivers a vertical layout scale (through hover translateY) so long-form
  *  content panels stay on the baseline while the hero card rotates.

@@ -378,12 +378,8 @@ body {
   background: var(--cs-bg);
 }
 
-.dark .cs-shell {
-  background: var(--cs-bg);
-}
-
 /* Modern display typography — tighter tracking for headings */
-h1, h2, h3, .font-display {
+h1, h2, h3 {
   font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
   letter-spacing: -0.02em;
 }
@@ -393,10 +389,6 @@ h1, h2, h3, .font-display {
   background: linear-gradient(160deg, rgba(32, 32, 35, 0.92), rgba(20, 20, 22, 0.86));
   border: 1px solid rgba(148, 197, 255, 0.10);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 44px -24px rgba(0, 0, 0, 0.9);
-}
-.dark .glass-panel {
-  background: rgba(24, 24, 26, 0.86);
-  border: 1px solid rgba(148, 197, 255, 0.10);
 }
 .dark .cs-nav {
   background: rgba(18, 18, 18, 0.82);
@@ -438,13 +430,6 @@ h1, h2, h3, .font-display {
   text-shadow: 0 0 36px rgba(var(--cs-glow), 0.38);
 }
 
-/* Gradient hairline divider */
-.divider-glow {
-  height: 1px;
-  border: 0;
-  background: linear-gradient(90deg, transparent, rgba(var(--cs-glow), 0.45), transparent);
-}
-
 /* Hero legibility scrim — explicit CSS rather than Tailwind arbitrary dark
    variants, which do not reliably compile for gradient color stops. */
 .hero-scrim {
@@ -462,18 +447,7 @@ h1, h2, h3, .font-display {
     rgba(7, 11, 15, 0.80),
     rgba(7, 11, 15, 0.42)
   );
-}/* Consistent vertical rhythm between page sections */
-.section-y {
-  padding-top: 4.5rem;
-  padding-bottom: 4.5rem;
 }
-@media (min-width: 768px) {
-  .section-y {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-}
-
 /* ---------- Universal brand tokens (inner pages inherit these) ---------- */
 /* Saffron glow accent — the single brand colour used across the site.
    Defined once here so every inner page can reference it without
@@ -511,24 +485,6 @@ h1, h2, h3, .font-display {
   border-color: var(--cs-brand-line);
 }
 
-/* Scroll-triggered reveal (used by Results + inner pages). */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(24px) scale(0.97);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.scroll-reveal.in-view {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
 /* Brand gradient text — subtle, only on headings that can carry it. */
 .gradient-brand {
   background: linear-gradient(120deg, var(--cs-brand), #ffd29a 60%, var(--cs-brand));
@@ -539,12 +495,6 @@ h1, h2, h3, .font-display {
 }
 
 /* Soft brand divider */
-.divider-brand {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--cs-brand-soft), transparent);
-  border: 0;
-}
-
 /* ---------- Global UX polish (applies to every page) ---------- */
 html {
   scroll-behavior: smooth;
@@ -617,18 +567,12 @@ img {
 .bg-brand-soft {
   background-color: var(--cs-brand-soft);
 }
-.text-brand-hover {
-  color: var(--cs-brand-hover);
-}
 .border-brand {
   border-color: var(--cs-brand);
 }
 .border-brand-light,
 .hover\:border-brand-light:hover {
   border-color: var(--cs-brand-line);
-}
-.shadow-brand {
-  box-shadow: 0 10px 30px -12px rgba(255, 153, 51, 0.45);
 }
 .bg-brand\/10 {
   background-color: rgba(255, 153, 51, 0.1);

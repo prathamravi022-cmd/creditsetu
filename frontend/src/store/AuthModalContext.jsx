@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 
 /**
  * AuthModalContext — lets any surface (hero CTA, navbar, drawer) ask for the
