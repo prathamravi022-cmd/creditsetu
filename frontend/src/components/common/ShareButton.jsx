@@ -12,7 +12,7 @@ export default function ShareButton({ scheme }) {
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <button onClick={handleWhatsApp} className="flex items-center gap-1.5 px-3 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition-colors">
+      <button onClick={handleWhatsApp} className="flex items-center gap-1.5 px-3 py-2 bg-green-700 text-white rounded-lg text-sm hover:bg-green-700 transition-colors">
         <MessageCircle className="w-4 h-4" /> WhatsApp
       </button>
       <button onClick={handleSMS} className="flex items-center gap-1.5 px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">

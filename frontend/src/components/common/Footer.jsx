@@ -58,13 +58,13 @@ export default function Footer() {
               Smart India Hackathon 2026 — SIH26092<br />
               Theme: Ministry of Social Justice &amp; Empowerment
             </p>
-            <p className="text-xs text-slate-500 mt-3">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
               Helpline: 1800-11-0031 · <a href="mailto:prathamravi022@gmail.com" className="hover:text-[#34d399]">prathamravi022@gmail.com</a>
             </p>
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+        <div className="mt-8 pt-6 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
           <span>{t('footer.made_with')}</span>
           <span>© 2026 CreditSetu Scheme Finder. All rights reserved.</span>
         </div>

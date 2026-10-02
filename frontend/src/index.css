@@ -553,9 +553,23 @@ img {
   --cs-brand-hover: #ffa84d;
   --cs-brand-soft: rgba(255, 153, 51, 0.14);
   --cs-brand-line: rgba(255, 153, 51, 0.35);
+  /* Saffron is too light to read as small text on a light surface
+     (~2.1:1). Text uses this deeper amber in light mode and the true
+     saffron in dark mode, where it already has strong contrast. */
+  --cs-brand-text: #b45309;
+}
+.dark {
+  --cs-brand-text: var(--cs-brand);
 }
 .text-brand {
-  color: var(--cs-brand);
+  color: var(--cs-brand-text);
+}
+/* The deep brand green (#138808) fails contrast as text on dark surfaces
+   (~3.2:1). In dark mode lift every green text/accent — base and hover — to the
+   light emerald the components already use, which reads at ~8:1. */
+.dark .text-\[\#138808\],
+.dark .hover\:text-\[\#138808\]:hover {
+  color: #34d399;
 }
 .bg-brand {
   background-color: var(--cs-brand);

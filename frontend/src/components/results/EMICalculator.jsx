@@ -110,7 +110,7 @@ export default function EMICalculator({ scheme, onClose }) {
               onChange={(e) => setPrincipal(Number(e.target.value))}
               className="w-full accent-green-700"
             />
-            <div className="flex justify-between text-xs text-slate-500">
+            <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
               <span>{formatCurrency(scheme.amount_range.min)}</span>
               <span>{formatCurrency(maxLoan)}</span>
             </div>
@@ -130,7 +130,7 @@ export default function EMICalculator({ scheme, onClose }) {
               onChange={(e) => setTenure(Number(e.target.value))}
               className="w-full accent-green-700"
             />
-            <div className="flex justify-between text-xs text-slate-500">
+            <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
               <span>{scheme.tenure_range.min_months} months</span>
               <span>{scheme.tenure_range.max_months} months</span>
             </div>
@@ -157,25 +157,25 @@ export default function EMICalculator({ scheme, onClose }) {
         <div className="bg-slate-50 rounded-xl p-5">
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white rounded-lg p-3 border border-slate-200">
-              <span className="text-xs text-slate-500 block">{t('results.monthly_emi')}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.monthly_emi')}</span>
               <span className="text-xl font-bold text-green-700">{formatCurrency(calculation.emi)}</span>
             </div>
             <div className="bg-white rounded-lg p-3 border border-slate-200">
-              <span className="text-xs text-slate-500 block">{t('results.total_interest')}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.total_interest')}</span>
               <span className="text-xl font-bold text-orange-600">{formatCurrency(calculation.totalInterest)}</span>
             </div>
             <div className="bg-white rounded-lg p-3 border border-slate-200">
-              <span className="text-xs text-slate-500 block">{t('results.total_payment')}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.total_payment')}</span>
               <span className="text-lg font-bold text-green-900">{formatCurrency(calculation.totalPayment)}</span>
             </div>
             <div className="bg-white rounded-lg p-3 border border-slate-200">
-              <span className="text-xs text-slate-500 block">{t('results.subsidy')}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.subsidy')}</span>
               <span className="text-lg font-bold text-green-600">−{formatCurrency(calculation.subsidy)}</span>
             </div>
           </div>
 
           {calculation.margin > 0 && (
-            <div className="mt-3 text-xs text-slate-600 bg-white rounded-lg p-3 border border-slate-200">
+            <div className="mt-3 text-xs text-slate-600 dark:text-slate-400 bg-white rounded-lg p-3 border border-slate-200">
               {t('results.margin_money')}: <strong>{formatCurrency(calculation.margin)}</strong> ({scheme.margin_money_percentage}%)
             </div>
           )}
@@ -212,7 +212,7 @@ function AmortizationTable({ schedule }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-left text-xs text-slate-500 uppercase tracking-wider">
+            <tr className="border-b border-slate-200 text-left text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               <th className="py-2 px-3">Month</th>
               <th className="py-2 px-3">EMI</th>
               <th className="py-2 px-3">Principal</th>

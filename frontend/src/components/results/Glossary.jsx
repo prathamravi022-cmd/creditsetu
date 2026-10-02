@@ -28,7 +28,7 @@ export default function Glossary() {
               <span className="font-semibold text-sm text-green-900 block">
                 {t(`glossary.${term.key}.term`)}
               </span>
-              <span className="text-xs text-slate-500 line-clamp-2">
+              <span className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
                 {t(`glossary.${term.key}.def`)}
               </span>
             </div>

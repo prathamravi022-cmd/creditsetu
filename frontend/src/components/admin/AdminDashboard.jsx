@@ -42,7 +42,7 @@ function OverviewTab({ stats }) {
       </div>
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
         <h3 className="font-semibold text-[#000080] mb-4 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-[#FF9933]" /> Recent Activity
+          <Activity className="w-5 h-5 text-[#b45309] dark:text-[#FF9933]" /> Recent Activity
         </h3>
         <div className="space-y-3">
           {ACTIVITY_LOG.length === 0 ? (<div className="p-6 text-center text-gray-400">No recent activity. Activity logs will appear here when users interact with the platform.</div>) : ACTIVITY_LOG.map(function(item) {
@@ -50,7 +50,7 @@ function OverviewTab({ stats }) {
               user: <Users className="w-4 h-4 text-[#138808]" />,
               scheme: <FileText className="w-4 h-4 text-[#000080]" />,
               disbursement: <TrendingUp className="w-4 h-4 text-[#138808]" />,
-              alert: <AlertTriangle className="w-4 h-4 text-[#FF9933]" />,
+              alert: <AlertTriangle className="w-4 h-4 text-[#b45309] dark:text-[#FF9933]" />,
               application: <Clock className="w-4 h-4 text-[#000080]" />,
               bank: <Building2 className="w-4 h-4 text-[#000080]" />
             };
@@ -104,7 +104,7 @@ function UsersTab() {
                   <td className="px-4 py-3 text-gray-600">{u.state}</td>
                   <td className="px-4 py-3"><span className="px-2 py-1 rounded-full text-xs font-medium bg-[#000080]/10 text-[#000080]">{u.category}</span></td>
                   <td className="px-4 py-3 text-gray-600">{(u.income/100000).toFixed(1)}L</td>
-                  <td className="px-4 py-3"><span className={"px-2 py-1 rounded-full text-xs font-medium " + (u.status === "Active" ? "bg-[#138808]/10 text-[#138808]" : "bg-[#FF9933]/10 text-[#FF9933]")}>{u.status}</span></td>
+                  <td className="px-4 py-3"><span className={"px-2 py-1 rounded-full text-xs font-medium " + (u.status === "Active" ? "bg-[#138808]/10 text-[#138808]" : "bg-[#FF9933]/10 text-[#b45309] dark:text-[#FF9933]")}>{u.status}</span></td>
                   <td className="px-4 py-3"><button className="text-[#138808] hover:underline text-xs"><Eye className="w-4 h-4 inline" /> View</button></td>
                 </tr>
               );

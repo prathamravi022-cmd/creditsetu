@@ -27,7 +27,7 @@ function getProbabilityColor(prob) {
 function getLabelColor(label) {
   switch (label) {
     case 'Highly Recommended': return 'bg-green-700 text-white';
-    case 'Recommended': return 'bg-green-600 text-white';
+    case 'Recommended': return 'bg-green-700 text-white';
     case 'Possible Match': return 'bg-amber-500 text-white';
     default: return 'bg-slate-400 text-white';
   }
@@ -107,7 +107,7 @@ export default function ResultsDashboard() {
         <PageBackdrop variant="results" />
         <AlertCircle className="w-16 h-16 text-slate-300 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-slate-700 mb-2">No Schemes Found</h2>
-        <p className="text-slate-500 mb-6">
+        <p className="text-slate-500 dark:text-slate-400 mb-6">
           We couldn't find matching schemes for your profile. Try adjusting your inputs.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
@@ -205,7 +205,7 @@ export default function ResultsDashboard() {
                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getLabelColor(scheme.recommendation_label)}`}>
                       {scheme.recommendation_label}
                     </span>
-                    <span className="text-xs text-slate-500 font-mono">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                       {scheme.scheme_code}
                     </span>
                   </div>
@@ -222,7 +222,7 @@ export default function ResultsDashboard() {
                   <div className={`w-16 h-16 rounded-full flex items-center justify-center text-lg font-bold ${getProbabilityColor(scheme.approval_probability)}`}>
                     {scheme.approval_probability}%
                   </div>
-                  <span className="text-xs text-slate-500 mt-1">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     {t('results.probability')}
                   </span>
                 </div>
@@ -232,7 +232,7 @@ export default function ResultsDashboard() {
               {/* Score Breakdown */}
               {scheme.approval_probability && (
                 <div className="mt-3 p-3 bg-slate-50 dark:bg-white/5 rounded-xl">
-                  <p className="text-[10px] font-medium text-slate-500 mb-2 uppercase tracking-wider">Score Breakdown</p>
+                  <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wider">Score Breakdown</p>
                   <div className="grid grid-cols-3 gap-x-4 gap-y-1">
                     {[
                       { label: 'Income', pts: Math.min(30, Math.round(scheme.approval_probability * 0.3)), max: 30 },
@@ -243,8 +243,8 @@ export default function ResultsDashboard() {
                       { label: 'Purpose', pts: Math.min(5, Math.round(scheme.approval_probability * 0.05)), max: 5 },
                     ].map((f, i) => (
                       <div key={i} className="flex items-center justify-between text-[10px]">
-                        <span className="text-slate-500">{f.label}</span>
-                        <span className="text-slate-600 font-medium">{f.pts}/{f.max}</span>
+                        <span className="text-slate-500 dark:text-slate-400">{f.label}</span>
+                        <span className="text-slate-600 dark:text-slate-400 font-medium">{f.pts}/{f.max}</span>
                       </div>
                     ))}
                   </div>
@@ -253,21 +253,21 @@ export default function ResultsDashboard() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 pt-4 border-t border-slate-100 dark:border-white/10 dark:border-white/10">
                 <div>
-                  <span className="text-xs text-slate-500 block">{t('results.amount_range')}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.amount_range')}</span>
                   <span className="font-semibold text-green-900 dark:text-green-300 text-sm">{scheme.amount_range.display}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">{t('results.interest_rate')}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.interest_rate')}</span>
                   <span className="font-semibold text-green-900 dark:text-green-300 text-sm">{scheme.interest_rate}% p.a.</span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">{t('results.tenure')}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.tenure')}</span>
                   <span className="font-semibold text-green-900 dark:text-green-300 text-sm">
                     {scheme.tenure_range.min_months}–{scheme.tenure_range.max_months} months
                   </span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">{t('results.moratorium')}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 block">{t('results.moratorium')}</span>
                   <span className="font-semibold text-green-900 dark:text-green-300 text-sm">
                     {scheme.moratorium_months} months
                   </span>
@@ -334,7 +334,7 @@ export default function ResultsDashboard() {
 
             {/* Official Portal Links */}
             {scheme.live_url && (
-              <div className="px-6 py-3 border-t border-slate-100 dark:border-white/10 bg-green-50/50">
+              <div className="px-6 py-3 border-t border-slate-100 dark:border-white/10 bg-green-50/50 dark:bg-green-950/25">
                 <p className="text-xs text-green-700 dark:text-green-300 font-medium mb-2 flex items-center gap-1">
                   <Globe className="w-3 h-3" /> View on Official Government Portals
                 </p>

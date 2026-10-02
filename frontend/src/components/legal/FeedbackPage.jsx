@@ -34,10 +34,10 @@ export default function FeedbackPage() {
             <CheckCircle className="w-8 h-8 text-green-700" />
           </div>
           <h2 className="text-2xl font-bold text-green-900 mb-2">Thank You!</h2>
-          <p className="text-slate-600 mb-6">
+          <p className="text-slate-600 dark:text-slate-400 mb-6">
             Your feedback has been submitted successfully. Our team will review it and respond within 48 hours.
           </p>
-          <p className="text-sm text-slate-500 mb-6">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">
             Reference: FB-{Date.now().toString(36).toUpperCase()}
           </p>
           <Link
@@ -54,7 +54,7 @@ export default function FeedbackPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 relative">
       <PageBackdrop variant="legal" />
-      <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
+      <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 text-sm font-medium mb-6">
         <ArrowLeft className="w-4 h-4" /> Back to Home
       </Link>
 
@@ -65,7 +65,7 @@ export default function FeedbackPage() {
           </div>
           <h1 className="text-3xl font-bold text-green-900">Feedback & Grievance</h1>
         </div>
-        <p className="text-slate-500 mb-8 ml-13">
+        <p className="text-slate-500 dark:text-slate-400 mb-8 ml-13">
           Report issues, share feedback, or raise grievances about your application or the Platform.
         </p>
 
@@ -160,7 +160,7 @@ export default function FeedbackPage() {
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-slate-500 space-y-1">
+        <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-slate-500 dark:text-slate-400 space-y-1">
           <p><strong>Grievance Officer:</strong> <a href="mailto:prathamravi022@gmail.com" className="text-green-700 hover:underline">prathamravi022@gmail.com</a></p>
           <p><strong>Helpline:</strong> 1800-XXX-XXXX (Toll Free, Mon–Sat 9AM–6PM)</p>
           <p><strong>Resolution Time:</strong> Within 7 working days</p>

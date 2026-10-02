@@ -6,7 +6,7 @@ export default function TermsConditions() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 relative">
       <PageBackdrop variant="legal" />
-      <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-green-700 hover:text-green-800 text-sm font-medium mb-6">
+      <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-green-700 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 text-sm font-medium mb-6">
         <ArrowLeft className="w-4 h-4" /> Back to Home
       </Link>
 
@@ -18,7 +18,7 @@ export default function TermsConditions() {
           <h1 className="text-3xl font-bold text-green-900">Terms & Conditions</h1>
         </div>
 
-        <p className="text-sm text-slate-500 mb-8">Last updated: August 2024 | Effective immediately</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">Last updated: August 2024 | Effective immediately</p>
 
         <div className="prose prose-slate max-w-none space-y-6 text-slate-700 leading-relaxed">
           <section>

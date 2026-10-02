@@ -88,7 +88,7 @@ export default function Navbar({ onAuthOpen }) {
               isAuthenticated ? (
                 <div className="hidden sm:flex items-center gap-1.5">
                   <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                    <User className="w-3.5 h-3.5 text-slate-500" />
+                    <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                     <span className="text-xs text-slate-700 dark:text-gray-300 max-w-[80px] truncate">
                       {user?.name || user?.mobile}
                     </span>
@@ -100,7 +100,7 @@ export default function Navbar({ onAuthOpen }) {
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-1.5 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                    className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors"
                     title="Logout"
                     aria-label="Logout"
                   >

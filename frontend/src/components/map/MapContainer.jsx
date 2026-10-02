@@ -128,7 +128,7 @@ export default function MapContainer({ center, partners, selectedPartner, onSele
       <div className="h-[300px] sm:h-[400px] md:h-[500px] bg-slate-100 rounded-2xl flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-green-700 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-slate-500 text-sm">Loading map...</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">Loading map...</p>
         </div>
       </div>
     );
@@ -146,11 +146,11 @@ export default function MapContainer({ center, partners, selectedPartner, onSele
       <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm rounded-lg p-2.5 text-xs shadow-md z-[400]">
         <div className="flex items-center gap-2 mb-1.5">
           <div className="w-3 h-3 bg-blue-600 rounded-full border-2 border-white shadow-sm" />
-          <span className="text-slate-600 font-medium">Your Location</span>
+          <span className="text-slate-600 dark:text-slate-400 font-medium">Your Location</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-green-700 rounded-full border-2 border-white shadow-sm" />
-          <span className="text-slate-600 font-medium">Eligible Bank</span>
+          <span className="text-slate-600 dark:text-slate-400 font-medium">Eligible Bank</span>
         </div>
       </div>
 
