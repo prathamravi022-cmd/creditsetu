@@ -27,7 +27,7 @@ export default function TermsConditions() {
             <p>
               By accessing or using GovTech Scheme Finder ("the Platform"), you agree to be bound by these
               Terms & Conditions. If you do not agree, please do not use the Platform. This Platform is
-              developed for the Smart India Hackathon (PS 26092) under the Ministry of Social Justice and
+              developed for the Smart India Hackathon (SIH26092) under the Ministry of Social Justice and
               Empowerment, Government of India.
             </p>
           </section>
@@ -91,7 +91,7 @@ export default function TermsConditions() {
             <p>
               For complaints or disputes:
               <br /><strong>Step 1:</strong> Use the in-app Grievance Modal (bottom-left button).
-              <br /><strong>Step 2:</strong> Email grievance@govtech-scheme.in with your application number.
+              <br /><strong>Step 2:</strong> Email <a className="text-green-700 hover:text-green-800 underline" href="mailto:prathamravi022@gmail.com">prathamravi022@gmail.com</a> with your application number.
               <br /><strong>Step 3:</strong> Escalate to the Grievance Officer within 30 days.
               <br /><strong>Resolution Time:</strong> We aim to resolve grievances within 7 working days.
             </p>

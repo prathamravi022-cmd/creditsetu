@@ -56,11 +56,11 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-3 text-slate-300">Problem Statement</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Smart India Hackathon 2026 — PS 26092<br />
+              Smart India Hackathon 2026 — SIH26092<br />
               Theme: Ministry of Social Justice &amp; Empowerment
             </p>
             <p className="text-xs text-slate-500 mt-3">
-              Helpline: 1800-11-0031
+              Helpline: 1800-11-0031 · <a href="mailto:prathamravi022@gmail.com" className="hover:text-[#34d399]">prathamravi022@gmail.com</a>
             </p>
           </div>
         </div>

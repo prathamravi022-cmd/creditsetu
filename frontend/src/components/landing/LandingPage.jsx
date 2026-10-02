@@ -9,7 +9,8 @@ import Tilt3D from "../ui/Tilt3D";
 import MagneticButton from "../ui/MagneticButton";
 import { Reveal, RevealGroup, RevealItem } from "../ui/Reveal";
 import Marquee from "../ui/Marquee";
-import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone, Clock, CheckCircle2 } from "lucide-react";
+import { LANDING_SCHEMES } from "../../data/landingSchemes";
+import { Shield, ArrowRight, Menu, X, Landmark, IndianRupee, TrendingUp, Globe, Phone, Clock, CheckCircle2, Mail } from "lucide-react";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useMobileMenu } from "../../store/MobileMenuContext";
 
@@ -62,7 +63,7 @@ function TricolorStripe() {
   return (<div className="fixed top-0 left-0 right-0 z-[60] h-1 flex"><div className="flex-1 bg-[#FF9933]" /><div className="flex-1 bg-white" /><div className="flex-1 bg-[#138808]" /></div>);
 }
 function AshokaChakra() {
-  return (<svg viewBox="0 0 100 100" className="w-8 h-8" fill="none" stroke="#000080" strokeWidth="1.5"><circle cx="50" cy="50" r="45" /><circle cx="50" cy="50" r="12" />{Array.from({length:24},function(_,i){var a=(i*15)*Math.PI/180;return <line key={i} x1={50+12*Math.cos(a)} y1={50+12*Math.sin(a)} x2={50+45*Math.cos(a)} y2={50+45*Math.sin(a)} />})}</svg>);
+  return (<svg viewBox="0 0 100 100" className="w-8 h-8" fill="none" stroke="#FF9933" strokeWidth="1.5"><circle cx="50" cy="50" r="45" /><circle cx="50" cy="50" r="12" />{Array.from({length:24},function(_,i){var a=(i*15)*Math.PI/180;return <line key={i} x1={50+12*Math.cos(a)} y1={50+12*Math.sin(a)} x2={50+45*Math.cos(a)} y2={50+45*Math.sin(a)} />})}</svg>);
 }
 function HeroIllustration() {
   return (<svg viewBox="0 0 400 350" className="w-full h-full" fill="none">
@@ -106,7 +107,7 @@ function LangToggle() {
   var idx = langs.findIndex(function(x){return x.c===current});
   if(idx===-1) idx=0;
   var next = langs[(idx+1)%langs.length];
-  return (<button onClick={function(){i18n.changeLanguage(next.c)}} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-600 hover:border-[#138808] hover:bg-[#138808]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-all text-gray-600 dark:text-gray-300" aria-label={"Switch language to " + next.l} title={"Switch to " + next.l}><Globe className="w-3.5 h-3.5" />{next.l}</button>);
+  return (<button onClick={function(){i18n.changeLanguage(next.c)}} className="flex h-8 items-center gap-1.5 px-3 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-600 hover:border-[#138808] hover:bg-[#138808]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808] transition-all text-gray-600 dark:text-gray-300" aria-label={"Switch language to " + next.l} title={"Switch to " + next.l}><Globe className="w-3.5 h-3.5" />{next.l}</button>);
 }
 
 
@@ -149,11 +150,17 @@ export default function LandingPage({ onAuthOpen }) {
     { icon: DocumentIcon, title: t("landing.features.step2.title"), desc: t("landing.features.step2.desc") },
     { icon: LocationPinIcon, title: t("landing.features.step3.title"), desc: t("landing.features.step3.desc") },
   ];
-  var schemes = [
-    { icon: IndianRupee, cat: "business", img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80", name: t("landing.schemes.micro.name"), desc: t("landing.schemes.micro.desc"), range: "Up to ₹1.40 Lakh", rate: "6.5% p.a.", badge: t("results.highly_recommended") },
-    { icon: TrendingUp, cat: "sc-st", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80", name: t("landing.schemes.term.name"), desc: t("landing.schemes.term.desc"), range: "₹1.40L - ₹50L", rate: "8% p.a.", badge: "Popular" },
-    { icon: Landmark, cat: "education", img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80", name: t("landing.schemes.edu.name"), desc: t("landing.schemes.edu.desc"), range: "Up to ₹10 Lakh", rate: "7.5% p.a.", badge: "For Students" },
-  ];
+  // Showcase catalogue — three cards for every category chip (see
+  // data/landingSchemes.js). Entries carrying a tKey reuse the existing
+  // landing.schemes translations rather than dropping them.
+  var schemes = LANDING_SCHEMES.map(function(s) {
+    var entry = Object.assign({}, s);
+    if (s.tKey) {
+      entry.name = t(s.tKey + ".name");
+      entry.desc = t(s.tKey + ".desc");
+    }
+    return entry;
+  });
   var testimonials = [
     { name: "Ramesh Kumar", loc: "Lucknow, UP", quote: "I got ₹2.5 lakh loan for my tailoring business in just 3 days. The AI matched me with the perfect MUDRA scheme.", scheme: "PM MUDRA" },
     { name: "Priya Devi", loc: "Jaipur, Rajasthan", quote: "As a woman entrepreneur, I didn’t know which scheme I qualified for. This platform found 3 schemes for me instantly.", scheme: "Stand-Up India" },
@@ -164,21 +171,42 @@ export default function LandingPage({ onAuthOpen }) {
   var [selectedCategory, setSelectedCategory] = useState("all");
   var categories = [{id:"all",label:"All Schemes",icon:"🏛️"},{id:"agriculture",label:"Agriculture",icon:"🌾"},{id:"education",label:"Education",icon:"📚"},{id:"health",label:"Health",icon:"🏥"},{id:"business",label:"Business/MSME",icon:"💼"},{id:"women",label:"Women Empowerment",icon:"👩"},{id:"sc-st",label:"SC/ST/OBC",icon:"🤝"},{id:"housing",label:"Housing",icon:"🏠"}];
 
-  // Live filtering for the search box + category chips (fully client-side)
+  // Live filtering for the search box + category chips (fully client-side).
+  // A category always resolves to its full row of three; "All Schemes" stays a
+  // tight taste of the catalogue until the visitor searches or picks a filter.
   var q = searchQuery.trim().toLowerCase();
-  var filteredSchemes = schemes.filter(function(s) {
-    var matchesCategory = selectedCategory === "all" || s.cat === selectedCategory;
-    var matchesQuery = !q || (s.name + " " + s.desc + " " + s.badge).toLowerCase().indexOf(q) !== -1;
-    return matchesCategory && matchesQuery;
-  });
+  var matchesQuery = function(s) {
+    return !q || (s.name + " " + s.desc + " " + s.badge + " " + s.cat).toLowerCase().indexOf(q) !== -1;
+  };
+  var filteredSchemes;
+  if (q) {
+    filteredSchemes = schemes.filter(function(s) {
+      return matchesQuery(s) && (selectedCategory === "all" || s.cat === selectedCategory);
+    }).slice(0, 9);
+  } else if (selectedCategory === "all") {
+    filteredSchemes = schemes.filter(function(s) { return s.featured; });
+  } else {
+    filteredSchemes = schemes.filter(function(s) { return s.cat === selectedCategory; });
+  }
+
+  // Glide to in-page sections instead of jumping; sections carry a scroll-margin
+  // so the fixed header never covers the heading we land on.
+  var scrollToId = function (e, id) {
+    if (e) e.preventDefault();
+    var el = document.getElementById(id);
+    if (!el) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    if (window.history && window.history.replaceState) window.history.replaceState(null, "", "#" + id);
+  };
 
   return (<div className="min-h-screen">
     <TricolorStripe />
     <nav className="fixed top-1 left-0 right-0 z-50 cs-nav shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-2.5 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3"><div className="w-10 h-10 rounded-lg bg-[#138808] flex items-center justify-center"><Landmark className="w-5 h-5 text-white" /></div><div className="flex flex-col"><span className="text-[#000080] dark:text-white font-bold text-lg leading-tight">CreditSetu</span><span className="text-gray-500 text-[10px] uppercase tracking-wider">Scheme Finder</span></div></Link>
-        <div className="hidden lg:flex items-center gap-8"><a href="#how-it-works" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.how_it_works")}</a><a href="#schemes" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.schemes")}</a><a href="#faq" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">FAQ</a><a href="#contact" className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.contact")}</a></div>
-        <div className="flex items-center gap-3"><LangToggle /><ThemeToggle /><button onClick={goGetStarted} className="mi-press mi-shine glow-accent hidden sm:inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors">{t("landing.hero.get_started_btn")}</button><button onClick={function(){ menuOpen ? closeMenu() : openMenu(); }} className="tap-spring lg:hidden w-11 h-11 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808]" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} title={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</button></div>
+        <div className="hidden lg:flex items-center gap-7 xl:gap-9"><a href="#how-it-works" onClick={function(e){ scrollToId(e, "how-it-works"); }} className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.how_it_works")}</a><a href="#schemes" onClick={function(e){ scrollToId(e, "schemes"); }} className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.schemes")}</a><a href="#faq" onClick={function(e){ scrollToId(e, "faq"); }} className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">FAQ</a><a href="#contact" onClick={function(e){ scrollToId(e, "contact"); }} className="mi-underline text-gray-600 dark:text-gray-300 hover:text-[#138808] text-sm font-medium transition-colors">{t("landing.nav.contact")}</a></div>
+        <div className="flex items-center gap-2.5 sm:gap-3"><LangToggle /><ThemeToggle /><button onClick={goGetStarted} className="mi-press mi-shine glow-accent hidden sm:inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#e68a2d] transition-colors">{t("landing.hero.get_started_btn")}</button><button onClick={function(){ menuOpen ? closeMenu() : openMenu(); }} className="tap-spring lg:hidden w-11 h-11 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#138808]" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} title={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</button></div>
       </div></nav>
     <section ref={heroRef} className="relative pt-20 pb-16 lg:pb-24 px-4 sm:px-6 lg:px-16 min-h-[72vh] md:min-h-[86vh] flex items-center overflow-hidden">
       {/* Static hero background image — no parallax, stays put on scroll */}
@@ -324,10 +352,10 @@ export default function LandingPage({ onAuthOpen }) {
           {/* Connecting line */}
           <div className="absolute top-12 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#000080] z-0" />
           {[
-            { step: "01", color: "bg-[#FF9933]", icon: "form", title: t("landing.process.step1.title") || "Tell Us About Yourself", desc: t("landing.process.step1.desc") || "Answer simple questions about your business, income, and location." },
-            { step: "02", color: "bg-[#138808]", icon: "ai", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 21+ government schemes." },
-            { step: "03", color: "bg-[#000080]", icon: "doc", title: t("landing.process.step3.title") || "Get Personalized Matches", desc: t("landing.process.step3.desc") || "See schemes ranked by eligibility with requirements and benefits." },
-            { step: "04", color: "bg-[#FF9933]", icon: "bank", title: t("landing.process.step4.title") || "Apply With Guidance", desc: t("landing.process.step4.desc") || "Get document checklist, bank locator, and official application links." },
+            { step: "01", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", icon: "form", title: t("landing.process.step1.title") || "Tell Us About Yourself", desc: t("landing.process.step1.desc") || "Answer simple questions about your business, income, and location." },
+            { step: "02", dot: "bg-[#FF9933]", color: "bg-[#138808]", icon: "ai", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 21+ government schemes." },
+            { step: "03", dot: "bg-[#FF9933]", color: "bg-[#000080]", icon: "doc", title: t("landing.process.step3.title") || "Get Personalized Matches", desc: t("landing.process.step3.desc") || "See schemes ranked by eligibility with requirements and benefits." },
+            { step: "04", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", icon: "bank", title: t("landing.process.step4.title") || "Apply With Guidance", desc: t("landing.process.step4.desc") || "Get document checklist, bank locator, and official application links." },
           ].map(function(item, i) {
             var iconEl;
             if (item.icon === "form") iconEl = (<svg className="w-8 h-8" viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="4" stroke="currentColor" strokeWidth="2.5"/><line x1="14" y1="16" x2="34" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="14" y1="22" x2="30" y2="22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><line x1="14" y1="28" x2="26" y2="28" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>);
@@ -336,7 +364,7 @@ export default function LandingPage({ onAuthOpen }) {
             else iconEl = (<svg className="w-8 h-8" viewBox="0 0 48 48" fill="none"><rect x="6" y="20" width="36" height="22" rx="3" stroke="currentColor" strokeWidth="2.5"/><path d="M16 20V14a8 8 0 0116 0v6" stroke="currentColor" strokeWidth="2.5"/><circle cx="24" cy="31" r="3" fill="currentColor"/></svg>);
             return (
               <div key={i} className={"relative flex flex-col items-center text-center z-10 transition-all duration-500 " + (stepsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")} style={{transitionDelay: (i*120)+"ms"}}>
-                <div className={"w-12 h-12 rounded-full " + item.color + " text-white flex items-center justify-center font-bold text-sm shadow-lg mb-4 relative z-10 bg-white border-4 border-current " + item.color}>
+                <div className={"w-12 h-12 rounded-full " + item.dot + " text-white flex items-center justify-center font-bold text-sm shadow-lg mb-4 relative z-10 border-4 border-current " + item.dot}>
                   {item.step}
                 </div>
                 <div className={"w-16 h-16 rounded-2xl " + item.color + "/10 flex items-center justify-center mb-3 text-" + item.color.replace("bg-", "")}>
@@ -352,14 +380,14 @@ export default function LandingPage({ onAuthOpen }) {
         <div className="md:hidden space-y-0 relative pl-8">
           <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#FF9933] via-[#138808] to-[#000080]" />
           {[
-            { step: "01", color: "bg-[#FF9933]", title: t("landing.process.step1.title") || "Tell Us About Yourself", desc: t("landing.process.step1.desc") || "Answer simple questions about your business, income, and location." },
-            { step: "02", color: "bg-[#138808]", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 21+ government schemes." },
-            { step: "03", color: "bg-[#000080]", title: t("landing.process.step3.title") || "Get Personalized Matches", desc: t("landing.process.step3.desc") || "See schemes ranked by eligibility with requirements and benefits." },
-            { step: "04", color: "bg-[#FF9933]", title: t("landing.process.step4.title") || "Apply With Guidance", desc: t("landing.process.step4.desc") || "Get document checklist, bank locator, and official application links." },
+            { step: "01", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", title: t("landing.process.step1.title") || "Tell Us About Yourself", desc: t("landing.process.step1.desc") || "Answer simple questions about your business, income, and location." },
+            { step: "02", dot: "bg-[#FF9933]", color: "bg-[#138808]", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 21+ government schemes." },
+            { step: "03", dot: "bg-[#FF9933]", color: "bg-[#000080]", title: t("landing.process.step3.title") || "Get Personalized Matches", desc: t("landing.process.step3.desc") || "See schemes ranked by eligibility with requirements and benefits." },
+            { step: "04", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", title: t("landing.process.step4.title") || "Apply With Guidance", desc: t("landing.process.step4.desc") || "Get document checklist, bank locator, and official application links." },
           ].map(function(item, i) {
             return (
               <div key={i} className={"relative pb-8 transition-all duration-500 " + (stepsVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4")} style={{transitionDelay: (i*120)+"ms"}}>
-                <div className={"absolute -left-5 w-6 h-6 rounded-full " + item.color + " text-white flex items-center justify-center font-bold text-[10px] shadow-md z-10"}>{item.step}</div>
+                <div className={"absolute -left-5 w-6 h-6 rounded-full " + item.dot + " text-white flex items-center justify-center font-bold text-[10px] shadow-md z-10"}>{item.step}</div>
                 <div className="glass-card rounded-xl p-4 ml-2">
                   <h3 className="font-bold text-[#000080] dark:text-white mb-1 text-sm">{item.title}</h3>
                   <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">{item.desc}</p>
@@ -521,12 +549,12 @@ export default function LandingPage({ onAuthOpen }) {
       <div aria-hidden="true" className="cs-orb cs-orb-green w-[300px] h-[300px] -bottom-40 left-[-6%] opacity-60" />
       <div aria-hidden="true" className="absolute inset-0 cs-dots opacity-[0.06]" />
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="bg-[#FF9933]/10 border border-[#FF9933]/20 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-10 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"><div className="flex items-center gap-3"><Phone className="w-6 h-6 text-[#FF9933]" /><div><div className="text-white font-semibold text-lg">{t("landing.footer.helpline")}</div><div className="text-[#FF9933] font-bold text-xl">{helpline}</div></div></div><div className="text-white/50 text-sm text-center md:text-right">{t("landing.footer.available_247")}</div></div>
+        <div className="bg-[#FF9933]/10 border border-[#FF9933]/20 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-10 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"><div className="flex items-center gap-3"><Phone className="w-6 h-6 text-[#FF9933]" /><div><div className="text-white font-semibold text-lg">{t("landing.footer.helpline")}</div><div className="text-[#FF9933] font-bold text-xl">{helpline}</div><a href="mailto:prathamravi022@gmail.com" className="mt-1.5 inline-flex items-center gap-1.5 text-white/70 hover:text-[#FF9933] text-xs font-medium transition-colors"><Mail className="w-3.5 h-3.5" />prathamravi022@gmail.com</a></div></div><div className="text-white/50 text-sm text-center md:text-right">{t("landing.footer.available_247")}</div></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-10 mb-8 sm:mb-12">
           <div><div className="flex items-center gap-2 mb-4"><div className="w-8 h-8 rounded-lg bg-[#138808] flex items-center justify-center"><Landmark className="w-4 h-4 text-white" /></div><span className="text-white font-semibold text-lg">CreditSetu</span></div><p className="text-white/60 text-sm mb-4">{t("landing.footer.government_scheme_finder")}</p><div className="flex items-center gap-3"><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.148 0 7.372 2.96 7.372 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.633 0 12.017 0z"/></svg></a><a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#138808] hover:text-white transition-all"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></a></div></div>
           <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.quick_links")}</h4><ul className="space-y-2.5"><li><Link to="/" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.home")}</Link></li><li><Link to={eligibilityTarget(user)} className="mi-underline text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.check_eligibility")}</Link></li><li><Link to="/find-bank" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.find_bank")}</Link></li></ul></div>
           <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">{t("landing.footer.legal")}</h4><ul className="space-y-2.5"><li><Link to="/privacy-policy" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.privacy")}</Link></li><li><Link to="/terms" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.terms")}</Link></li><li><Link to="/feedback" className="text-white/50 hover:text-white text-sm transition-colors">{t("landing.footer.feedback")}</Link></li></ul></div>
-          <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">Problem Statement</h4><div className="flex items-center gap-2 mb-3"><AshokaChakra /><div className="text-white/70 text-xs leading-tight">Smart India Hackathon 2026<br/>PS 26092 — Ministry of Social<br/>Justice &amp; Empowerment</div></div></div>
+          <div><h4 className="text-white/80 font-semibold text-sm uppercase tracking-wider mb-4">Problem Statement</h4><div className="flex items-center gap-2 mb-3"><AshokaChakra /><div className="text-white/70 text-xs leading-tight">Smart India Hackathon 2026<br/>SIH26092 — Ministry of Social<br/>Justice &amp; Empowerment</div></div></div>
         </div>
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4"><AshokaChakra /><p className="text-white/50 text-sm">Made with ❤️ by Team Codivra — Smart India Hackathon 2026</p></div>

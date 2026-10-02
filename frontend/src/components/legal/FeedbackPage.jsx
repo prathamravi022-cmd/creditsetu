@@ -161,7 +161,7 @@ export default function FeedbackPage() {
         </form>
 
         <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-slate-500 space-y-1">
-          <p><strong>Grievance Officer:</strong> grievance@govtech-scheme.in</p>
+          <p><strong>Grievance Officer:</strong> <a href="mailto:prathamravi022@gmail.com" className="text-green-700 hover:underline">prathamravi022@gmail.com</a></p>
           <p><strong>Helpline:</strong> 1800-XXX-XXXX (Toll Free, Mon–Sat 9AM–6PM)</p>
           <p><strong>Resolution Time:</strong> Within 7 working days</p>
         </div>

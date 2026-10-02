@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-bold text-green-900 mb-3">1. Introduction</h2>
             <p>
               This Privacy Policy describes how GovTech Scheme Finder ("the Platform"), developed for the
-              Smart India Hackathon (Problem Statement 26092, Ministry of Social Justice and Empowerment),
+              Smart India Hackathon (SIH26092, Ministry of Social Justice and Empowerment),
               collects, uses, stores, and protects your personal information. We are committed to protecting
               your privacy in compliance with the Digital Personal Data Protection (DPDP) Act, 2023.
             </p>
@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-bold text-green-900 mb-3">7. Grievance Officer</h2>
             <p>
               For any privacy-related concerns, contact our Grievance Officer:
-              <br /><strong>Email:</strong> grievance@govtech-scheme.in
+              <br /><strong>Email:</strong> <a className="text-green-700 hover:text-green-800 underline" href="mailto:prathamravi022@gmail.com">prathamravi022@gmail.com</a>
               <br /><strong>Phone:</strong> 1800-XXX-XXXX (Toll Free)
               <br /><strong>Response Time:</strong> Within 48 hours of receipt.
             </p>

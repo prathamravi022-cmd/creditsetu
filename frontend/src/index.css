@@ -860,6 +860,60 @@ textarea {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
 }
 
+/* ---- Smooth in-page scrolling --------------------------------- */
+/* Anchor links glide to their section instead of jumping, and every section
+   clears the fixed header thanks to scroll-margin. */
+html,
+body {
+  scroll-behavior: smooth;
+}
+html {
+  scroll-padding-top: 5.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---- Minimal scrollbar ---------------------------------------- */
+/* A thin, theme-aware bar instead of the chunky OS default. The thumb is drawn
+   inside transparent padding so it floats rather than sitting in a track. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.22) transparent;
+}
+.dark * {
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.22);
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 153, 51, 0.55);
+  background-clip: content-box;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.18);
+  background-clip: content-box;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(52, 211, 153, 0.6);
+  background-clip: content-box;
+}
+
 
 
 
