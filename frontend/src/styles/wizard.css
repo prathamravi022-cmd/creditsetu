@@ -240,13 +240,18 @@
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 8px;
+  /* Taller hit area for thumbs on phones; the visible track stays thin via a
+     centered 8px gradient so the minimal look is unchanged. */
+  height: 28px;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.12);
+  background-image: linear-gradient(rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0.12));
+  background-size: 100% 8px;
+  background-repeat: no-repeat;
+  background-position: center;
   outline: none;
 }
 .dark .wz-range-input {
-  background: rgba(255, 255, 255, 0.14);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.14));
 }
 .wz-range-input::-webkit-slider-thumb {
   -webkit-appearance: none;

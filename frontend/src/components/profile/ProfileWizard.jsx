@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import {
   Building2, BadgePercent, Home, GraduationCap, Rocket, TrendingUp, Wallet, Package,
-  ArrowLeft, ArrowRight, CheckCircle2, User, MapPin, Users,
+  ArrowLeft, ArrowRight, CheckCircle2, User, MapPin, Users, Briefcase, Sprout, HeartPulse,
 } from 'lucide-react';
 import { useAuth } from '../../store/AuthContext';
 import {
@@ -25,7 +25,7 @@ import { STATE_DISTRICTS, INDIAN_STATES } from '../../data/stateDistricts';
  * shape (see normalizeProfile) so the recommender only ever reads one model.
  */
 
-const TOTAL = 7;
+const TOTAL = 8;
 
 const CATEGORIES = [
   { key: 'loan', Icon: Building2, tKey: 'onboarding.business_loan', fallback: 'Business / Enterprise loan', desc: 'Business / working capital / micro finance' },
@@ -34,11 +34,16 @@ const CATEGORIES = [
   { key: 'education', Icon: GraduationCap, tKey: 'onboarding.education', fallback: 'Education', desc: 'Scholarships & education loans' },
 ];
 
+// One shared list for everyone — no background-specific branching.
 const PURPOSES = [
   { key: 'startup', label: 'New business setup', Icon: Rocket },
   { key: 'expansion', label: 'Business expansion', Icon: TrendingUp },
   { key: 'working_capital', label: 'Working capital', Icon: Wallet },
-  { key: 'asset_purchase', label: 'Asset purchase', Icon: Package },
+  { key: 'asset_purchase', label: 'Asset / equipment purchase', Icon: Package },
+  { key: 'education', label: 'Education / skill fees', Icon: GraduationCap },
+  { key: 'housing', label: 'Home / housing', Icon: Home },
+  { key: 'agriculture', label: 'Agriculture / farming', Icon: Sprout },
+  { key: 'health', label: 'Medical / health expenses', Icon: HeartPulse },
 ];
 
 const GENDERS = [
@@ -52,6 +57,25 @@ const SOCIAL = [
   { key: 'obc', label: 'OBC' },
   { key: 'sc', label: 'SC' },
   { key: 'st', label: 'ST' },
+  { key: 'minority', label: 'Minority' },
+];
+
+const OCCUPATIONS = [
+  { key: 'student', label: 'Student' },
+  { key: 'farmer', label: 'Farmer' },
+  { key: 'business', label: 'Business owner' },
+  { key: 'salaried', label: 'Salaried' },
+  { key: 'artisan', label: 'Artisan / Craftsperson' },
+  { key: 'looking', label: 'Looking for work' },
+];
+
+const EDUCATIONS = [
+  { key: 'below_10th', label: 'Below 10th' },
+  { key: '10th', label: '10th pass' },
+  { key: '12th', label: '12th pass' },
+  { key: 'iti', label: 'ITI / Diploma' },
+  { key: 'graduate', label: 'Graduate' },
+  { key: 'postgraduate', label: 'Postgraduate' },
 ];
 
 const STEP_TITLES = [
@@ -60,6 +84,7 @@ const STEP_TITLES = [
   'Approximate Amount',
   'Personal Details',
   'Your Location',
+  'Work & Education',
   'Background & Income',
   'Review',
 ];
@@ -76,6 +101,8 @@ const EMPTY = {
   location_type: 'rural',
   social_category: '',
   family_annual_income: '',
+  occupation: '',
+  education: '',
   is_bpl: false,
   has_disability: false,
   bpl_card: '',
@@ -115,6 +142,9 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
   useEffect(() => {
     const stored = loadProfile(user);
     if (!stored) return;
+    // Returning users open straight on Review — they can walk back to change
+    // anything, but never have to re-answer all eight steps.
+    setStep(TOTAL - 1);
     setForm((prev) => ({
       ...prev,
       ...Object.fromEntries(
@@ -146,8 +176,9 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
     if (index === 4 && !form.state) return 'Select your state';
     if (index === 4 && !form.district) return 'Select your district';
     if (index === 4 && !/^[0-9]{6}$/.test(form.pincode)) return 'Enter a valid 6-digit pincode';
-    if (index === 5 && !form.social_category) return 'Select your social category';
-    if (index === 5 && !(Number(form.family_annual_income) > 0)) return 'Enter your annual family income';
+    if (index === 5 && !form.occupation) return 'Select your occupation';
+    if (index === 6 && !form.social_category) return 'Select your social category';
+    if (index === 6 && !(Number(form.family_annual_income) > 0)) return 'Enter your annual family income';
     return null;
   };
 
@@ -475,8 +506,55 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
               </div>
             </section>
 
-            {/* 5 — background & income */}
+            {/* 5 — work & education */}
             <section className="wz-step" aria-hidden={step !== 5}>
+              <div className="wz-card">
+                <div className="wz-cat">
+                  <Briefcase className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
+                  <span>
+                    <span className="wz-cat-title">Work &amp; Education</span>
+                    <span className="wz-cat-hint">Many schemes are reserved for a trade or study level</span>
+                  </span>
+                </div>
+                <div className="wz-fields">
+                  <div>
+                    <span className="wz-label">Occupation</span>
+                    <div className="wz-chips">
+                      {OCCUPATIONS.map(({ key, label }) => (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => set('occupation', key)}
+                          aria-pressed={form.occupation === key}
+                          className={`wz-chip ${form.occupation === key ? 'selected' : ''}`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="wz-label">Highest Education</span>
+                    <div className="wz-chips">
+                      {EDUCATIONS.map(({ key, label }) => (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => set('education', key)}
+                          aria-pressed={form.education === key}
+                          className={`wz-chip ${form.education === key ? 'selected' : ''}`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 6 — background & income */}
+            <section className="wz-step" aria-hidden={step !== 6}>
               <div className="wz-card">
                 <div className="wz-cat">
                   <Users className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
@@ -619,8 +697,8 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
               </div>
             </section>
 
-            {/* 6 — review */}
-            <section className="wz-step" aria-hidden={step !== 6}>
+            {/* 7 — review */}
+            <section className="wz-step" aria-hidden={step !== 7}>
               <div className="wz-card">
                 <div className="wz-cat">
                   <CheckCircle2 className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
@@ -640,6 +718,8 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
                     ['District', form.district || '—'],
                     ['Pincode', form.pincode || '—'],
                     ['Area', form.location_type === 'urban' ? 'Urban' : 'Rural'],
+                    ['Occupation', OCCUPATIONS.find((o) => o.key === form.occupation)?.label || '—'],
+                    ['Education', EDUCATIONS.find((e) => e.key === form.education)?.label || '—'],
                     ['Social Category', SOCIAL.find((s) => s.key === form.social_category)?.label || '—'],
                     ['Annual Income', form.family_annual_income ? inr(form.family_annual_income) : '—'],
                     ...(form.is_bpl ? [['BPL / Ration Card', form.bpl_card || 'Yes']] : []),

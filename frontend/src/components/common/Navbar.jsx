@@ -121,7 +121,7 @@ export default function Navbar({ onAuthOpen }) {
             {/* Mobile menu toggle — opens the single shared drawer mounted by the shell */}
             <button
               onClick={() => (mobileOpen ? closeMenu() : openMenu())}
-              className="tap-spring lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
+              className="tap-spring lg:hidden min-w-11 min-h-11 grid place-items-center rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
             >

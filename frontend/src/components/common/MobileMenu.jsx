@@ -106,7 +106,7 @@ export default function MobileMenu({ open, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-xl grid place-items-center text-gray-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            className="w-11 h-11 rounded-xl grid place-items-center text-gray-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />

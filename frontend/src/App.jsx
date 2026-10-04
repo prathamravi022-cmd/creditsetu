@@ -11,7 +11,7 @@ import MobileMenu from "./components/common/MobileMenu";
 import MobileStickyCta from "./components/common/MobileStickyCta";
 import PageTransition from "./components/common/PageTransition";
 import ProfileWizard from "./components/profile/ProfileWizard";
-import EligibilityFlow from "./components/eligibility/EligibilityFlow";
+
 
 const LoadFailed = () => (
   <main style={{ padding: "3rem", textAlign: "center", color: "#fff" }}>
@@ -140,7 +140,7 @@ export default function App() {
           path="/get-started"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <EligibilityFlow />
+              <ProfileWizard mode="onboarding" />
             </Suspense>
           }
         />
@@ -148,7 +148,7 @@ export default function App() {
           path="/onboarding"
           element={
             <Suspense fallback={<LoadFailed />}>
-              <EligibilityFlow />
+              <ProfileWizard mode="onboarding" />
             </Suspense>
           }
         />

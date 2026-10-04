@@ -11,7 +11,6 @@ import './index.css';
 // Tailwind's preflight (which resets button backgrounds) regardless of
 // specificity, and a plain @import at the top of index.css would land before it.
 import './styles/wizard.css';
-import './styles/eligibility.css';
 
 // Register Service Worker
 if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {})); }
