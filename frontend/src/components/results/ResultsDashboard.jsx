@@ -150,10 +150,26 @@ export default function ResultsDashboard() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12 relative">
       <PageBackdrop variant="results" />
-      <div className="relative z-10">
-      <ScrollReveal className="mb-6">
-        <div className="bg-green-50 dark:bg-[#0e1a13]/40 border border-green-200 dark:border-green-800/30 rounded-xl p-4 flex items-center gap-3">
-          <div className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center">
+      <div className="relative z-10 lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 lg:items-start">
+      {/* Sidebar — the results summary and the edit action live beside the list */}
+      <aside className="mb-6 lg:mb-0 lg:sticky lg:top-24 space-y-4">
+        <div>
+          <h1 className="text-slate-900 dark:text-white">{t('results.title')}</h1>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">
+            Found {recommendations.count} matching schemes for you
+          </p>
+        </div>
+
+        {/* Let users refine their criteria and re-rank the schemes at any time */}
+        <Link
+          to="/edit-profile"
+          className="flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-green-700 dark:border-green-600 text-green-700 dark:text-green-300 text-sm font-semibold hover:bg-green-700/5 dark:hover:bg-green-500/10 transition-colors"
+        >
+          <Pencil className="w-4 h-4" /> Edit Details
+        </Link>
+
+        <div className="bg-green-50 dark:bg-[#0e1a13]/40 border border-green-200 dark:border-green-800/30 rounded-xl p-4 flex items-start gap-3">
+          <div className="w-10 h-10 shrink-0 bg-green-700 rounded-full flex items-center justify-center">
             <CheckCircle className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -169,27 +185,10 @@ export default function ResultsDashboard() {
             </p>
           </div>
         </div>
-      </ScrollReveal>
+      </aside>
 
-      {/* Header */}
-      <ScrollReveal className="mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div>
-            <h1 className="text-slate-900 dark:text-white">{t('results.title')}</h1>
-            <p className="text-slate-600 dark:text-slate-400">
-              Found {recommendations.count} matching schemes for you
-            </p>
-          </div>
-          {/* Let users refine their criteria and re-rank the schemes at any time */}
-          <Link
-            to="/edit-profile"
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-green-700 dark:border-green-600 text-green-700 dark:text-green-300 text-sm font-semibold hover:bg-green-700/5 dark:hover:bg-green-500/10 transition-colors shrink-0"
-          >
-            <Pencil className="w-4 h-4" /> Edit Details
-          </Link>
-        </div>
-      </ScrollReveal>
-
+      {/* Main column — hero, scheme cards and glossary */}
+      <div className="space-y-6 min-w-0">
       {/* Hero image — Indian small-business context */}
       <ScaleCard className="mb-6 relative rounded-2xl overflow-hidden h-56 sm:h-64 w-full border border-black/5 dark:border-white/10">
         <img
@@ -436,6 +435,7 @@ export default function ResultsDashboard() {
         </h2>
         <Glossary />
       </ScrollReveal>
+      </div>
       </div>
     </div>
   );
