@@ -612,7 +612,7 @@ function ReviewCard({ answers, identity, existing, error, onEdit }) {
       <h1 className="ef-q">{existing ? 'We already have your details' : 'Ready to find your schemes'}</h1>
       <p className="ef-q-hint">
         {existing
-          ? 'Confirm and we will match this profile against 21 government schemes. Update anything that has changed.'
+          ? 'Confirm and we will match this profile against 100+ government schemes. Update anything that has changed.'
           : 'One last look — change any answer, then we will match you.'}
       </p>
 

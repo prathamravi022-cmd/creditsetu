@@ -128,57 +128,6 @@ export function normalizeProfile(raw = {}) {
 }
 
 /**
- * Fit tags per scheme — the eligibility answers that the schemes' own rule JSON
- * cannot express (occupation, education level, gender, urban/rural). Kept as an
- * explicit table so every nudge is auditable rather than buried in heuristics.
- *
- * Vocabulary: student | salaried | business | farmer | artisan | looking |
- *             women | rural | urban | school | iti | research | housing | subsidy
- */
-const SCHEME_FITS = {
-  'NSFDC-MF-001': ['business', 'artisan', 'rural'],
-  'NSFDC-TL-002': ['business', 'farmer'],
-  'NMDFC-EL-003': ['student'],
-  'MUDRA-PM-004': ['business', 'artisan', 'urban', 'looking'],
-  'NSFDC-HP-005': ['housing', 'rural', 'subsidy'],
-  'NSFDC-SC-006': ['women', 'business', 'subsidy'],
-  'PMEGP-007': ['business', 'farmer', 'looking', 'rural', 'subsidy'],
-  'CGTMSE-008': ['business', 'urban'],
-  'NSFDC-CC-009': ['artisan', 'business'],
-  'NMDFC-TL-010': ['business', 'rural'],
-  'NRLM-011': ['women', 'rural', 'artisan', 'farmer', 'subsidy'],
-  'MJP-012': ['student', 'research'],
-  'PMS-SC-013': ['student', 'school'],
-  'NSFDC-SG-014': ['student', 'looking', 'iti'],
-  'NSFDC-WS-015': ['rural', 'farmer'],
-  'MUDRA-TP-016': ['business', 'urban'],
-  'PMMY-SH-017': ['artisan', 'rural', 'looking'],
-  'NSFDC-WC-018': ['business', 'artisan'],
-  'SCSP-019': ['rural', 'farmer', 'business', 'subsidy'],
-  'NSFDC-TR-020': ['business', 'urban'],
-  'CCLGS-021': ['artisan', 'business', 'rural'],
-};
-
-/** How well the extra eligibility answers fit this scheme (-4 … +8). */
-function fitScore(scheme, profile) {
-  const fits = SCHEME_FITS[scheme.scheme_code] || [];
-  let score = 0;
-
-  if (profile.occupation && fits.includes(profile.occupation)) score += 4;
-  if (profile.gender === 'F' && fits.includes('women')) score += 4;
-  if (fits.includes(profile.locationType)) score += 2;
-  if (profile.isStudent && fits.includes('student')) score += 4;
-  if (!profile.isStudent && fits.includes('student')) score -= 4;
-  if (profile.education === 'postgraduate' && fits.includes('research')) score += 3;
-  if (['school', 'higher_secondary'].includes(profile.education) && fits.includes('school')) score += 3;
-  if (profile.education === 'iti' && fits.includes('iti')) score += 3;
-  if (profile.schemeType === 'housing' && fits.includes('housing')) score += 4;
-  if (profile.schemeType === 'subsidy' && fits.includes('subsidy')) score += 2;
-
-  return Math.max(-4, Math.min(8, score));
-}
-
-/**
  * Scopes an storage key to the signed-in account (email / phone / uid) so two
  * people sharing one device don't overwrite each other's details. Anonymous
  * visits share the single device-level slot.
@@ -244,6 +193,9 @@ export function eligibilityTarget(user) {
 /* ---------- scoring ---------- */
 const inr = (n) => '₹' + Number(n).toLocaleString('en-IN');
 
+// Floor: the engine always returns at least this many schemes.
+const MIN_RESULTS = 6;
+
 function labelFor(p) {
   if (p >= 80) return 'Highly Recommended';
   if (p >= 60) return 'Recommended';
@@ -251,79 +203,123 @@ function labelFor(p) {
   return 'Low Match';
 }
 
+const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+
+/**
+ * Scores one scheme against a profile.
+ *
+ * Hard gates are limited to objective, published exclusions — social category,
+ * gender, age and state. Everything else is scored, so a broad 100+ scheme
+ * dataset never over-filters: an unusual profile still sees the closest real
+ * schemes instead of an empty screen. Returns null when a hard gate fails.
+ */
 function scoreScheme(scheme, profile) {
-  const rules = scheme.eligibility_rules || {};
-  const categories = rules.categories || [];
-  const states = rules.states || [];
-  const purposes = rules.loan_purpose || [];
+  const r = scheme.eligibility_rules || {};
+  const cats = r.categories || [];
+  const states = r.states || [];
 
-  // Hard eligibility gates — where the scheme is explicit and the user is known.
-  const categoryOk =
-    categories.length === 0 || !profile.socialCategory || categories.includes(profile.socialCategory);
-  if (!categoryOk) return null;
+  const catOk =
+    cats.length === 0 ||
+    !profile.socialCategory ||
+    cats.includes(profile.socialCategory) ||
+    (profile.gender === 'F' && r.women_inclusive);
+  if (!catOk) return null;
 
-  const stateOk = statesMatch(profile.state, states);
-  if (!stateOk) return null;
+  if (r.gender && r.gender !== 'any' && profile.gender && profile.gender !== r.gender) return null;
 
-  const wantsEducation = profile.intent === 'education';
-  const purposeOk =
-    purposes.length === 0 ||
-    purposes.includes(wantsEducation ? 'education' : 'business') ||
-    (profile.intent === 'housing' && scheme.scheme_type === 'housing_loan');
-  if (!purposeOk) return null;
+  if (profile.age) {
+    if (r.min_age != null && profile.age < r.min_age) return null;
+    if (r.max_age != null && profile.age > r.max_age) return null;
+  }
 
-  let score = 0;
+  if (!statesMatch(profile.state, states)) return null;
 
   // Income fit (30)
-  const maxIncome = Number(rules.max_income) || 600000;
-  if (profile.income === null) score += 20;
-  else if (profile.income <= maxIncome) score += 30;
-  else score += Math.max(0, Math.round(30 - ((profile.income - maxIncome) / maxIncome) * 40));
+  let incomePts;
+  if (profile.income == null || r.max_income == null) incomePts = 22;
+  else if (profile.income <= r.max_income) incomePts = 30;
+  else incomePts = clamp(Math.round(30 - ((profile.income - r.max_income) / r.max_income) * 40), 0, 30);
 
-  // Social category scarcity (25)
-  if (categories.length === 0) score += 22;
-  else score += 25;
+  // Category exclusivity (20) — reserved-category schemes score a touch higher.
+  const catPts = cats.length === 0 ? 16 : cats.includes(profile.socialCategory) ? 20 : 10;
 
-  // Location (20)
-  if (states.length === 0) score += 18;
-  else score += 20;
+  // State reach (10)
+  const locPts = states.length === 0 ? 8 : 10;
 
   // Purpose alignment (15)
-  if (purposes.length === 0) score += 12;
-  else score += 15;
+  const wants = profile.intent === 'education' ? 'education' : profile.intent === 'housing' ? 'housing' : 'business';
+  const purposes = r.loan_purpose || [];
+  const purposePts = purposes.length === 0 ? 10 : purposes.includes(wants) ? 15 : 4;
 
-  // Amount within the scheme's band (10)
+  // Amount band (10)
   const min = Number(scheme.min_amount) || 0;
   const max = Number(scheme.max_amount) || 0;
-  if (profile.amount >= min && profile.amount <= max) score += 10;
-  else if (profile.amount < min) score += 4;
-  else score += profile.amount <= max * 1.5 ? 8 : 2;
+  let amountPts;
+  if (!scheme.is_loan) amountPts = 8;
+  else if (profile.amount >= min && profile.amount <= max) amountPts = 10;
+  else if (profile.amount < min) amountPts = 5;
+  else amountPts = profile.amount <= max * 1.5 ? 8 : 3;
 
-  // BPL / disability support programmes (5)
-  if ((profile.isBpl && rules.prefer_bpl) || (profile.hasDisability && rules.prefer_disability)) score += 5;
-  else score += 2;
+  // Occupation fit (8)
+  const occs = r.occupation || [];
+  const occPts = occs.length === 0 ? 5 : occs.includes(profile.occupation) ? 8 : 2;
 
-  // Occupation / education / gender / area fit (-4 to +8)
-  score += fitScore(scheme, profile);
+  // Area fit (4)
+  const areas = r.area || [];
+  const areaPts = areas.length === 0 ? 3 : areas.includes(profile.locationType) ? 4 : 1;
 
-  const probability = Math.max(20, Math.min(96, score));
+  // Education fit (3)
+  const edus = r.education || [];
+  const eduPts = edus.length === 0 ? 2 : edus.includes(profile.education) ? 3 : 1;
+
+  // Targeted support (3)
+  let supportPts = 1;
+  if (profile.isBpl && r.prefer_bpl) supportPts += 1;
+  if (profile.hasDisability && r.prefer_disability) supportPts += 1;
+
+  // Age targeting (5) — reward schemes whose own age band fits (senior/youth schemes).
+  let agePts = 0;
+  if (profile.age) {
+    if (r.min_age != null && r.min_age >= 60 && profile.age >= r.min_age) agePts = 5;
+    else if (r.max_age != null && r.max_age <= 45 && profile.age <= r.max_age) agePts = 3;
+  }
+
+  const raw = incomePts + catPts + locPts + purposePts + amountPts + occPts + areaPts + eduPts + supportPts + agePts;
+  // Universal schemes are always eligible; bias them down so specific matches rank first.
+  const biased = r.universal ? raw - 10 : raw;
+  const probability = clamp(Math.round(biased), 18, 96);
 
   return {
     scheme_id: scheme.scheme_code,
     scheme_code: scheme.scheme_code,
     name: scheme.name,
     description: scheme.description,
+    category: scheme.category,
     recommendation_label: labelFor(probability),
     approval_probability: probability,
+    widely_eligible: !!r.universal,
+    is_loan: !!scheme.is_loan,
+    breakdown: {
+      Income: { pts: incomePts, max: 30 },
+      Category: { pts: catPts, max: 20 },
+      Location: { pts: locPts, max: 10 },
+      Purpose: { pts: purposePts, max: 15 },
+      Cost: { pts: amountPts, max: 10 },
+      Occupation: { pts: occPts, max: 8 },
+      Area: { pts: areaPts, max: 4 },
+      Education: { pts: eduPts, max: 3 },
+      Support: { pts: supportPts, max: 3 },
+      Age: { pts: agePts, max: 5 },
+    },
     amount_range: {
-      min: min,
-      max: max,
-      display: `${inr(min)} – ${inr(max)}`,
+      min,
+      max,
+      display: max > 0 ? `${inr(min)} – ${inr(max)}` : 'Non-monetary / varies',
     },
     interest_rate: scheme.interest_rate,
     tenure_range: {
-      min_months: Number(scheme.min_tenure_months) || 12,
-      max_months: Number(scheme.max_tenure_months) || 60,
+      min_months: Number(scheme.min_tenure_months) || 0,
+      max_months: Number(scheme.max_tenure_months) || 0,
     },
     moratorium_months: Number(scheme.moratorium_months) || 0,
     subsidy_percentage: Number(scheme.subsidy_percentage) || 0,
@@ -331,25 +327,41 @@ function scoreScheme(scheme, profile) {
     required_documents: scheme.required_documents || [],
     source: 'local',
     live_url: scheme.live_url || '',
-    ministry: scheme.ministry || 'Ministry of Social Justice',
+    ministry: scheme.ministry || 'Government of India',
+    portal: scheme.portal || '',
   };
 }
 
-/** Rank every scheme against a profile and return the object the Results page expects. */
+/** Rank every scheme against a profile, guaranteeing a non-empty result set. */
 export function buildRecommendations(rawProfile) {
   const profile = normalizeProfile(rawProfile);
   const ranked = ALL_SCHEMES.map((s) => scoreScheme(s, profile))
     .filter(Boolean)
     .sort((a, b) => b.approval_probability - a.approval_probability);
 
-  const top = ranked.slice(0, 8);
+  // Guaranteed floor: top the list up with universally-eligible schemes so a
+  // narrow or unusual profile never lands on the "No Schemes Found" screen.
+  if (ranked.length < MIN_RESULTS) {
+    const seen = new Set(ranked.map((r) => r.scheme_code));
+    const fillers = ALL_SCHEMES.filter((s) => s.eligibility_rules?.universal && !seen.has(s.scheme_code))
+      .map((s) => scoreScheme(s, profile))
+      .filter(Boolean)
+      .sort((a, b) => b.approval_probability - a.approval_probability);
+    for (const f of fillers) {
+      if (ranked.length >= MIN_RESULTS) break;
+      if (seen.has(f.scheme_code)) continue;
+      seen.add(f.scheme_code);
+      ranked.push({ ...f, widely_eligible: true });
+    }
+  }
 
   return {
-    count: top.length,
+    count: ranked.length,
     total_considered: ALL_SCHEMES.length,
+    widely_eligible_count: ranked.filter((r) => r.widely_eligible).length,
     profile,
     generated_at: new Date().toISOString(),
-    recommendations: top,
+    recommendations: ranked,
   };
 }
 

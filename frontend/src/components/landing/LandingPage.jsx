@@ -102,7 +102,7 @@ export default function LandingPage({ onAuthOpen }) {
   var [stepsRef, stepsVisible] = useScrollReveal(0.1);
   var [testiRef, testiVisible] = useScrollReveal(0.15);
   var [ctaRef, ctaVisible] = useScrollReveal(0.15);
-  var [s1Ref, s1Val] = AnimatedCounter(21, "+");
+  var [s1Ref, s1Val] = AnimatedCounter(100, "+");
   // India has 28 states + 8 union territories = 36, so a "+" here was factually wrong.
   var [s2Ref, s2Val] = AnimatedCounter(36, "");
   var [s3Ref, s3Val] = AnimatedCounter(35, "+");
@@ -207,7 +207,7 @@ export default function LandingPage({ onAuthOpen }) {
             </p>
             {/* Factual product capabilities — no invented ratings or testimonials */}
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-              {["21+ central & state schemes", "Available in 7 languages", "Free to use"].map(function(item) {
+              {["100+ central & state schemes", "Available in 7 languages", "Free to use"].map(function(item) {
                 return (
                   <li key={item} className="inline-flex items-center gap-1.5">
                     <svg className="w-4 h-4 text-[#138808] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -312,7 +312,7 @@ export default function LandingPage({ onAuthOpen }) {
           <div className="absolute top-12 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#000080] z-0" />
           {[
             { step: "01", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", icon: "form", title: t("landing.process.step1.title") || "Tell Us About Yourself", desc: t("landing.process.step1.desc") || "Answer simple questions about your business, income, and location." },
-            { step: "02", dot: "bg-[#FF9933]", color: "bg-[#138808]", icon: "ai", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 21+ government schemes." },
+            { step: "02", dot: "bg-[#FF9933]", color: "bg-[#138808]", icon: "ai", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 100+ government schemes." },
             { step: "03", dot: "bg-[#FF9933]", color: "bg-[#000080]", icon: "doc", title: t("landing.process.step3.title") || "Get Personalized Matches", desc: t("landing.process.step3.desc") || "See schemes ranked by eligibility with requirements and benefits." },
             { step: "04", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", icon: "bank", title: t("landing.process.step4.title") || "Apply With Guidance", desc: t("landing.process.step4.desc") || "Get document checklist, bank locator, and official application links." },
           ].map(function(item, i) {
@@ -340,7 +340,7 @@ export default function LandingPage({ onAuthOpen }) {
           <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#FF9933] via-[#138808] to-[#000080]" />
           {[
             { step: "01", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", title: t("landing.process.step1.title") || "Tell Us About Yourself", desc: t("landing.process.step1.desc") || "Answer simple questions about your business, income, and location." },
-            { step: "02", dot: "bg-[#FF9933]", color: "bg-[#138808]", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 21+ government schemes." },
+            { step: "02", dot: "bg-[#FF9933]", color: "bg-[#138808]", title: t("landing.process.step2.title") || "AI Analyzes Your Eligibility", desc: t("landing.process.step2.desc") || "Our AI engine matches your profile against 100+ government schemes." },
             { step: "03", dot: "bg-[#FF9933]", color: "bg-[#000080]", title: t("landing.process.step3.title") || "Get Personalized Matches", desc: t("landing.process.step3.desc") || "See schemes ranked by eligibility with requirements and benefits." },
             { step: "04", dot: "bg-[#FF9933]", color: "bg-[#FF9933]", title: t("landing.process.step4.title") || "Apply With Guidance", desc: t("landing.process.step4.desc") || "Get document checklist, bank locator, and official application links." },
           ].map(function(item, i) {
@@ -366,7 +366,7 @@ export default function LandingPage({ onAuthOpen }) {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#000080] dark:text-white mb-3">Find the Right Scheme for You</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">Search 21+ central and state schemes, or filter by the category that fits you.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">Search 100+ central and state schemes, or filter by the category that fits you.</p>
           </div>
           <div className="relative mb-5">
             <input
@@ -482,7 +482,7 @@ export default function LandingPage({ onAuthOpen }) {
             { q: "What is CreditSetu?", a: "CreditSetu is an AI-powered government scheme discovery platform that helps marginalized entrepreneurs find and apply for the right government credit schemes based on their profile." },
             { q: "How does the AI matching work?", a: "Our AI engine analyzes your personal details, business type, income, and location to match you with eligible government schemes. It ranks schemes by eligibility probability." },
             { q: "Is CreditSetu free to use?", a: "Yes, CreditSetu is completely free. We help you discover government schemes and guide you to official application portals." },
-            { q: "Which schemes are available?", a: "We cover 21+ government credit schemes including PM MUDRA, NSFDC Term Loan, Stand-Up India, Educational Loan Scheme, and more from both central and state governments." },
+            { q: "Which schemes are available?", a: "We cover 100+ central and state government schemes across business, agriculture, education, health, housing, women, SC/ST/OBC and senior-citizen categories." },
             { q: "How do I apply for a scheme?", a: "After finding eligible schemes, CreditSetu provides a document checklist and redirects you to the official application portal (myScheme/JanSamarth) to complete your application." },
             { q: "Is my data safe?", a: "Yes. We follow DPDP Act 2023 guidelines. Your data is encrypted and never shared with third parties without your consent." },
           ].map(function(item, i) {

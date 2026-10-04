@@ -580,7 +580,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
                 <span className="wz-saved-icon">✓</span>
                 <h2 className="text-xl font-semibold">Finding your schemes…</h2>
                 <p className="mt-1 text-sm opacity-70">
-                  Matching your profile against 21 government credit schemes.
+                  Matching your profile against 100+ government credit schemes.
                 </p>
               </div>
             </div>
