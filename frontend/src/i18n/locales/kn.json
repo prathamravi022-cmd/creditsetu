@@ -293,7 +293,11 @@
     "urban": "ನಗರ",
     "rural": "ಗ್ರಾಮೀಣ",
     "select_district": "ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
-    "select_state_first": "ಮೊದಲು ರಾಜ್ಯ ಆಯ್ಕೆಮಾಡಿ"
+    "select_state_first": "ಮೊದಲು ರಾಜ್ಯ ಆಯ್ಕೆಮಾಡಿ",
+    "subsidy": "ಸಬ್ಸಿಡಿ / ಅನುದಾನ",
+    "housing": "ವಸತಿ ಸಾಲ",
+    "education": "ಶಿಕ್ಷಣ",
+    "selected_category_label": "ಆಯ್ಕೆಮಾಡಿದ ವರ್ಗ"
   },
   "app_name": "ಕ್ರೆಡಿಟ್‌ಸೇತು",
   "edit_profile": {

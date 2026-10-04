@@ -293,7 +293,11 @@
     "urban": "শহুরে",
     "rural": "গ্রামীণ",
     "select_district": "জেলা নির্বাচন করুন",
-    "select_state_first": "প্রথমে রাজ্য নির্বাচন করুন"
+    "select_state_first": "প্রথমে রাজ্য নির্বাচন করুন",
+    "subsidy": "ভর্তুকি / অনুদান",
+    "housing": "আবাসন ঋণ",
+    "education": "শিক্ষা",
+    "selected_category_label": "নির্বাচিত বিভাগ"
   },
   "app_name": "ক্রেডিটসেতু",
   "edit_profile": {

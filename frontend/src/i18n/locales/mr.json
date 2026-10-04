@@ -293,7 +293,11 @@
     "urban": "शहरी",
     "rural": "ग्रामीण",
     "select_district": "जिल्हा निवडा",
-    "select_state_first": "प्रथम राज्य निवडा"
+    "select_state_first": "प्रथम राज्य निवडा",
+    "subsidy": "सबसिडी / अनुदान",
+    "housing": "गृहकर्ज",
+    "education": "शिक्षण",
+    "selected_category_label": "निवडलेली श्रेणी"
   },
   "app_name": "क्रेडिटसेतू",
   "edit_profile": {
