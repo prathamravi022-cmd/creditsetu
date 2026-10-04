@@ -71,7 +71,7 @@ export default function AuthModal({ open, onClose }) {
     setTimeout(() => emailRef.current?.focus(), 400);
     // Reset state
     setMode('login'); setEmail(''); setPassword(''); setPhone(''); setOtp('');
-    setOtpSent(false); setLoading(false); setError(''); setSuccess(false);
+    setLoading(false); setError(''); setSuccess(false);
   }, [open]);
 
   // Close on Escape
@@ -262,7 +262,6 @@ export default function AuthModal({ open, onClose }) {
         const { error: supaErr } = await supabase.auth.signInWithOtp({ phone: '+91' + phone });
         if (supaErr) throw supaErr;
       }
-      setOtpSent(true);
       setMode('otp');
     } catch (err) {
       const msg = err.message || 'Failed to send OTP';
@@ -483,7 +482,7 @@ export default function AuthModal({ open, onClose }) {
                 className="w-full py-3 rounded-xl bg-[#138808] hover:bg-[#0f6d06] text-white font-semibold text-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 {loading ? <><Spinner /> Verifying...</> : 'Verify OTP'}
               </button>
-              <button type="button" onClick={() => { setMode('phone'); setOtpSent(false); setOtp(''); setError(''); }}
+              <button type="button" onClick={() => { setMode('phone'); setOtp(''); setError(''); }}
                 className="w-full py-2 text-sm text-gray-500 hover:text-[#138808] transition-colors">
                 ← Change number
               </button>

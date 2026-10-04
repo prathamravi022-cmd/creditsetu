@@ -327,6 +327,7 @@ function scoreScheme(scheme, profile) {
     },
     moratorium_months: Number(scheme.moratorium_months) || 0,
     subsidy_percentage: Number(scheme.subsidy_percentage) || 0,
+    margin_money_percentage: Number(scheme.margin_money_percentage) || 0,
     required_documents: scheme.required_documents || [],
     source: 'local',
     live_url: scheme.live_url || '',

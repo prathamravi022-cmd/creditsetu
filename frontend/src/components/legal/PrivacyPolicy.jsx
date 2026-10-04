@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
             <p>
               For any privacy-related concerns, contact our Grievance Officer:
               <br /><strong>Email:</strong> <a className="text-green-700 hover:text-green-800 underline" href="mailto:prathamravi022@gmail.com">prathamravi022@gmail.com</a>
-              <br /><strong>Phone:</strong> 1800-XXX-XXXX (Toll Free)
+              <br /><strong>Phone:</strong> 1800-11-0031 (Toll Free)
               <br /><strong>Response Time:</strong> Within 48 hours of receipt.
             </p>
           </section>

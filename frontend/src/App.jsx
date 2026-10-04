@@ -44,9 +44,14 @@ function ProtectedRoute({ children, adminOnly = false }) {
     return <Navigate to="/" replace />;
   }
   if (adminOnly) {
+    // AuthContext stores the mobile number as `user.mobile` (and flags admins via
+    // `user.isAdmin`), while older code paths used `user.phone` — accept all of them
+    // so an admin who signs in by phone actually reaches the dashboard.
+    const phone = String(user.phone || user.mobile || "").replace(/[^0-9]/g, "");
     const isAdmin =
+      user.isAdmin === true ||
       (user.email && user.email.toLowerCase() === "prathamravi022@gmail.com") ||
-      (user.phone && String(user.phone).replace(/[^0-9]/g, "") === "9259609658");
+      phone === "9259609658";
     if (!isAdmin) {
       return <Navigate to="/" replace />;
     }

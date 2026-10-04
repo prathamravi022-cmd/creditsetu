@@ -142,6 +142,11 @@ export default function MobileMenu({ open, onClose }) {
             <button type="button" onClick={() => go('/edit-profile')} className={`${itemCls} text-left`}>
               <Icon as={UserCog} /> Edit Details
             </button>
+            {isAdmin && (
+              <Link to="/admin/dashboard" onClick={onClose} className={itemCls}>
+                <Icon as={Shield} /> {t('nav.admin') || 'Admin'}
+              </Link>
+            )}
           </nav>
 
           {/* Landing section shortcuts */}

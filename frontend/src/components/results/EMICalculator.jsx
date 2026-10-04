@@ -21,10 +21,13 @@ export default function EMICalculator({ scheme, onClose }) {
   const [moratorium, setMoratorium] = useState(scheme.moratorium_months);
 
   const calculation = useMemo(() => {
-    const subsidy = principal * (scheme.subsidy_percentage / 100);
-    const margin = principal * (scheme.margin_money_percentage / 100);
-    const effectivePrincipal = principal - subsidy - margin;
-    const r = scheme.interest_rate / (12 * 100);
+    const subsidyPct = Number(scheme.subsidy_percentage) || 0;
+    const marginPct = Number(scheme.margin_money_percentage) || 0;
+    const interestRate = Number(scheme.interest_rate) || 0;
+    const subsidy = principal * (subsidyPct / 100);
+    const margin = principal * (marginPct / 100);
+    const effectivePrincipal = Math.max(principal - subsidy - margin, 0);
+    const r = interestRate / (12 * 100);
     const n = tenure;
 
     let emi = 0;
@@ -176,7 +179,7 @@ export default function EMICalculator({ scheme, onClose }) {
 
           {calculation.margin > 0 && (
             <div className="mt-3 text-xs text-slate-600 dark:text-slate-400 bg-white rounded-lg p-3 border border-slate-200">
-              {t('results.margin_money')}: <strong>{formatCurrency(calculation.margin)}</strong> ({scheme.margin_money_percentage}%)
+              {t('results.margin_money')}: <strong>{formatCurrency(calculation.margin)}</strong> ({Number(scheme.margin_money_percentage) || 0}%)
             </div>
           )}
         </div>

@@ -212,9 +212,9 @@ function ActivityTab() {
   );
 }
 export default function AdminDashboard() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   var [tab, setTab] = useState("overview");
-  var [adminPhone, setAdminPhone] = useState(sessionStorage.getItem("admin_phone") || "Admin");
+  var [adminPhone, setAdminPhone] = useState((user && (user.name || user.mobile || user.email)) || sessionStorage.getItem("admin_phone") || "Admin");
   var [stats] = useState({
     totalUsers: 0,
     totalSchemes: 0,
@@ -223,8 +223,8 @@ export default function AdminDashboard() {
   });
 
   useEffect(function() {
-    setAdminPhone(sessionStorage.getItem("admin_phone") || "Unknown");
-  }, []);
+    setAdminPhone((user && (user.name || user.mobile || user.email)) || sessionStorage.getItem("admin_phone") || "Admin");
+  }, [user]);
 
   function handleLogout() {
     // Clear the real session too — otherwise the admin stays signed in and can

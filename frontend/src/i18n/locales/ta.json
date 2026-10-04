@@ -112,7 +112,7 @@
     "disclaimer": "This is a prototype for Smart India Hackathon. Not an official government portal."
   },
   "results": {
-    "title": "உங்கள் திട്பங்கள்",
+    "title": "உங்கள் திட்டங்கள்",
     "loading": "Finding the best schemes for you...",
     "probability": "Approval Probability",
     "highly_recommended": "Highly Recommended",
@@ -247,7 +247,7 @@
     },
     "next": "அடுத்து",
     "back": "பில்சேல்",
-    "submit": "என் திട്பங்களுக்க கண்ടிரியவட்டுங்கள்",
+    "submit": "என் திட்டங்களைக் கண்டறியுங்கள்",
     "save_exit": "Save & Exit",
     "complete": "% complete",
     "est_time": "About {{min}} min left",
@@ -331,7 +331,7 @@
     "sih_credit": "CreditSetu — Smart India Hackathon 2026"
   },
   "login": {
-    "title": "அரசு திട്ப கண்ടிரப்பு",
+    "title": "CreditSetu திட்ட கண்டறிதல்",
     "continue_google": "Continue with Google",
     "or": "or",
     "mobile_number": "Mobile Number",

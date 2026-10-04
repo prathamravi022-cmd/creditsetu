@@ -247,7 +247,7 @@
     },
     "next": "ಮುಂದೆ",
     "back": "ಹಿಂದೆ",
-    "submit": "ನನ್ ಯೋಜನೆಗಳನ್ನు ಹುಡುಕಿ",
+    "submit": "ನನ್ನ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ",
     "save_exit": "Save & Exit",
     "complete": "% complete",
     "est_time": "About {{min}} min left",
@@ -268,7 +268,7 @@
     "validation_category": "Please select your social category",
     "validation_income": "Please enter your family income",
     "validation_cost": "Please set an estimated project cost",
-    "header.step": "ಹಂತ {{step}} / {{total}} — ಸುಮಾರು {{mins}} ನಿ॥ಮಿ ಉಳಿದಿದೆ",
+    "header.step": "ಹಂತ {{step}} / {{total}} — ಸುಮಾರು {{mins}} ನಿಮಿಷ ಉಳಿದಿದೆ",
     "percent_complete": "{{pct}}% ಪೂರ್ಣಗೊಂಡಿದೆ",
     "select_gender": "ಲಿಂಗ ಆಯ್ಕೆಮಾಡಿ",
     "male": "ಪುರುಷ",
@@ -331,7 +331,7 @@
     "sih_credit": "CreditSetu — Smart India Hackathon 2026"
   },
   "login": {
-    "title": "ಸರ್ಕಾರಿ ಯೋಜನೆ શ್ಸಯತಾವ",
+    "title": "CreditSetu ಯೋಜನೆ ಹುಡುಕಾಟ",
     "continue_google": "Continue with Google",
     "or": "or",
     "mobile_number": "Mobile Number",
