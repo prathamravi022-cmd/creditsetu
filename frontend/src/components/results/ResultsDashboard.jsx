@@ -152,7 +152,7 @@ export default function ResultsDashboard() {
       <PageBackdrop variant="results" />
       <div className="relative z-10 lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 lg:items-start">
       {/* Sidebar — the results summary and the edit action live beside the list */}
-      <aside className="mb-6 lg:mb-0 lg:sticky lg:top-24 space-y-4">
+      <aside className="mb-6 lg:mb-0 lg:sticky lg:top-24 space-y-4" data-scroll3d="6">
         <div>
           <h1 className="text-slate-900 dark:text-white">{t('results.title')}</h1>
           <p className="text-slate-600 dark:text-slate-400 text-sm">

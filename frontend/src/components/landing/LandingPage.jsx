@@ -347,7 +347,7 @@ export default function LandingPage({ onAuthOpen }) {
             return (
               <div key={i} className={"relative pb-8 transition-all duration-500 " + (stepsVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4")} style={{transitionDelay: (i*120)+"ms"}}>
                 <div className={"absolute -left-5 w-6 h-6 rounded-full " + item.dot + " text-white flex items-center justify-center font-bold text-[10px] shadow-md z-10"}>{item.step}</div>
-                <div className="glass-card rounded-xl p-4 ml-2">
+                <div className="glass-card rounded-xl p-4 ml-2" data-scroll3d="5">
                   <h3 className="font-bold text-[#000080] dark:text-white mb-1 text-sm">{item.title}</h3>
                   <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">{item.desc}</p>
                 </div>

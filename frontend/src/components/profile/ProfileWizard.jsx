@@ -283,7 +283,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
           <div className="wz-slide" style={{ transform: `translateX(-${step * 100}%)` }}>
             {/* 0 — category */}
             <section className="wz-step" aria-hidden={step !== 0}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <span>
                     <span className="wz-cat-title">Scheme Category</span>
@@ -310,7 +310,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 1 — purpose */}
             <section className="wz-step" aria-hidden={step !== 1}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <span>
                     <span className="wz-cat-title">Purpose</span>
@@ -336,7 +336,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 2 — amount */}
             <section className="wz-step" aria-hidden={step !== 2}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <span>
                     <span className="wz-cat-title">Approximate Amount</span>
@@ -372,7 +372,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 3 — personal */}
             <section className="wz-step" aria-hidden={step !== 3}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <User className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
                   <span>
@@ -424,7 +424,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 4 — location */}
             <section className="wz-step" aria-hidden={step !== 4}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <MapPin className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
                   <span>
@@ -508,7 +508,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 5 — work & education */}
             <section className="wz-step" aria-hidden={step !== 5}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <Briefcase className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
                   <span>
@@ -555,7 +555,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 6 — background & income */}
             <section className="wz-step" aria-hidden={step !== 6}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <Users className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
                   <span>
@@ -699,7 +699,7 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
 
             {/* 7 — review */}
             <section className="wz-step" aria-hidden={step !== 7}>
-              <div className="wz-card">
+              <div className="wz-card" data-scroll3d="5">
                 <div className="wz-cat">
                   <CheckCircle2 className="h-5 w-5 text-[#138808] dark:text-[#34d399]" aria-hidden="true" />
                   <span>

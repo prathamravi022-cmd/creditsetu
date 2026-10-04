@@ -49,7 +49,7 @@ export default function MobileStickyCta() {
         <button
           type="button"
           onClick={run}
-          className="tap-spring mi-shine glow-accent flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#138808] px-5 text-sm font-semibold text-white shadow-[0_16px_34px_-14px_rgba(19,136,8,0.75)] transition-shadow duration-300"
+          className="p3d tap-spring mi-shine glow-accent flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#138808] px-5 text-sm font-semibold text-white shadow-[0_16px_34px_-14px_rgba(19,136,8,0.75)] transition-shadow duration-300"
         >
           {label}
           <Icon aria-hidden="true" className="h-4 w-4" />

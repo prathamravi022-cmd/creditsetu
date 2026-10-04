@@ -109,7 +109,7 @@ export default function PartnerLocator() {
     'text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/30 hover:text-slate-900 dark:hover:text-white';
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 relative">
+    <div className="max-w-6xl mx-auto px-4 py-8 relative overflow-hidden">
       <PageBackdrop variant="findbank" />
       <div aria-hidden="true" className="cs-orb cs-orb-green w-[340px] h-[340px] -top-24 right-[-8%] opacity-50" />
 
@@ -135,13 +135,13 @@ export default function PartnerLocator() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => setShowMap(!showMap)}
-              className="scale-card inline-flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-white/20 text-sm font-medium text-slate-700 dark:text-white hover:border-brand-light hover:bg-brand-soft transition-colors"
+              className="p3d-soft scale-card inline-flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-white/20 text-sm font-medium text-slate-700 dark:text-white hover:border-brand-light hover:bg-brand-soft transition-colors"
             >
               <Map className="w-4 h-4 text-brand" /> {showMap ? t('map.show_list') : t('map.show_map')}
             </button>
             <button
               onClick={() => navigate(eligibilityTarget(user))}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-brand text-[#000080] rounded-xl text-sm font-medium hover:bg-brand-hover transition-colors shadow-sm"
+              className="p3d-soft inline-flex items-center gap-2 px-4 py-2 bg-brand text-[#000080] rounded-xl text-sm font-medium hover:bg-brand-hover transition-colors shadow-sm"
             >
               <ChevronRight className="w-3.5 h-3.5" /> {t('map.find_scheme')}
             </button>
@@ -224,7 +224,7 @@ export default function PartnerLocator() {
               );
             }
           }}
-          className="scale-card flex items-center gap-2 px-4 py-2.5 bg-brand text-[#000080] rounded-xl text-sm font-medium hover:bg-brand-hover transition-colors shadow-sm"
+          className="p3d-soft scale-card flex items-center gap-2 px-4 py-2.5 bg-brand text-[#000080] rounded-xl text-sm font-medium hover:bg-brand-hover transition-colors shadow-sm"
         >
           <Navigation className="w-4 h-4" /> {t('map.my_location')}
         </button>

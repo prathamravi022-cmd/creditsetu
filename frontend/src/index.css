@@ -888,6 +888,162 @@ html {
   background-clip: content-box;
 }
 
+/* ============================================================
+   MOBILE 3D DEPTH SYSTEM  (< 768px)
+   A single, cohesive depth language for touch: three-step layered
+   shadows, glass surfaces, spring press physics and scroll-linked
+   perspective. Everything animates transform/opacity only (all
+   compositor work) and the heavy effects are scoped to small
+   screens, so desktop is untouched.
+   ============================================================ */
+
+/* ---- Elevation tokens -------------------------------------- */
+/* Each step stacks a tight contact shadow, a mid ambient shadow and a
+   wide soft shadow. The *stack* is what reads as physical depth — a
+   single blurred drop shadow never does. */
+:root {
+  --cs-elev-1: 0 1px 1px rgba(15, 23, 42, 0.05),
+               0 3px 8px -3px rgba(15, 23, 42, 0.10),
+               0 12px 24px -18px rgba(15, 23, 42, 0.20);
+  --cs-elev-2: 0 1px 1px rgba(15, 23, 42, 0.06),
+               0 8px 18px -6px rgba(15, 23, 42, 0.13),
+               0 24px 48px -26px rgba(15, 23, 42, 0.26);
+  --cs-elev-3: 0 2px 3px rgba(15, 23, 42, 0.07),
+               0 16px 34px -10px rgba(15, 23, 42, 0.16),
+               0 44px 80px -34px rgba(15, 23, 42, 0.34);
+}
+.dark {
+  /* Black-on-black shadows are invisible on their own, so every dark
+     step adds a faint inset top highlight — the lit top edge of a
+     raised surface. */
+  --cs-elev-1: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+               0 2px 6px -2px rgba(0, 0, 0, 0.70),
+               0 10px 22px -14px rgba(0, 0, 0, 0.85);
+  --cs-elev-2: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+               0 6px 16px -5px rgba(0, 0, 0, 0.75),
+               0 22px 44px -22px rgba(0, 0, 0, 0.95);
+  --cs-elev-3: inset 0 1px 0 rgba(255, 255, 255, 0.07),
+               0 14px 30px -8px rgba(0, 0, 0, 0.80),
+               0 40px 70px -30px rgba(0, 0, 0, 1);
+}
+
+/* Reusable depth steps */
+.cs-elev-1 { box-shadow: var(--cs-elev-1); }
+.cs-elev-2 { box-shadow: var(--cs-elev-2); }
+.cs-elev-3 { box-shadow: var(--cs-elev-3); }
+
+/* ---- Glass 3D surface -------------------------------------- */
+/* A frosted, clearly-raised panel. Works in both themes; the dark
+   variant keeps a light top edge so it stays distinct from the page. */
+.cs-glass-3d {
+  position: relative;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--cs-elev-2);
+}
+.dark .cs-glass-3d {
+  background: linear-gradient(160deg, rgba(38, 38, 42, 0.74), rgba(20, 20, 22, 0.84));
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow: var(--cs-elev-2);
+}
+
+/* ---- Perspective scene ------------------------------------- */
+/* Establishes real 3D space so children can sit at different Z. */
+.cs-depth-scene {
+  perspective: 1000px;
+  perspective-origin: 50% 35%;
+}
+
+@media (max-width: 767px) {
+  /* ---- 3D press physics ------------------------------------ */
+  /* On tap the element sinks into the page (a small translateY + scale
+     fakes translateZ) and its shadow collapses from raised to flush —
+     the classic "button being pushed in" read. Release springs back
+     with a gentle overshoot via the cubic-bezier. */
+  .p3d {
+    transform-style: preserve-3d;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s ease, border-color 0.3s ease,
+                background-color 0.3s ease;
+    will-change: transform;
+  }
+  .p3d:active {
+    transform: translate3d(0, 2px, 0) scale(0.955);
+    transition-duration: 0.09s;
+    box-shadow: var(--cs-elev-1);
+  }
+  /* Lighter variant for large surfaces (cards, drawers) where a 4.5%
+     shrink would feel excessive. */
+  .p3d-soft:active {
+    transform: translate3d(0, 1px, 0) scale(0.985);
+    transition-duration: 0.1s;
+  }
+
+  /* ---- Scroll-linked perspective --------------------------- */
+  /* Elements tagged data-scroll3d tilt into the viewport and
+     straighten as they reach the centre. Only transform animates; the
+     values come from one shared rAF scroll loop (see Mobile3D.jsx). */
+  [data-scroll3d] {
+    transform: perspective(900px)
+               rotateX(var(--cs3d-rx, 0deg))
+               translate3d(0, var(--cs3d-ty, 0), 0)
+               scale(var(--cs3d-s, 1));
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+  }
+  [data-scroll3d].is-3d-active {
+    will-change: transform;
+  }
+
+  /* ---- Elevate the app's own surfaces ---------------------- */
+  /* Reusing the tokens on existing card/field/nav classes gives the
+     whole product the depth language without per-page CSS. */
+  .m-card { box-shadow: var(--cs-elev-2); }
+  .dark .m-card { box-shadow: var(--cs-elev-2); }
+  .m-card:active {
+    box-shadow: var(--cs-elev-1), 0 0 0 1px rgba(19, 136, 8, 0.4),
+                0 0 30px -6px rgba(19, 136, 8, 0.45);
+  }
+  .dark .m-card:active {
+    box-shadow: var(--cs-elev-1), 0 0 0 1px rgba(52, 211, 153, 0.45),
+                0 0 32px -4px rgba(52, 211, 153, 0.5);
+  }
+  .glass-card { box-shadow: var(--cs-elev-2); }
+  .dark .glass-card { box-shadow: var(--cs-elev-2); }
+  .field-float > .field-float__input { box-shadow: var(--cs-elev-1); }
+  .field-float > .field-float__input:focus {
+    box-shadow: var(--cs-elev-2), 0 0 0 3px rgba(19, 136, 8, 0.14);
+  }
+  .dark .field-float > .field-float__input:focus {
+    box-shadow: var(--cs-elev-2), 0 0 0 3px rgba(52, 211, 153, 0.16);
+  }
+
+  /* Locator and inner-page cards reuse the same depth steps. */
+  .scale-card { box-shadow: var(--cs-elev-2); }
+  .dark .scale-card { box-shadow: var(--cs-elev-2); }
+
+  /* The fixed app bar becomes the topmost layer once the page scrolls. */
+  .cs-nav.is-scrolled { box-shadow: 0 10px 28px -20px rgba(0, 0, 0, 0.6); }
+  .dark .cs-nav.is-scrolled { box-shadow: 0 10px 28px -20px rgba(0, 0, 0, 0.9); }
+}
+
+/* ---- Reduced motion: drop every transform-based effect ------ */
+@media (prefers-reduced-motion: reduce) {
+  .p3d,
+  .p3d-soft,
+  .p3d:active,
+  .p3d-soft:active,
+  [data-scroll3d] {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}
+
 
 
 

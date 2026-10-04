@@ -22,7 +22,7 @@ const LANGUAGES = [
 ];
 
 const itemCls =
-  'flex items-center gap-3 w-full px-3.5 py-3 min-h-[48px] rounded-xl text-sm font-medium transition-all duration-200 ' +
+  'p3d-soft flex items-center gap-3 w-full px-3.5 py-3 min-h-[48px] rounded-xl text-sm font-medium transition-all duration-200 ' +
   'text-slate-700 dark:text-slate-200 hover:bg-[#138808]/8 dark:hover:bg-[#138808]/15 hover:translate-x-0.5';
 
 function Icon({ as: As }) {
@@ -91,7 +91,7 @@ export default function MobileMenu({ open, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
-        className={`absolute top-0 right-0 h-full w-80 max-w-[86vw] flex flex-col bg-white dark:bg-[#0b1220] border-l border-gray-100 dark:border-white/10 shadow-2xl transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`cs-elev-3 absolute top-0 right-0 h-full w-80 max-w-[86vw] flex flex-col bg-white dark:bg-[#0b1220] border-l border-gray-100 dark:border-white/10 transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3.5 border-b border-gray-100 dark:border-white/10">
@@ -106,7 +106,7 @@ export default function MobileMenu({ open, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="w-11 h-11 rounded-xl grid place-items-center text-gray-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            className="p3d w-11 h-11 rounded-xl grid place-items-center text-gray-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
@@ -186,7 +186,7 @@ export default function MobileMenu({ open, onClose }) {
                       type="button"
                       onClick={() => i18n.changeLanguage(lang.code)}
                       aria-pressed={active}
-                      className={`px-2.5 py-2 rounded-lg text-xs font-medium border transition-colors ${
+                      className={`p3d-soft px-2.5 py-2 rounded-lg text-xs font-medium border transition-colors ${
                         active
                           ? 'border-[#138808] bg-[#138808]/10 text-[#138808]'
                           : 'border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:border-[#138808]/50'
@@ -221,7 +221,7 @@ export default function MobileMenu({ open, onClose }) {
             <button
               type="button"
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold text-red-600 border border-red-200 dark:border-red-500/30 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+              className="p3d w-full flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold text-red-600 border border-red-200 dark:border-red-500/30 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
             >
               <LogOut className="w-4 h-4" /> Logout
             </button>
@@ -229,7 +229,7 @@ export default function MobileMenu({ open, onClose }) {
             <button
               type="button"
               onClick={() => go(eligibilityTarget(user))}
-              className="w-full flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold text-white bg-[#138808] hover:bg-[#0f6d06] transition-colors shadow-md"
+              className="p3d w-full flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold text-white bg-[#138808] hover:bg-[#0f6d06] transition-colors cs-elev-2"
             >
               <LogIn className="w-4 h-4" /> Get Started
             </button>

@@ -110,7 +110,7 @@ export default function Navbar({ onAuthOpen }) {
               ) : (
                 <button
                   onClick={openAuthModal}
-                  className="mi-press mi-shine hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
+                  className="p3d mi-press mi-shine hidden sm:flex items-center gap-1 px-3 py-1.5 bg-green-700 text-white rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>Login</span>
@@ -121,7 +121,7 @@ export default function Navbar({ onAuthOpen }) {
             {/* Mobile menu toggle — opens the single shared drawer mounted by the shell */}
             <button
               onClick={() => (mobileOpen ? closeMenu() : openMenu())}
-              className="tap-spring lg:hidden min-w-11 min-h-11 grid place-items-center rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
+              className="p3d tap-spring lg:hidden min-w-11 min-h-11 grid place-items-center rounded-lg text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/10"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
             >

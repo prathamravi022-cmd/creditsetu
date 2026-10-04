@@ -497,3 +497,48 @@
     padding: 1.1rem;
   }
 }
+
+/* ---- Mobile 3D depth: raised controls + push-in press ------- */
+/* Lives here (not index.css) because this file is imported after it and
+   intentionally wins the cascade — the base :active rules above would
+   otherwise out-specify the new press physics. */
+@media (max-width: 767px) {
+  /* The step card becomes a clearly raised surface in both themes. */
+  .wz-card {
+    box-shadow: var(--cs-elev-2);
+  }
+  .dark .wz-card {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    box-shadow: var(--cs-elev-2);
+  }
+  .wz-option {
+    box-shadow: var(--cs-elev-1);
+  }
+  .dark .wz-option {
+    box-shadow: var(--cs-elev-1);
+  }
+  .wz-option:active {
+    transform: translate3d(0, 2px, 0) scale(0.94);
+    box-shadow: var(--cs-elev-1);
+  }
+  .wz-chip {
+    box-shadow: var(--cs-elev-1);
+  }
+  .dark .wz-chip {
+    box-shadow: var(--cs-elev-1);
+  }
+  .wz-chip:active {
+    transform: translate3d(0, 1px, 0) scale(0.93);
+  }
+  .wz-btn:active {
+    transform: translate3d(0, 2px, 0) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wz-option:active,
+  .wz-chip:active,
+  .wz-btn:active {
+    transform: none !important;
+  }
+}

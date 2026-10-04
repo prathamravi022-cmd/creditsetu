@@ -9,6 +9,7 @@ import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import MobileMenu from "./components/common/MobileMenu";
 import MobileStickyCta from "./components/common/MobileStickyCta";
+import Mobile3D from "./components/common/Mobile3D";
 import PageTransition from "./components/common/PageTransition";
 import ProfileWizard from "./components/profile/ProfileWizard";
 
@@ -98,6 +99,9 @@ function Shell({ children }) {
       <MobileMenu open={menuOpen} onClose={closeMenu} />
       <MobileStickyCta />
       <AuthModal open={authOpen} onClose={closeAuth} />
+
+      {/* Shared mobile depth driver: scroll-linked tilt + app-bar elevation */}
+      <Mobile3D />
     </div>
   );
 }
