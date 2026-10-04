@@ -30,7 +30,8 @@ export default function PartnerLocator() {
   const [filterType, setFilterType] = useState('all');
   const [radius, setRadius] = useState(50);
   const [expandedCard, setExpandedCard] = useState(null);
-  const [showMap, setShowMap] = useState(false);
+  // Map is open by default so branch locations are visible without a tap.
+  const [showMap, setShowMap] = useState(true);
   const [MapComponent, setMapComponent] = useState(null);
   const [userLocation, setUserLocation] = useState([26.8467, 80.9462]);
   const [selectedPartner, setSelectedPartner] = useState(null);

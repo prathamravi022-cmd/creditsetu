@@ -14,7 +14,7 @@ import SkeletonCard from './SkeletonCard';
 import PageBackdrop from '../art/PageBackdrop';
 import ScaleCard from '../ui/ScaleCard';
 import ScrollReveal from '../ui/ScrollReveal';
-import { loadProfile, generateAndCache } from '../../services/recommender';
+import { loadProfile, generateAndCache, buildRecommendations } from '../../services/recommender';
 import { useAuth } from '../../store/AuthContext';
 
 function getProbabilityColor(prob) {
@@ -42,18 +42,31 @@ export default function ResultsDashboard() {
   const [showEMI, setShowEMI] = useState(null);
   // Large datasets render in pages so 100+ schemes never block the main thread.
   const [visibleCount, setVisibleCount] = useState(6);
+  // True when we are showing the broad fallback (no saved details yet).
+  const [usingDefaults, setUsingDefaults] = useState(false);
 
   useEffect(() => {
     try {
       const data = sessionStorage.getItem('recommendations');
-      if (data) {
-        setRecommendations(JSON.parse(data));
+      let cached = null;
+      try { cached = data ? JSON.parse(data) : null; } catch { cached = null; }
+      // Treat a zero-count or pre-100+-dataset cache as stale — otherwise an old
+      // empty result could survive and show the "No Schemes Found" dead end.
+      const stale = !cached || cached.count === 0 || !cached.recommendations?.[0]?.breakdown;
+      if (!stale) {
+        setRecommendations(cached);
         setVisibleCount(6);
       } else {
         // Remembered details mean matches can always be rebuilt (new tab, reload).
         const profile = loadProfile(user);
         if (profile) {
           setRecommendations(generateAndCache(profile));
+          setVisibleCount(6);
+        } else {
+          // No saved details yet — never show an empty screen. Fall back to the
+          // broadly eligible schemes so every user sees real matches.
+          setRecommendations(buildRecommendations({}));
+          setUsingDefaults(true);
           setVisibleCount(6);
         }
       }
@@ -145,10 +158,14 @@ export default function ResultsDashboard() {
           </div>
           <div>
             <p className="text-sm font-semibold text-green-800 dark:text-green-300">
-              You qualify for {recommendations.count} of {recommendations.total_considered}+ government schemes
+              {usingDefaults
+                ? `Showing ${recommendations.count} widely eligible schemes`
+                : `You qualify for ${recommendations.count} of ${recommendations.total_considered}+ government schemes`}
             </p>
             <p className="text-xs text-green-600 dark:text-green-400">
-              {recommendations.recommendations.filter(r => r.approval_probability >= 60).length} schemes have 60%+ approval probability
+              {usingDefaults
+                ? 'Add your details for personalised matches ranked for you.'
+                : `${recommendations.recommendations.filter(r => r.approval_probability >= 60).length} schemes have 60%+ approval probability`}
             </p>
           </div>
         </div>

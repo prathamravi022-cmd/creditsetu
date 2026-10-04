@@ -78,6 +78,10 @@ const EMPTY = {
   family_annual_income: '',
   is_bpl: false,
   has_disability: false,
+  bpl_card: '',
+  disability_type: '',
+  disability_percentage: '',
+  udid: false,
 };
 
 function calculateAge(dob) {
@@ -536,6 +540,81 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
                       </button>
                     ))}
                   </div>
+
+                  {/* BPL selected → capture the card so schemes that need it
+                      can be pre-filled instead of asked for again later. */}
+                  {form.is_bpl && (
+                    <div className={`field-float ${form.bpl_card ? 'is-filled' : ''}`}>
+                      <input
+                        id="wz-bpl"
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        value={form.bpl_card}
+                        onChange={(e) => set('bpl_card', e.target.value.replace(/[^0-9]/g, ''))}
+                        className="field-float__input"
+                        placeholder=" "
+                      />
+                      <label htmlFor="wz-bpl" className="field-float__label">
+                        BPL / Ration Card Number (optional)
+                      </label>
+                    </div>
+                  )}
+
+                  {/* Disability selected → capture type, percentage and whether a
+                      UDID certificate exists, so disability-specific schemes rank
+                      correctly and the paperwork is known up front. */}
+                  {form.has_disability && (
+                    <>
+                      <div>
+                        <label className="wz-label" htmlFor="wz-disability-type">
+                          Type of Disability
+                        </label>
+                        <select
+                          id="wz-disability-type"
+                          className="wz-select"
+                          value={form.disability_type}
+                          onChange={(e) => set('disability_type', e.target.value)}
+                        >
+                          <option value="">Select type (optional)</option>
+                          {[
+                            ['locomotor', 'Locomotor'],
+                            ['visual', 'Visual'],
+                            ['hearing', 'Hearing'],
+                            ['speech', 'Speech'],
+                            ['intellectual', 'Intellectual'],
+                            ['multiple', 'Multiple'],
+                          ].map(([v, label]) => (
+                            <option key={v} value={v}>{label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className={`field-float ${form.disability_percentage ? 'is-filled' : ''}`}>
+                        <input
+                          id="wz-disability-pct"
+                          type="text"
+                          inputMode="numeric"
+                          autoComplete="off"
+                          value={form.disability_percentage}
+                          onChange={(e) => set('disability_percentage', e.target.value.replace(/[^0-9]/g, ''))}
+                          className="field-float__input"
+                          placeholder=" "
+                        />
+                        <label htmlFor="wz-disability-pct" className="field-float__label">
+                          Disability Percentage (optional)
+                        </label>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => set('udid', !form.udid)}
+                        aria-pressed={form.udid}
+                        className={`wz-chip ${form.udid ? 'selected' : ''}`}
+                      >
+                        {form.udid ? '✓ ' : ''}
+                        I have a UDID / Disability Certificate
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </section>
@@ -563,6 +642,19 @@ export default function ProfileWizard({ mode = 'onboarding' }) {
                     ['Area', form.location_type === 'urban' ? 'Urban' : 'Rural'],
                     ['Social Category', SOCIAL.find((s) => s.key === form.social_category)?.label || '—'],
                     ['Annual Income', form.family_annual_income ? inr(form.family_annual_income) : '—'],
+                    ...(form.is_bpl ? [['BPL / Ration Card', form.bpl_card || 'Yes']] : []),
+                    ...(form.has_disability
+                      ? [[
+                          'Disability',
+                          [
+                            form.disability_type
+                              ? form.disability_type.charAt(0).toUpperCase() + form.disability_type.slice(1)
+                              : '',
+                            form.disability_percentage ? `${form.disability_percentage}%` : '',
+                            form.udid ? 'UDID ✓' : '',
+                          ].filter(Boolean).join(' · ') || 'Yes',
+                        ]]
+                      : []),
                   ].map(([label, value]) => (
                     <div className="wz-review-row" key={label}>
                       <dt>{label}</dt>

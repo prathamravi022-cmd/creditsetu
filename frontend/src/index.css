@@ -712,6 +712,22 @@ textarea {
   box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.16);
 }
 
+/* A native date input draws its own dd/mm/yyyy placeholder, which collided
+   with the floating label on mobile. Hide the browser's text until the field
+   is focused or filled, and keep the calendar affordance clearly tappable. */
+.field-float:not(.is-filled) > .field-float__input[type="date"]:not(:focus)::-webkit-datetime-edit {
+  color: transparent;
+}
+.field-float > .field-float__input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.65;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.dark .field-float > .field-float__input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.7;
+}
+
 /* ---- Glassmorphism scheme cards ---------------------------- */
 /* Inactive: quiet glass. Tapped/held: a glowing brand border that
    lifts the card off the page — the mobile stand-in for 3D tilt,
